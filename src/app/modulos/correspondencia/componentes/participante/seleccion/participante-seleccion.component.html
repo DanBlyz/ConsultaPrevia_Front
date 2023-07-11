@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12 form-group mb-2">
+        <a (click)="ejecutarOperacion({operacion: 'seleccionar-participante'})" href="javscript:void(0);">
+            <i class="fas fa-plus-circle fa-lg text-primary mr-1"></i></a>
+        <label><span class="required-field-indicator"></span> <a
+                (click)="ejecutarOperacion({operacion: 'seleccionar-participante'})" class="text-dark" href="javascrip:void(0);">{{
+                etiqueta }}</a>: </label>
+        <ng-container *ngIf="seleccionarParticipante">
+            <div class="border rounded p-3 mt-1 mb-1">
+                <div style="display: flex; flex-direction: row;">
+                    <i class="fas fa-user-circle fa-4x mr-2 text-muted"></i>
+                    <div class="d-block w-100">
+                        <div class="d-block mb-1">
+                            <ng-select
+                                (change)="ejecutarOperacion({operacion: 'uni-organizacional-seleccionado', id: $event})"
+                                [clearable]="false">
+                                <ng-option value="">[Elija una opción]</ng-option>
+                                <ng-option *ngFor="let item of listaUniOrganizacionalCodificador" [value]="item.id">
+                                    {{ item.nombre }}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="d-block mb-1">
+                            <ng-select
+                                (change)="ejecutarOperacion({operacion: 'participante-seleccionado', id: $event})"
+                                [clearable]="false">
+                                <ng-option value="">[Elija una opción]</ng-option>
+                                <ng-option *ngFor="let item of listaBuzonUsuario" [value]="item.id">
+                                    <span class="d-block small text-muted">{{ item.buzonUniOrganizacional
+                                        }}</span>
+                                    <span>{{ item.nombre }}</span>
+                                    <span class="d-block small text-muted">{{ item.buzonPuesto }}</span>
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="d-block mb-1 float-right">
+                            <!-- <button (click)="ejecutarAccion({accion: 'agregar'})" type="submit"
+                                class="btn btn-success mr-1" title="Agregar">
+                                <i class="fas fa-user-plus"></i>
+                            </button> -->
+                            <button (click)="ejecutarAccion({accion: 'cancelar'})" type="button" class="btn btn-danger"
+                                title="Cancelar">
+                                <i class="fas fa-window-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="listaParticipante.length > 0">
+            <div class="border rounded p-3 mt-1 mb-1" *ngFor="let participante of listaParticipante">
+                <button (click)="ejecutarAccion({accion: 'quitar', buzonId: participante.buzonId})" class="close"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div style="display: flex; flex-direction: row;">
+                    <i class="fas fa-user-circle fa-4x mr-2 text-muted"></i>
+                    <div>
+                        <h5 class="mt-0 mb-1">{{participante.nombre}}</h5>
+                        <span class="d-block">{{participante.puesto}}</span>
+                        <span class="d-block text-muted">{{participante.uniOrganizacional}}</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

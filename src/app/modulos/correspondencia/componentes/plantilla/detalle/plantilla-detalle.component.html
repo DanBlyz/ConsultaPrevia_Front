@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-row">
+                <div class="col-md-3 form-group mb-2">
+                    <label class="d-block">Tipo de documento:</label>
+                    <span>{{ plantilla.tipoDocumentoNombre }}</span>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label class="d-block">Version:</label>
+                    <span>{{ plantilla.version }}</span>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label class="d-block">Fecha:</label>
+                    <span>{{ plantilla.fecha | date: 'dd/MM/yyyy': 'UTC' }}</span>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <span *ngIf="plantilla.estaActiva" class="badge badge-success">ACTIVA</span>
+                    <span *ngIf="!plantilla.estaActiva" class="badge badge-danger">INACTIVA</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <div class="pagina mb-5 mx-auto">
+                        <app-plantilla-documento></app-plantilla-documento>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="onOperacion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="onOperacion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

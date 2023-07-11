@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formParametro" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Tipo:</label>
+                    <ng-select [clearable]="false" formControlName="tipo">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option value="PROVEIDO">PROVEIDO</ng-option>
+                        <ng-option value="SISTEMA">SISTEMA</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Orden:</label>
+                    <input type="number" class="form-control" formControlName="orden" />
+                </div>
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Valor:</label>
+                    <input type="text" class="form-control" formControlName="valor" />
+                </div>
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Texto:</label>
+                    <input type="text" class="form-control" formControlName="texto" />
+                </div>
+            </div>
+            <div *ngIf="tipoOperacion === 'modificar'" class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="parametro_estaActivo"
+                            formControlName="estaActivo">
+                        <label class="custom-control-label" for="parametro_estaActivo">esta activo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

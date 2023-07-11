@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9" style="height: 100%; overflow-y: scroll;">
+            <app-plantilla-documento [modoVisualizacion]="modoVisualizacion"></app-plantilla-documento>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <app-plantilla-menu [documento]="documento"></app-plantilla-menu>
+                    <hr>
+                    <form [formGroup]="formPlantilla" autocomplete="off" class="text-default">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <h3>Registro de plantilla</h3>
+                            </div>
+                            <div class="col-md-12 form-group mb-2">
+                                <label><span class="required-field-indicator"></span> Tipo de documento:</label>
+                                <ng-select (change)="ejecutarAccion({ accion: 'seleccionado', id: $event})" [clearable]="false" formControlName="tipoDocumentoId">
+                                    <ng-option value="">[Elija una opción]</ng-option>
+                                    <ng-option *ngFor="let item of listaTipoDocumentoCodificador" [value]="item.id">{{ item.nombre }}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-md-6 form-group mb-2">
+                                <label><span class="required-field-indicator"></span> Versión:</label>
+                                <input type="number" class="form-control" formControlName="version" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div *ngIf="tipoOperacion === 'modificar'" class="col-md-4 form-group mb-2">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="estaActiva" formControlName="estaActiva">
+                                    <label class="custom-control-label" for="estaActiva">esta activa</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-end">
+                            <div class="form-group">
+                                <input *ngIf="tipoOperacion === 'crear'" (click)="vaciarBloques()" type="button"
+                                    class="btn btn-danger mr-1" value="Limpiar">
+                                <button (click)="onOperacion(tipoOperacion)" type="submit"
+                                    class="btn btn-success mr-1" [title]="botonOperacion">
+                                    {{botonOperacion}}
+                                </button>
+                                <button [routerLink]="['/correspondencia/plantillas']" type="button"
+                                    class="btn btn-dark" title="Volver">
+                                    Volver
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                                    <span class="required-field-indicator"></span></em>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

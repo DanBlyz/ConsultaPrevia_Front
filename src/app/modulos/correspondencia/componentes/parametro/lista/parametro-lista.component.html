@@ -1,0 +1,89 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <app-correspondencia-parametro-buscador [objeto]="filtro" (accion)="ejecutarAccion($event)">
+                </app-correspondencia-parametro-buscador>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover border mt-4 ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>TIPO</th>
+                                <th class="td-auto">ORDEN</th>
+                                <th>VALOR</th>
+                                <th>TEXTO</th>
+                                <th class="td-auto">ESTA ACTIVO</th>
+                                <th class="td-auto">OPERACIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of lista">
+                                <td class="td-auto align-middle">{{ item.tipo }}</td>
+                                <td class="align-middle text-center">{{ item.orden }}</td>
+                                <td class="align-middle">{{ item.valor }}</td>
+                                <td class="align-middle">{{ item.texto }}</td>
+                                
+                                <td class="align-middle text-center">
+                                    <i *ngIf="item.estaActivo" class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="!item.estaActivo" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
+
+                                <td class="align-middle">
+                                    <i (click)="ejecutarOperacion('detalle', item.id)"
+                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
+                                    <i *ngIf="item.sePuedeModificar" (click)="ejecutarOperacion('modificar', item.id)"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
+                                    <i *ngIf="item.sePuedeEliminar" (click)="ejecutarOperacion('eliminar', item.id)"
+                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <app-paginador (paginar)="paginar()"></app-paginador>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right mt-3">
+                    <input type="button" value="Nuevo registro" class="btn btn-primary"
+                        (click)="ejecutarOperacion('crear', 0)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalParametro let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitulo }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [ngSwitch]="tipoOperacion">
+            <app-correspondencia-parametro-formulario *ngSwitchCase="'crear'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-parametro-formulario>
+            <app-correspondencia-parametro-detalle *ngSwitchCase="'detalle'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-parametro-detalle>
+            <app-correspondencia-parametro-formulario *ngSwitchCase="'modificar'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-parametro-formulario>
+            <app-correspondencia-parametro-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-parametro-detalle>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <img src="assets/images/favicon.ico" width="32"> ADSIB
+    </div>
+</ng-template>
+
+
