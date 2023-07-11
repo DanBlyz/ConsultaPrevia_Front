@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12 mb-2">
+        <input type="file" accept=".pdf" style="display: none;"
+            (change)="ejecutarOperacion({operacion: 'adjunto-seleccionado', input: $event})" #fileUpload>
+        <ng-container *ngIf="sePuedeAgregar">
+            <button (click)="fileUpload.click()" type="button" class="btn btn-primary float-right" title="Enviar">
+                Agregar respaldo
+            </button>
+        </ng-container>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-2">
+        <ng-container *ngIf="lista.length === 0">
+            El documento no cuenta con respaldos.
+        </ng-container>
+        <ul class="list-group">
+            <li *ngFor="let item of lista" class="list-group-item border-0 pt-0 pb-0">
+                <i class="far fa-file-pdf fa-lg text-dark mr-1"></i> {{ item.nomPublico }}
+                <a (click)="ejecutarAccion({accion: 'descargar-adjunto', id: item.id})" href="javascript:void(0)">
+                    <i class="fas fa-external-link-alt ml-1"></i></a>
+                <a *ngIf="sePuedeAgregar" (click)="ejecutarAccion({accion: 'quitar-adjunto', id: item.id})" href="javascript:void(0)">
+                    <i class="fas fa-trash-alt ml-1 text-danger"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>

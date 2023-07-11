@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="text-muted m-0">{{ documento?.tipoDocumentoNombre }}</h5>
+        <ng-container *ngIf="listaRemitenteExterno.length === 0">
+            <h2 class="m-0">{{ documento?.cite }}</h2>
+        </ng-container>
+        <ng-container *ngIf="listaRemitenteExterno.length > 0">
+            <h2 class="m-0">{{ documento?.citeExterno }}</h2>
+            <h4 class="text-muted m-0">{{ documento?.cite }}</h4>
+        </ng-container>
+        <h4 class="m-0">H.R. {{ documento?.hojaRutaNumero }}</h4>
+        <div class="mt-1">
+            <label class="d-block mb-0">Referencia:</label>
+            <span class="d-block h5">{{ documento?.referencia }}</span>
+            <span *ngIf="documento?.prioridad === 'NORMAL'" class="badge badge-dark mr-1">NORMAL</span>
+            <span *ngIf="documento?.prioridad === 'URGENTE'" class="badge badge-danger mr-1">URGENTE</span>
+            <ng-container *ngIf="listaRemitenteExterno.length > 0">
+                <label class="d-block mb-0">Remitente externo:</label>
+                <ng-container *ngFor="let item of listaRemitenteExterno">
+                    <span>{{ item.nombre }} - <span class="small text-muted">{{ item.puesto }}</span></span>
+                    <span class="d-block small text-muted"><i class="fas fa-building"></i> {{ item.entidad }}</span>
+                </ng-container>
+            </ng-container>
+            <!-- <ng-container *ngIf="documento?.observacion">
+                <label class="d-block mb-0">Observaciones:</label>
+                <span class="d-block h5">{{ documento?.observacion }}</span>
+            </ng-container> -->
+            <ng-container *ngIf="documento?.dandoContinuidad">
+                <label class="d-block mb-0">Dando continuidad:</label>
+                <span class="d-block h5">{{ documento?.dandoContinuidad }}</span>
+            </ng-container>
+        </div>
+    </div>
+</div>

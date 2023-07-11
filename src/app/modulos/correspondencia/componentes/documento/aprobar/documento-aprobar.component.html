@@ -1,0 +1,45 @@
+<app-correspondencia-documento-resumen></app-correspondencia-documento-resumen>
+<nav class="mt-2">
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+      aria-controls="nav-home" aria-selected="true">Aprobar</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+      aria-controls="nav-profile" aria-selected="false">Devolver</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <form autocomplete="off" class="text-default">
+      <div class="form-row justify-content-end">
+        <div class="form-group">
+          <ng-container *ngIf="documentoAdjunto">
+            <button (click)="ejecutarAccion({accion: 'aprobar', id: documento?.id})" type="button"
+              class="btn btn-success mr-1" title="Aprobar">
+              Aprobar
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <form [formGroup]="formDevolucion" autocomplete="off" class="text-default">
+      <div class="form-row">
+        <div class="col-md-12 form-group mb-2">
+          <label><span class="required-field-indicator"></span> Aclaración de devolución:</label>
+          <textarea class="form-control" rows="2" formControlName="aclaracion"></textarea>
+        </div>
+      </div>
+      <div class="form-row justify-content-end">
+        <div class="form-group">
+          <ng-container *ngIf="documentoAdjunto">
+            <button (click)="ejecutarAccion({accion: 'devolver', id: documento?.id})" type="button"
+              class="btn btn-primary mr-1" title="Devolver">
+              Devolver
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

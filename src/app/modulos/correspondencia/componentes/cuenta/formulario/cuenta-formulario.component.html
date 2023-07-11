@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formCuenta" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Codigo:</label>
+                    <input type="text" class="form-control" formControlName="codigo" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Modo Autenticacion:</label>
+                    <input type="text" class="form-control" formControlName="modoAutenticacion" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Nombre:</label>
+                    <input type="text" class="form-control" formControlName="nombre" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> clave:</label>
+                    <input type="text" class="form-control" formControlName="clave" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Contraseña:</label>
+                    <input type="text" class="form-control" formControlName="contrasenia" />
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

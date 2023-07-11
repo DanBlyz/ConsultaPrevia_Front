@@ -1,0 +1,95 @@
+<app-correspondencia-documento-resumen></app-correspondencia-documento-resumen>
+<nav class="mt-2">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+            aria-controls="nav-home" aria-selected="true">Derivar</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+            aria-controls="nav-profile" aria-selected="false">Archivar</a>
+        <a class="nav-item nav-link" id="nav-devolver-tab" data-toggle="tab" href="#nav-devolver" role="tab"
+            aria-controls="nav-devolver" aria-selected="false">Devolver</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="mt-2 tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <form [formGroup]="formDerivacion" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <app-correspondencia-participante-seleccion #destinatarios etiqueta="Seleccionar destinatario(s)"
+                    tipoParticipante="destinatario" style="width: 670px;"></app-correspondencia-participante-seleccion>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="Dar curso" id="defaultCheck1"
+                            name="checkSeleccion">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Dar curso
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="Preparar respuesta" id="defaultCheck2"
+                            name="checkSeleccion">
+                        <label class="form-check-label" for="defaultCheck2">
+                            Preparar respuesta
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label>Aclaración de proveído:</label>
+                    <textarea class="form-control" rows="2" formControlName="proveido"></textarea>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <ng-container *ngIf="documentoAdjunto">
+                        <button (click)="ejecutarAccion({accion: 'derivar', id: documento?.id})" type="button"
+                            class="btn btn-primary mr-1" title="Derivar">
+                            Derivar
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="mt-2 tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <form [formGroup]="formArchivado" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Observación:</label>
+                    <textarea class="form-control" rows="2" formControlName="observacion"></textarea>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <ng-container *ngIf="documentoAdjunto">
+                        <button (click)="ejecutarAccion({accion: 'archivar', id: documento?.id})" type="button"
+                            class="btn btn-danger mr-1" title="Archivar">
+                            Archivar
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade" id="nav-devolver" role="tabpanel" aria-labelledby="nav-devolver-tab">
+        <form [formGroup]="formDevolucion" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                  <label><span class="required-field-indicator"></span> Aclaración de devolución:</label>
+                  <textarea class="form-control" rows="2" formControlName="aclaracion"></textarea>
+                </div>
+              </div>
+              <div class="form-row justify-content-end">
+                <div class="form-group">
+                  <ng-container *ngIf="documentoAdjunto">
+                    <button (click)="ejecutarAccion({accion: 'devolver', id: documento?.id})" type="button"
+                      class="btn btn-primary mr-1" title="Devolver">
+                      Devolver
+                    </button>
+                  </ng-container>
+                </div>
+              </div>
+        </form>
+    </div>
+</div>

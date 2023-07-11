@@ -1,0 +1,179 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formDocumento" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <ng-container *ngIf="tipoOperacion === 'crear'">
+                    <div class="col-md-6 form-group mb-2">
+                        <label>Vincular a una hoja de ruta existente:</label>
+                        <div *ngIf="!hojaRutaSeleccionada" class="input-group">
+                            <input
+                                (keydown.enter)="ejecutarOperacion({operacion: 'buscar-hoja-ruta', valor: inputHojaRuta.value})"
+                                class="form-control" style="max-width: 100px;" #inputHojaRuta>
+                            <div class="input-group-append" id="button-addon4">
+                                <button
+                                    (click)="ejecutarOperacion({operacion: 'buscar-hoja-ruta', valor: inputHojaRuta.value})"
+                                    class="btn btn-outline-primary" type="button">
+                                    <i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="col-md-12 form-group mb-2">
+                    <ng-container *ngIf="hojaRutaEncontrada && !hojaRutaSeleccionada">
+                        <div class="d-block border rounded p-3 mt-1 mb-1" style="overflow-y: scroll; height: 150px;">
+                            <div class="mb-1">
+                                <button *ngIf="hojaRutaEncontrada"
+                                    (click)="ejecutarOperacion({operacion: 'seleccionar-hoja-ruta'})"
+                                    class="btn btn-success mr-1" type="button"><i class="fas fa-check-circle"></i> Deseo
+                                    vincularme a esta hoja de ruta</button>
+                                <button *ngIf="hojaRutaEncontrada"
+                                    (click)="ejecutarOperacion({operacion: 'cancelar-busqueda'})"
+                                    class="btn btn-danger mr-1" type="button"><i class="fas fa-times-circle"></i>
+                                    Descartar la búsqueda</button>
+                            </div>
+                            <h5 class="mt-0 mb-1"><strong>Hoja de Ruta:</strong>
+                                {{hojaRutaEncontrada.numero}}.{{hojaRutaEncontrada.gestion}}
+                            </h5>
+                            <ul>
+                                <li *ngFor="let item of hojaRutaEncontrada?.listaDocumento">
+                                    <span class="d-block"><strong>{{item.tipoDocumentoNombre}}: </strong>
+                                        {{item.cite}}</span>
+                                    <span class="d-block"><strong>Referencia:</strong> {{item.referencia}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="hojaRutaEncontrada && hojaRutaSeleccionada">
+                        <div class="alert alert-success">
+                            <button *ngIf="tipoOperacion !== 'modificar'"
+                                (click)="ejecutarOperacion({operacion: 'quitar-hoja-ruta', id: hojaRutaEncontrada.id})"
+                                class="close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div>
+                                <h5 class="mt-0 mb-1">El documento se encuentra vinculado a la hoja de ruta:</h5>
+                                <h3 class="mt-0 mb-1 font-weight-bold text-center">
+                                    {{hojaRutaEncontrada?.numero}}.{{hojaRutaEncontrada?.gestion}}</h3>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Tipo de documento:</label>
+                    <ng-select (change)="ejecutarOperacion({operacion: 'seleccionar-tipo-documento', id: $event})"
+                        [clearable]="false" formControlName="tipoDocumentoId"
+                        [readonly]="tipoOperacion === 'modificar'">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option *ngFor="let item of listaTipoDocumentoCodificador" [value]="item.id">
+                            {{ item.nombre }}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div *ngIf="tipoDocumentoSeleccionado?.remitente === 'EXTERNO'" class="form-row">
+                <div class="col-md-6 form-group mb-2">
+                    <label>Cite externo:</label>
+                    <input type="text" class="form-control" formControlName="citeExterno" />
+                </div>
+            </div>
+            <div *ngIf="tipoDocumentoSeleccionado?.destinatario !== 'GRUPO'" class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <app-correspondencia-participante-seleccion #destinatarios etiqueta="Seleccionar destinatario(s)"
+                        tipoParticipante="destinatario"></app-correspondencia-participante-seleccion>
+                </div>
+            </div>
+
+            <div *ngIf="tipoDocumentoSeleccionado?.destinatario === 'GRUPO'" class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <app-correspondencia-participante-grupo-seleccion #grupos etiqueta="Seleccionar grupo(s)"
+                        tipoParticipante="destinatario-grupo">
+                    </app-correspondencia-participante-grupo-seleccion>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <app-correspondencia-participante-seleccion #vias etiqueta="Seleccionar via(s)"
+                        tipoParticipante="via">
+                    </app-correspondencia-participante-seleccion>
+                </div>
+            </div>
+            <div *ngIf="tipoDocumentoSeleccionado?.remitente === 'EXTERNO'" class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <app-correspondencia-participante-contacto-seleccion #externos
+                        etiqueta="Seleccionar remitente(s) externo(s)" tipoParticipante="remitente-externo">
+                    </app-correspondencia-participante-contacto-seleccion>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <app-correspondencia-participante-seleccion #remitentes etiqueta="Seleccionar remitente(s)"
+                        tipoParticipante="remitente"
+                        [participantePorDefecto]="participantePorDefecto"></app-correspondencia-participante-seleccion>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Lugar:</label>
+                    <input type="text" class="form-control" formControlName="lugar" />
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Fecha:</label>
+                    <input type="date" [min]="fecInicial" class="form-control" formControlName="fecha" />
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Prioridad:</label>
+                    <ng-select [clearable]="false" formControlName="prioridad">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option value="NORMAL">NORMAL</ng-option>
+                        <ng-option value="URGENTE">URGENTE</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Clasificacion:</label>
+                    <ng-select [clearable]="false" formControlName="clasificacionId">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option *ngFor="let item of listaClasificacionCodificador" [value]="item.id">
+                            {{ item.nombre }}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Referencia:</label>
+                    <textarea class="form-control" rows="2" formControlName="referencia"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label>Observación:</label>
+                    <textarea class="form-control" rows="3" formControlName="observacion"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label class="mb-0">Dando continuidad:</label>
+                    <span class="d-block form-text text-muted mt-0">Llene el siguiente campo si desea referenciar documentos de su
+                        anterior Sistema de Correspondencia</span>
+                    <textarea class="form-control" rows="3" formControlName="dandoContinuidad"></textarea>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion({accion: tipoOperacion})" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion({accion: 'cancelar'})" type="button" class="btn btn-dark"
+                        title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

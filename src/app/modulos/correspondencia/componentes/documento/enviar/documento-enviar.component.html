@@ -1,0 +1,130 @@
+<app-correspondencia-documento-resumen></app-correspondencia-documento-resumen>
+<nav class="mt-2">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-enviar-tab" data-toggle="tab" href="#nav-enviar" role="tab"
+            aria-controls="nav-enviar" aria-selected="true">Enviar</a>
+        <a class="nav-item nav-link" id="nav-anular-tab" data-toggle="tab" href="#nav-anular" role="tab"
+            aria-controls="nav-anular" aria-selected="false">Anular</a>
+        <a class="nav-item nav-link" id="nav-vincular-hoja-ruta-tab" data-toggle="tab" href="#nav-vincular-hoja-ruta" role="tab"
+            aria-controls="nav-vincular-hoja-ruta" aria-selected="false">Vincular hoja ruta</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-enviar" role="tabpanel" aria-labelledby="nav-enviar-tab">
+        <div class="form-row justify-content-end mt-2">
+            <div class="form-group">
+                <ng-container
+                    *ngIf="(documento?.tieneContenido && !documentoAdjunto && documento?.prioridad != 'PREVIO') || (documento?.tieneDocumentoAdjunto && documento?.prioridad != 'PREVIO')">
+                    <button (click)="ejecutarAccion({accion: 'enviar', id: documento?.id})" type="button"
+                        class="btn btn-info mr-1" title="Enviar">
+                        Enviar
+                    </button>
+                </ng-container>
+                <ng-container
+                *ngIf="(documento?.prioridad === 'PREVIO')">
+                <button (click)="ejecutarAccion({accion: 'generarCiteHr', id: documento?.id})" type="button"
+                    class="btn btn-warning mr-1" title="Generar CITE y HR">
+                    Generar CITE y HR.
+                </button>
+            </ng-container>
+                <ng-container *ngIf="documento?.estaObservado === true">
+                    <button (click)="ejecutarAccion({accion: 'eliminar-adjunto', id: documento?.id})" type="button"
+                        class="btn btn-danger mr-1" title="Eliminar documento observado">
+                        Eliminar documento observado
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-anular" role="tabpanel" aria-labelledby="nav-anular-tab">
+        <form [formGroup]="formAnulado" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Observación:</label>
+                    <textarea class="form-control" rows="2" formControlName="observacion"></textarea>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <ng-container>
+                        <button (click)="ejecutarAccion({accion: 'anular', id: documento?.id})" type="button"
+                            class="btn btn-danger mr-1" title="Archivar">
+                            Anular
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade" id="nav-vincular-hoja-ruta" role="tabpanel" aria-labelledby="nav-vincular-hoja-ruta-tab">
+        <form [formGroup]="formVincular" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label>Vincular a una hoja de ruta existente:</label>
+                    <div *ngIf="!hojaRutaSeleccionada" class="input-group">
+                        <input (keydown.enter)="ejecutarOperacion({operacion: 'buscar-hoja-ruta', valor: inputHojaRuta.value})"
+                            class="form-control" style="max-width: 100px;" #inputHojaRuta>
+                        <div class="input-group-append" id="button-addon4">
+                            <button (click)="ejecutarOperacion({operacion: 'buscar-hoja-ruta', valor: inputHojaRuta.value})"
+                                class="btn btn-outline-primary" type="button" [disabled]="inputHojaRuta.value === ''">
+                                <i class="fas fa-search"></i></button>
+                            <button *ngIf="hojaRutaEncontrada" (click)="ejecutarOperacion({operacion: 'seleccionar-hoja-ruta'})"
+                                class="btn btn-success" type="button"><i class="fas fa-check-circle"></i></button>
+                            <button *ngIf="hojaRutaEncontrada"
+                                (click)="ejecutarOperacion({operacion: 'cancelar-busqueda'}); inputHojaRuta.value = ''"
+                                class="btn btn-danger" type="button"><i class="fas fa-times-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <ng-container *ngIf="hojaRutaEncontrada && !hojaRutaSeleccionada">
+                        <div class="d-block border rounded p-3 mt-1 mb-1" style="overflow-y: scroll; height: 150px;">
+                            <h5 class="mt-0 mb-1"><strong>Hoja de Ruta:</strong>
+                                {{hojaRutaEncontrada.numero}}.{{hojaRutaEncontrada.gestion}}
+                            </h5>
+                            <ul>
+                                <li *ngFor="let item of hojaRutaEncontrada?.listaDocumento">
+                                    <span class="d-block"><strong>{{item.tipoDocumentoNombre}}: </strong>
+                                        {{item.cite}}</span>
+                                    <span class="d-block"><strong>Referencia:</strong> {{item.referencia}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="hojaRutaEncontrada && hojaRutaSeleccionada">
+                        <div class="d-block border rounded p-3 mt-1 mb-1">
+                            <button *ngIf="tipoOperacion !== 'modificar'"
+                                (click)="ejecutarOperacion({operacion: 'quitar-hoja-ruta', id: hojaRutaEncontrada.id})"
+                                class="close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div>
+                                <h5 class="mt-0 mb-1"><strong>Hoja de Ruta:</strong>
+                                    {{hojaRutaEncontrada?.numero}}.{{hojaRutaEncontrada?.gestion}}</h5>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Observación:</label>
+                    <textarea class="form-control" rows="2" formControlName="observacion"></textarea>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <ng-container>
+                        <button
+                            (click)="ejecutarAccion({accion: 'vincular-hoja-ruta', id: documento?.id, hojaRutaIdOrigen: documento?.hojaRutaId, hojaRutaIdDestino: hojaRutaEncontrada?.id, hojaRutaOrigen: documento?.hojaRutaNumero, hojaRutaDestino: hojaRutaEncontrada?.numero + '.' + hojaRutaEncontrada?.gestion})"
+                            type="button" class="btn btn-info mr-1" title=" Asignar Hoja ruta">
+                            Vincular con hoja de ruta
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
