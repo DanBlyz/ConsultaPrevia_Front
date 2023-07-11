@@ -1,0 +1,36 @@
+
+.menu-contextual {
+	width: 100%;
+	position: relative;
+	display: inline-block;
+	padding: 1px;
+}
+
+.menu-contextual:hover {
+	background-color: #F8F8FF;
+	padding: 0px;
+	border: #1827 1px dashed;
+}
+
+.menu-contextual:hover .menu {
+	display: block;
+}
+
+.menu-contextual .menu {
+	padding: 7px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+	z-index: 999;
+}
+
+.menu-contextual .menu a {
+	color: #000;
+	opacity: 0.2;
+}
+
+.menu-contextual .menu a:hover {
+	color: #000;
+	opacity: 0.6;
+}

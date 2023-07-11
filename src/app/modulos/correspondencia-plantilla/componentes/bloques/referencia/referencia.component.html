@@ -1,0 +1,137 @@
+<ng-container *ngIf="modoVisualizacion === 'ESQUEMA'">
+    <app-plantilla-menu-contextual (operacion)="ejecutarOperacion($event)" (accion)="ejecutarAccion($event)" [esConfigurable]="true">
+        <div *ngIf="configuracion.esParaEncabezado" class="row mb-1">
+            <div class="col-2">
+                <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }}</span>
+            </div>
+            <div class="col-10">
+                <span class="d-block font-weight-bold">{{ datosPresentacion.texto }}</span>
+            </div>
+        </div>
+        <div *ngIf="!configuracion.esParaEncabezado" class="row" [ngClass]="configuracion | referencia">
+            <div class="col-12 mt-4 mb-4">
+                <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }} {{ datosPresentacion.texto }}</span>
+            </div>
+        </div>
+    </app-plantilla-menu-contextual>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'PRESENTACION'">
+    <div *ngIf="configuracion.esParaEncabezado" class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block font-weight-bold">{{ datosPresentacion.texto }}</span>
+        </div>
+    </div>
+    <div *ngIf="!configuracion.esParaEncabezado" class="row" [ngClass]="configuracion | referencia">
+        <div class="col-12 mt-4 mb-4">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }} {{ datosPresentacion.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'REGISTRO'">
+    <div *ngIf="configuracion.esParaEncabezado" class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block font-weight-bold">{{ datos.texto }}</span>
+        </div>
+    </div>
+    <div *ngIf="!configuracion.esParaEncabezado" class="row" [ngClass]="configuracion | referencia">
+        <div class="col-12" style="margin-top: 0.5cm; margin-bottom: 0.5cm;">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }} {{ datos.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'DOCUMENTO'">
+    <div *ngIf="configuracion.esParaEncabezado" class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block font-weight-bold">{{ datos.texto }}</span>
+        </div>
+    </div>
+    <div *ngIf="!configuracion.esParaEncabezado" class="row" [ngClass]="configuracion | referencia">
+        <div class="col-12 mt-4 mb-4">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaReferencia }} {{ datos.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #modalReferencia let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Referencia - Configuración de bloque</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="formConfiguracion" autocomplete="off" class="text-default">
+                    <div class="form-row mb-3">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="esParaEncabezado"
+                                    [checked]="configuracion.esParaEncabezado" formControlName="esParaEncabezado">
+                                <label class="form-check-label" for="esParaEncabezado">
+                                    Es para imprimir en el encabezado.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label><span class="required-field-indicator"></span> Referencia:</label>
+                            <input type="text" class="form-control" formControlName="etiquetaReferencia" />
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionIzquierda" name="alineacion" value="IZQUIERDA" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionIzquierda">Texto alineado a la izquierda</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionCentro" name="alineacion" value="CENTRO" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionCentro">Texto centrado</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionDerecha" name="alineacion" value="DERECHA" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionDerecha">Texto alineado a la derecha</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label><span class="required-field-indicator"></span> Margen izquierdo:</label>
+                            <input type="number" class="form-control" formControlName="margenIzquierdo" />
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <div class="form-group">
+                            <button (click)="ejecutarAccion({accion: 'aplicar-configuracion'})" type="submit" class="btn btn-primary mr-1" title="Aplicar">
+                                Aplicar
+                            </button>
+                            <button (click)="ejecutarOperacion({operacion: 'cancelar'})" type="button" class="btn btn-dark" title="Cancelar">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                                <span class="required-field-indicator"></span></em>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <img src="assets/images/favicon.ico" width="32"> ADSIB
+    </div>
+</ng-template>

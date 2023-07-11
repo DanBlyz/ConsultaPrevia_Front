@@ -1,0 +1,120 @@
+<ng-container *ngIf="modoVisualizacion === 'ESQUEMA'">
+    <app-plantilla-menu-contextual (operacion)="ejecutarOperacion($event)" (accion)="ejecutarAccion($event)" [esConfigurable]="true">
+        <div class="row">
+            <div class="col-12">
+                <span [ngClass]="configuracion | titulo">{{ configuracion.texto }}</span>
+            </div>
+        </div>
+    </app-plantilla-menu-contextual>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'PRESENTACION'">
+    <div class="row">
+        <div class="col-12">
+            <span [ngClass]="configuracion | titulo">{{ configuracion.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'REGISTRO'">
+    <div class="row">
+        <div class="col-12">
+            <span [ngClass]="configuracion | titulo">{{ configuracion.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'DOCUMENTO'">
+    <div class="row">
+        <div class="col-12">
+            <span [ngClass]="configuracion | titulo">{{ configuracion.texto }}</span>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #modalTitulo let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Título - Configuración de bloque</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="formConfiguracion" autocomplete="off" class="text-default">
+                    <div class="form-row">
+                        <div class="col-md-12 form-group mb-2">
+                            <label><span class="required-field-indicator"></span> Texto:</label>
+                            <input type="text" class="form-control" formControlName="texto" />
+                        </div>
+                        <div class="col-md-6 form-group mb-2">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="imgIzquierda" name="nivel"
+                                    value="NIVEL 1" formControlName="nivel">
+                                <label class="custom-control-label" for="imgIzquierda"><span class="h3">Título de nivel
+                                        1</span></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="imgCentro" name="nivel"
+                                    value="NIVEL 2" formControlName="nivel">
+                                <label class="custom-control-label" for="imgCentro"><span class="h4">Título de nivel
+                                        2</span></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="imgDerecha" name="nivel"
+                                    value="NIVEL 3" formControlName="nivel">
+                                <label class="custom-control-label" for="imgDerecha"><span class="h5">Título de nivel
+                                        3</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group mb-2">
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionIzquierda"
+                                        name="alineacion" value="IZQUIERDA" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionIzquierda">Título alineado a la
+                                        izquierda</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionCentro"
+                                        name="alineacion" value="CENTRO" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionCentro">Título centrado</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group mb-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="alineacionDerecha"
+                                        name="alineacion" value="DERECHA" formControlName="alineacion">
+                                    <label class="custom-control-label" for="alineacionDerecha">Título alineado a la
+                                        derecha</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <div class="form-group">
+                            <button (click)="ejecutarAccion({accion: 'aplicar-configuracion'})" type="submit"
+                                class="btn btn-primary mr-1" title="Aplicar">
+                                Aplicar
+                            </button>
+                            <button (click)="ejecutarOperacion({operacion: 'cancelar'})" type="button"
+                                class="btn btn-dark" title="Cancelar">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados
+                                con
+                                <span class="required-field-indicator"></span></em>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <img src="assets/images/favicon.ico" width="32"> ADSIB
+    </div>
+</ng-template>

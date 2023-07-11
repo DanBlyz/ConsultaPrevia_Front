@@ -1,0 +1,156 @@
+<ng-container *ngIf="modoVisualizacion === 'ESQUEMA'">
+    <app-plantilla-menu-contextual (operacion)="ejecutarOperacion($event)" (accion)="ejecutarAccion($event)" [esConfigurable]="true">
+        <div class="row mb-1">
+            <div class="col-2">
+                <span class="d-block font-weight-bold">{{ configuracion.etiquetaEntidad }}</span>
+            </div>
+            <div class="col-10">
+                <span class="d-block">{{ datosPresentacion.remitente.entidad }}</span>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-2">
+                <span class="d-block font-weight-bold">{{ configuracion.etiquetaNombre }}</span>
+            </div>
+            <div class="col-10">
+                <span class="d-block">{{ datosPresentacion.remitente.nombre }}</span>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-2">
+                <span class="d-block font-weight-bold">{{ configuracion.etiquetaPuesto }}</span>
+            </div>
+            <div class="col-10">
+                <span class="d-block">{{ datosPresentacion.remitente.puesto }}</span>
+            </div>
+        </div>
+    </app-plantilla-menu-contextual>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'PRESENTACION'">
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaEntidad }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datosPresentacion.remitente.entidad }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaNombre }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datosPresentacion.remitente.nombre }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaPuesto }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datosPresentacion.remitente.puesto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'REGISTRO'">
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaEntidad }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.entidad }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaNombre }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.nombre }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaPuesto }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.puesto }}</span>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="modoVisualizacion === 'DOCUMENTO'">
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaEntidad }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.entidad }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaNombre }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.nombre }}</span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">
+            <span class="d-block font-weight-bold">{{ configuracion.etiquetaPuesto }}</span>
+        </div>
+        <div class="col-10">
+            <span class="d-block">{{ datos.remitente.puesto }}</span>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #modalRemitenteExterno let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Remitente externo - Configuración de bloque</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="formConfiguracion" autocomplete="off" class="text-default">
+                    <div class="form-row mb-3">
+                        <div class="col-md-4">
+                            <label><span class="required-field-indicator"></span> Entidad:</label>
+                            <input type="text" class="form-control" formControlName="etiquetaEntidad" />
+                        </div>
+                        <div class="col-md-4">
+                            <label><span class="required-field-indicator"></span> Nombre:</label>
+                            <input type="text" class="form-control" formControlName="etiquetaNombre" />
+                        </div>
+                        <div class="col-md-4">
+                            <label><span class="required-field-indicator"></span> Puesto:</label>
+                            <input type="text" class="form-control" formControlName="etiquetaPuesto" />
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <div class="form-group">
+                            <button (click)="ejecutarAccion({accion: 'aplicar-configuracion'})" type="submit" class="btn btn-primary mr-1" title="Aplicar">
+                                Aplicar
+                            </button>
+                            <button (click)="ejecutarOperacion({operacion: 'cancelar'})" type="button" class="btn btn-dark" title="Cancelar">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                                <span class="required-field-indicator"></span></em>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <img src="assets/images/favicon.ico" width="32"> ADSIB
+    </div>
+</ng-template>

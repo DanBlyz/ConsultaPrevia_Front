@@ -1,0 +1,9 @@
+<div class="menu-contextual">
+    <ng-content></ng-content>
+    <div class="menu">
+        <a (click)="ejecutarAccion('subir-bloque')" href="javascript:void(0);" title="Subir bloque"><i class="fas fa-arrow-up fa-lg mr-1"></i></a>
+        <a (click)="ejecutarAccion('bajar-bloque')" href="javascript:void(0);" title="Bajar bloque"><i class="fas fa-arrow-down fa-lg mr-1"></i></a>
+        <a (click)="ejecutarAccion('quitar-bloque')" href="javascript:void(0);" title="Quitar bloque"><i class="far fa-trash-alt fa-lg mr-1"></i></a>
+        <a *ngIf="esConfigurable" (click)="ejecutarOperacion({operacion: 'configurar-bloque'})" href="javascript:void(0);" title="Configurar bloque"><i class="fas fa-cog fa-lg mr-1"></i></a>
+    </div>
+</div>
