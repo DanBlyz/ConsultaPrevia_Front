@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formBuzon" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Uni. organizacional:</label>
+                    <ng-select (change)="ejecutarOperacion({operacion: 'uni-organizacional-seleccionado', id: $event})" [clearable]="false" formControlName="refUniOrganizacionalId">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option *ngFor="let item of listaUniOrganizacionalCodificador" [value]="item.id">{{ item.nombre }}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Puesto:</label>
+                    <ng-select (change)="ejecutarOperacion({operacion: 'puesto-seleccionado', id: $event})" [clearable]="false" formControlName="refPuestoId">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option *ngFor="let item of listaPuestoCodificador" [value]="item.id">{{ item.nombre }}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="esReceptorCorrespondenciaExterna" formControlName="esReceptorCorrespondenciaExterna">
+                        <label class="custom-control-label" for="esReceptorCorrespondenciaExterna">es receptor de correspondencia externa</label>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="tipoOperacion === 'modificar'" class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Estado:</label>
+                    <ng-select [clearable]="false" formControlName="estado">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option value="ACTIVO">ACTIVO</ng-option>
+                        <ng-option value="INACTIVO">INACTIVO</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <!-- <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="estaActivo" formControlName="estaActivo">
+                        <label class="custom-control-label" for="estaActivo">esta activo</label>
+                    </div>
+                </div>
+            </div> -->
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

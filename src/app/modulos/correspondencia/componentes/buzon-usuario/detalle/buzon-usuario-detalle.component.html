@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <h3>{{ buzon?.puesto }} <small class="d-block text-muted">{{ buzon?.uniOrganizacional }}</small></h3>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 form-group mb-2">
+                    <label class="d-block">Nombre:</label>
+                    <span>{{ buzonUsuario.nombre }}</span>
+                </div>
+                <div class="col-md-2 form-group mb-2">
+                    <label class="d-block">Iniciales:</label>
+                    <span>{{ buzonUsuario.iniciales }}</span>
+                </div>
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Tipo de acceso:</label>
+                    <span>{{ buzonUsuario.tipoAcceso }}</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Fec. inicio:</label>
+                    <span>{{ buzonUsuario.fecInicio | date: 'dd/MM/yyy' : 'UTC' }}</span>
+                </div>
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Fec. conclución:</label>
+                    <span>{{ buzonUsuario.fecConclusion | date: 'dd/MM/yyy' : 'UTC' }}</span>
+                </div>
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Estado:</label>
+                    <span>{{ buzonUsuario.estado }}</span>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <app-correspondencia-buzon-buscador [objeto]="filtro" (accion)="ejecutarAccion($event)">
+                </app-correspondencia-buzon-buscador>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover border mt-4 ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>PUESTO</th>
+                                <th>UNI. ORGANIZACIONAL</th>
+                                <th class="td-auto">ESTADO</th>
+                                <th class="td-auto">OPERACIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of lista">
+                                <td class="align-middle">
+                                    <span class="d-block">{{ item.puesto }}</span>
+                                    <span *ngIf="item.esReceptorCorrespondenciaExterna" class="badge badge-success">Es receptor de correspondencia externa</span>
+                                </td>
+                                <td class="td-auto align-middle">{{ item.uniOrganizacional }}</td>
+                                <td class="align-middle text-center">{{ item.estado }}</td>
+                                <td class="align-middle">
+                                    <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
+                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
+                                    <i *ngIf="item.sePuedeModificar" (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
+                                    <i *ngIf="item.sePuedeEliminar" (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
+                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer"
+                                        title="Eliminar"></i>
+                                    <div class="btn-group dropleft">
+                                        <i class="fas fa-ellipsis-v fa-lg text-dark m-2 mb-3 cursor-pointer"
+                                            data-toggle="dropdown"></i>
+                                        <div class="dropdown-menu" style="z-index: 9999 !important">
+                                            <h6 class="dropdown-header bg-dark text-white">
+                                                OPERACIONES
+                                            </h6>
+                                            <a [routerLink]="['/correspondencia/buzones', item.id, 'usuarios']"
+                                                class="dropdown-item cursor-pointer">
+                                                <i class="fas fa-cog text-dark mr-1" title="Administrar buzon"></i>
+                                                Administrar buzon
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <app-paginador (paginar)="paginar()"></app-paginador>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right mt-3">
+                    <input type="button" value="Nuevo registro" class="btn btn-primary"
+                        (click)="ejecutarOperacion({operacion: 'crear'})">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalBuzon let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitulo }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [ngSwitch]="tipoOperacion">
+            <app-correspondencia-buzon-formulario *ngSwitchCase="'crear'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-buzon-formulario>
+            <app-correspondencia-buzon-detalle *ngSwitchCase="'detalle'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-buzon-detalle>
+            <app-correspondencia-buzon-formulario *ngSwitchCase="'modificar'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-buzon-formulario>
+            <app-correspondencia-buzon-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-buzon-detalle>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <img src="assets/images/favicon.ico" width="32"> ADSIB
+    </div>
+</ng-template>
