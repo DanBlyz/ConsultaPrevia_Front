@@ -1,0 +1,13 @@
+{
+  "name": "@ajam/comun",
+  "version": "1.0.0",
+  "description": "Módulo de componentes y funciones transversales para proyectos sobre Angular",
+  "author": "AJAM",
+  "contributors": [
+    {
+      "name": "Carizon Campuzano",
+      "email": "carizon.campuzano@autoridadminera.gob.bo"
+    }
+  ],
+  "license": "LPG-Bolivia"
+}

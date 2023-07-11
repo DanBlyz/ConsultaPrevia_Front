@@ -1,0 +1,20 @@
+<div [hidden]="totalRegistros !== 0">
+  <div class="alert alert-info">No hay registros para mostrar.</div>
+</div>
+<div class="p-2">    
+  <div class="d-block">Se han encontrado <strong>{{ totalRegistros }}</strong> registro(s).</div>
+  <div class="float-left">
+    <i (click)="ejecutarAccion('primero')" class="fa fa-operacion fa-angle-double-left m-1 cursor-pointer" title="Primero"></i>
+    <i (click)="ejecutarAccion('anterior')" class="fa fa-operacion fa-angle-left m-1 cursor-pointer" title="Anterior"></i>
+    <span class="h4 p-2">{{ paginaActual }}&nbsp;/&nbsp;{{ totalPaginas }}</span>
+    <i (click)="ejecutarAccion('siguiente')" class="fa fa-operacion fa-angle-right m-1 cursor-pointer" title="Siguiente"></i>
+    <i (click)="ejecutarAccion('ultimo')" class="fa fa-operacion fa-angle-double-right m-1 cursor-pointer" title="Último"></i>
+  </div>
+  <div class="float-right">
+    <select class="custom-select" style="width: auto" [(ngModel)]="registrosPorPaginaSeleccionado" (change)="ajustarRegistrosPorPagina()">
+      <option value="10" [selected]="registrosPorPaginaSeleccionado===10">10 registros por página</option>
+      <option value="50" [selected]="registrosPorPaginaSeleccionado===50">50 registros por página</option>
+      <option value="100" [selected]="registrosPorPaginaSeleccionado===100">100 registros por página</option>
+    </select>
+  </div>
+</div>
