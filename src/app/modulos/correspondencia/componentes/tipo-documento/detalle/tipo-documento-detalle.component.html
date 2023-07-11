@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Sigla:</label>
+                    <span>{{ tipoDocumento.sigla }}</span>
+                </div>
+                <div class="col-md-8 form-group mb-2">
+                    <label class="d-block">Nombre:</label>
+                    <span>{{ tipoDocumento.nombre }}</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Descripción:</label>
+                    <span>{{ tipoDocumento.descripcion }}</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label class="d-block">Remitente:</label>
+                    <span>{{ tipoDocumento.remitente }}</span>
+                </div>
+                <div class="col-md-8 form-group mb-2">
+                    <label class="d-block">Destinatario:</label>
+                    <span>{{ tipoDocumento.destinatario }}</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="conPlantilla" [checked]="tipoDocumento.conPlantilla" disabled>
+                        <label class="custom-control-label" for="conPlantilla">con plantilla</label>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="esPublico" [checked]="tipoDocumento.esPublico" disabled>
+                        <label class="custom-control-label" for="esPublico">es público</label>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="citePorUniOrganizacional" [checked]="tipoDocumento.citePorUniOrganizacional" disabled>
+                        <label class="custom-control-label" for="citePorUniOrganizacional">generar CITE por unidad organizacional</label>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="estaActivo" [checked]="tipoDocumento.estaActivo" disabled>
+                        <label class="custom-control-label" for="estaActivo">esta activo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

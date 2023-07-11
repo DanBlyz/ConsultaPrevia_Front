@@ -1,0 +1,24 @@
+<ng-container *ngIf="archivado">
+    <h3><i class="fas fa-file-signature"></i> Observación</h3>
+    <div>
+        <p class="font-italic mt-3">
+            {{ archivado?.observacion }}
+        </p>
+        <p class="text-right">
+            <span class="d-block"><i class="far fa-calendar-alt"></i> {{ archivado?.instante |
+                date: 'dd/MM/yyyy' }}</span>
+            <span class="d-block"><i class="far fa-clock"></i> {{ archivado?.instante | date:
+                'HH:mm' }}</span>
+        </p>
+    </div>
+    <div>
+        <div style="display: flex; flex-direction: row;">
+            <i class="fas fa-id-card fa-4x mr-2 text-muted"></i>
+            <div *ngFor="let signatario of signatarios">
+                <h5 class="mt-0 mb-1">{{ signatario.CN }}</h5>
+                <span class="d-block">{{ signatario.T }}</span>
+                <span class="d-block text-muted">{{ signatario.OU }}</span>
+            </div>
+        </div>
+    </div>
+</ng-container>

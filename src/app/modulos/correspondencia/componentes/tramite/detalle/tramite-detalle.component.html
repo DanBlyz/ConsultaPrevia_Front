@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Correlativo:</label>
+                    <span>{{ tramite.correlativo }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Codigo Unico:</label>
+                    <span>{{ tramite.codigoUnico }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Area Minera:</label>
+                    <span>{{ tramite.areaMinera }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Clasificacion:</label>
+                    <span>{{ tramite.clasificacion }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Departamento:</label>
+                    <span>{{ tramite.departamento }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Provincia:</label>
+                    <span>{{ tramite.provincia }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Municipio:</label>
+                    <span>{{ tramite.municipio }}</span>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

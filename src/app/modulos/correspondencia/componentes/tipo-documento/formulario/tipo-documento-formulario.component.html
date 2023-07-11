@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formTipoDocumento" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Sigla:</label>
+                    <input type="text" class="form-control" formControlName="sigla" />
+                </div>
+                <div class="col-md-8 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Nombre:</label>
+                    <input type="text" class="form-control" formControlName="nombre" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label>Descripción:</label>
+                    <textarea class="form-control" formControlName="descripcion"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Remitente:</label>
+                    <ng-select [clearable]="false" formControlName="remitente">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option value="INTERNO">INTERNO</ng-option>
+                        <ng-option value="EXTERNO">EXTERNO</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-md-8 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Destinatario:</label>
+                    <ng-select [clearable]="false" formControlName="destinatario">
+                        <ng-option value="">[Elija una opción]</ng-option>
+                        <ng-option value="INTERNO">INTERNO</ng-option>
+                        <ng-option value="EXTERNO">EXTERNO</ng-option>
+                        <ng-option value="GRUPO">GRUPO</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="conPlantilla" formControlName="conPlantilla">
+                        <label class="custom-control-label" for="conPlantilla">con plantilla</label>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="esPublico" formControlName="esPublico">
+                        <label class="custom-control-label" for="esPublico">es público</label>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="citePorUniOrganizacional" formControlName="citePorUniOrganizacional">
+                        <label class="custom-control-label" for="citePorUniOrganizacional">generar CITE por unidad organizacional</label>
+                    </div>
+                </div>
+                <div *ngIf="tipoOperacion === 'modificar'" class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="estaActivo" formControlName="estaActivo">
+                        <label class="custom-control-label" for="estaActivo">esta activo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

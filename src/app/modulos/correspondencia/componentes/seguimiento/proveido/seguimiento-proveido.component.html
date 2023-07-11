@@ -1,0 +1,30 @@
+<ng-container *ngIf="proveidoFirmado">
+    <h3><i class="fas fa-file-signature"></i> Proveido</h3>
+    <div>
+        <span class="h5 d-block mb-0"><strong>CITE:</strong> {{ proveidoFirmado?.cite }}</span>
+        <span class="h6 d-block"><strong>H.R.:</strong> {{ proveidoFirmado?.hojaRuta }}</span>
+        <ul class="list-group list-group-flush1">
+            <li *ngFor="let accion of proveidoFirmado?.acciones" class="list-group-item border-0 pt-0 pb-0"><i
+                    class="fas fa-check text-success"></i> {{ accion }}</li>
+        </ul>
+        <p class="font-italic mt-3">
+            {{ proveidoFirmado?.instruccion }}
+        </p>
+        <p class="text-right">
+            <span class="d-block"><i class="far fa-calendar-alt"></i> {{ proveidoFirmado?.instante |
+                date: 'dd/MM/yyyy' }}</span>
+            <span class="d-block"><i class="far fa-clock"></i> {{ proveidoFirmado?.instante | date:
+                'HH:mm' }}</span>
+        </p>
+    </div>
+    <div>
+        <div style="display: flex; flex-direction: row;">
+            <i class="fas fa-id-card fa-4x mr-2 text-muted"></i>
+            <div *ngFor="let signatario of signatarios">
+                <h5 class="mt-0 mb-1">{{ signatario.CN }}</h5>
+                <span class="d-block">{{ signatario.T }}</span>
+                <span class="d-block text-muted">{{ signatario.OU }}</span>
+            </div>
+        </div>
+    </div>
+</ng-container>
