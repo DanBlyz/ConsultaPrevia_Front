@@ -1,0 +1,13 @@
+{
+  "name": "@ajam/admin-lte3",
+  "version": "1.0.0",
+  "description": "Módulo de componentes de estructura visual, basado en la plantilla AdminLTE 3",
+  "author": "AJAM",
+  "contributors": [
+    {
+      "name": "Carizon Campuzano",
+      "email": "carizon.campuzano@autoridadminera.gob.bo"
+    }
+  ],
+  "license": "LPG-Bolivia"
+}

@@ -1,0 +1,30 @@
+<ngx-spinner name="spinner-contenedor" type="ball-atom">
+    <span *ngIf="titulo" style="display: block; color: #fff; font-size: x-large; text-align: center;">{{ titulo }}</span>
+    <span style="display: block; color: #fff; font-size: xx-large; text-align: center;">{{ mensaje }}</span>
+</ngx-spinner>
+<div class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <app-admin-lte3-encabezado></app-admin-lte3-encabezado>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <app-admin-lte3-menu-lateral></app-admin-lte3-menu-lateral>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <app-admin-lte3-ubicacion></app-admin-lte3-ubicacion>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <router-outlet></router-outlet>
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <app-admin-lte3-pie></app-admin-lte3-pie>
+    </div>
+    <!-- ./wrapper -->
+</div>

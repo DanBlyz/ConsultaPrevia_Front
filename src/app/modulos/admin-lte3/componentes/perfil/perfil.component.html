@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" [src]="usuarioAutenticado?.fotografia || 'assets/admin-lte3/img/unknown.jpg'"
+                        alt="User profile picture">
+                </div>
+                <h3 class="profile-username text-center">{{ usuarioAutenticado.nomPublico }}</h3>
+                <p class="text-muted text-center">{{ usuarioAutenticado.cuenta }}</p>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header p-2">
+                <h3><span class="lstick"></span>Información de la cuenta</h3>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <form [formGroup]="formPerfil" autocomplete="off" class="form-horizontal">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-sm-3 col-form-label"><span class="required-field-indicator"></span> Nombre</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="apellido" class="col-sm-3 col-form-label"><span class="required-field-indicator"></span> Apellido(s)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="apellido"formControlName="apellido">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nomPublico" class="col-sm-3 col-form-label"><span class="required-field-indicator"></span> Nombre público</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nomPublico" formControlName="nomPublico">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="correoElectronico" class="col-sm-3 col-form-label"><span class="required-field-indicator"></span> Correo electrónico</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="correoElectronico" formControlName="correoElectronico">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                            <button (click)="actualizar()" type="submit" class="btn btn-dark float-right">Actualizar</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con <span class="required-field-indicator"></span></em>
+                        </div>
+                    </div>   
+                </form>
+            </div><!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <app-admin-lte3-cambiar-contrasenia></app-admin-lte3-cambiar-contrasenia>
+    </div>
+    <!-- /.col -->
+</div>
