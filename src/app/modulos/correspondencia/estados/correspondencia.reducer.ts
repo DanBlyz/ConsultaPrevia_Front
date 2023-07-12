@@ -139,7 +139,14 @@ export const correspondenciaInicial: CorrespondenciaState = {
     paginado: null,
     lista: []
   },
-  actoAdministrativo: null
+  actoAdministrativo: null,
+
+  listaPagoCpt: {
+    filtro: null,
+    paginado: null,
+    lista: []
+  },
+  pagoCpt: null
 };
 
 const correspondenciaReducer = createReducer(
@@ -748,6 +755,37 @@ const correspondenciaReducer = createReducer(
           return {
             ...state,
             actoAdministrativo: { ...objeto }
+          };
+        }),
+        //Pago Cpt
+        on(CorrespondenciaAcciones.establecerFiltroPagoCpt, (state, { filtro }) => {
+          return {
+            ...state,
+            listaPagoCpt: {
+              ...state.listaPagoCpt,
+              filtro: { ...filtro }
+            },
+            pagoCpt: null
+          };
+        }),
+        on(
+          CorrespondenciaAcciones.establecerListaPagoCpt,
+          (state, { lista, paginado }) => {
+            return {
+              ...state,
+              listaPagoCpt: {
+                ...state.listaPagoCpt,
+                lista: [...lista],
+                paginado: { ...paginado }
+              },
+              pagoCpt: null
+            };
+          }
+        ),
+        on(CorrespondenciaAcciones.establecerPagoCpt, (state, { objeto }) => {
+          return {
+            ...state,
+            pagoCpt: { ...objeto }
           };
         }),
 

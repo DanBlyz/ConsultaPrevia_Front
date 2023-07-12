@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formPagoCpt" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Pago Realizado:</label>
+                    <input type="checkbox" class="form-control" formControlName="pagoRealizado">
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Encargado:</label>
+                    <input type="text" class="form-control" formControlName="encargado" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Dias de Viaje:</label>
+                    <input type="number" class="form-control" formControlName="diasViaje" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Tipo Viaje:</label>
+                    <input type="text" class="form-control" formControlName="tipoViaje" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Monto Total:</label>
+                    <input type="number" class="form-control" formControlName="montoTotal" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Actor Productivo Minero:</label>
+                    <input type="text" class="form-control" formControlName="apm" />
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

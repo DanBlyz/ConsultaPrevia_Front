@@ -64,6 +64,7 @@ import {
   NotificacionFormularioComponent
 } from './componentes/notificacion';
 import { ActoAdministrativoListaComponent } from './componentes/acto-administrativo';
+import { PagoCptListaComponent } from './componentes/pago-cpt';
 
 const routes: Routes = [
   {
@@ -530,6 +531,16 @@ const routes: Routes = [
         data: {
           title: 'Actos Administrativos',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Actos Administrativos' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Identificacion/correspondencia/pagos-cpt',
+        component: PagoCptListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Pagos Cpt',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Pagos Cpt' }],
           roles: []
         }
       },

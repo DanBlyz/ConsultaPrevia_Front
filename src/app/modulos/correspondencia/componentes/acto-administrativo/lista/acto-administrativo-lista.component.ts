@@ -10,12 +10,12 @@ import { Subscription } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { PaginadorComponent } from 'src/app/comun/componentes';
-import { Paginado } from 'src/app/comun/modelos';
+import { Paginado, RespuestaObjeto } from 'src/app/comun/modelos';
 
-import { ActoAdministrativo } from '../../../modelos';
+import { ActoAdministrativo, PagoCpt } from '../../../modelos';
 import { ActoAdministrativoFilter } from '../../../modelos/filtros';
 import { ActoAdministrativoFacade } from '../../../fachadas';
-
+import { PagoCptFacade } from '../../../fachadas';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -36,10 +36,12 @@ export class ActoAdministrativoListaComponent
 
   modalTitulo: string;
   modal: NgbModalRef;
+  idActo : number;
 
   constructor(
     private actoAdministrativoFacade: ActoAdministrativoFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private pagoCptFacade: PagoCptFacade,
   ) {}
 
   ngOnInit(): void { 
@@ -91,6 +93,7 @@ export class ActoAdministrativoListaComponent
 
   ejecutarOperacion(evento: any): void {
     const actoAdministrativoTitulo = 'actoAdministrativo';
+    console.log(evento.opcion);
     switch (evento.operacion) {
       case 'crear': {
         this.tipoOperacion = 'crear';
@@ -116,6 +119,14 @@ export class ActoAdministrativoListaComponent
         this.tipoOperacion = 'eliminar';
         this.actoAdministrativoFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Eliminar ' + actoAdministrativoTitulo;
+        this.mostrarModal();
+        break;
+      }
+      case 'pagoCpt': {
+        this.tipoOperacion = 'pagoCpt';
+        this.idActo = evento.id;
+        console.log(this.idActo);
+        this.modalTitulo = 'Crear Pago Cpt';
         this.mostrarModal();
         break;
       }
@@ -158,6 +169,17 @@ export class ActoAdministrativoListaComponent
         this.cerrarModal();
         break;
       }
+      case 'guardaPagoCpt': {
+        evento.pagoCpt.fk_idActos = this.idActo;
+        console.log(this.idActo);
+        this.pagoCptFacade.guardar(evento.pagoCpt).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        break;
+      }
+      
     }
   }
 

@@ -22,3 +22,5 @@ export * from './tramite.facade';
 export * from './providencia.facade';
 export * from './notificacion.facade';
 export * from './acto-administrativo.facade';
+export * from './pago-cpt.facade';
+

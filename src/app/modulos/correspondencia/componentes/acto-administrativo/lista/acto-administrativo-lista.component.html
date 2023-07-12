@@ -17,15 +17,17 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of lista">
-                                <td class="align-middle"></td>
+                                <td class="align-middle">{{ item.tramite.correlativo }}</td>
                                 <td class="align-middle"></td>
                                 <td class="align-middle"></td>
                                 <td class="td-auto align-middle">{{ item.viajeRealizado }}</td>
                                 <td class="align-middle">{{ item.pagoRealizado }}</td>
                                 <td class="align-middle"></td>
                                 <td class="align-middle">
-                                    <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
-                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
+                                    <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
+                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
+                                    <input type="button" value="Pago Cpt" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
                                 </td>
                             </tr>
                         </tbody>
@@ -57,16 +59,10 @@
         </button>
     </div>
     <div class="modal-body">
-        <!--<div [ngSwitch]="tipoOperacion">
-            <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'crear'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
-            <app-correspondencia-acto-administrativo-detalle *ngSwitchCase="'detalle'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-detalle>
-            <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'modificar'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
-            <app-correspondencia-acto-administrativo-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-detalle>
-        </div>-->
+        <div [ngSwitch]="tipoOperacion">
+            <app-correspondencia-pago-cpt-formulario *ngSwitchCase="'pagoCpt'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-pago-cpt-formulario>
+        </div>
     </div>
     <div class="modal-footer">
         AJAM

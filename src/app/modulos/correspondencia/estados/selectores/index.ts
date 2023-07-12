@@ -18,3 +18,5 @@ export * from './tramite.selector';
 export * from './providencia.selector';
 export * from './notificacion.selector';
 export * from './acto-administrativo.selector';
+export * from './pago-cpt.selector';
+

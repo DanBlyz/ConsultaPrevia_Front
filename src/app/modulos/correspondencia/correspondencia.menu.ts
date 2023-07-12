@@ -162,6 +162,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
+      {
+        ruta: 'Identificacion/correspondencia/pagos-cpt',
+        titulo: 'Pagos Cpt',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
       /*{
         ruta: '/correspondencia/plantillas',
         titulo: 'Plantillas',

@@ -1,9 +1,10 @@
 export class PagoCptFilter {
-    fk_idactos?: number;
-    pagoRealizado?: boolean;
-    encargado?: string;
-    diasviaje?: number;
-    tipoviaje?: string;
-    montoTotal?: number;
-  }
-  
+  fk_idActos?: number;
+  pagoRealizado?: boolean;
+  encargado?: string;
+  diasviaje?: number;
+  tipoviaje?: string;
+  montoTotal?: number;
+  apm?: string;
+  flujo?: string;
+}

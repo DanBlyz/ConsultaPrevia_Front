@@ -143,6 +143,12 @@ import {
  import {
   ActoAdministrativoListaComponent
  } from './componentes/acto-administrativo';
+ import {
+  PagoCptListaComponent,
+  PagoCptBuscadorComponent,
+  PagoCptFormularioComponent,
+  PagoCptDetalleComponent
+ } from './componentes/pago-cpt';
 
 @NgModule({
   declarations: [
@@ -242,6 +248,11 @@ import {
     NotificacionListaComponent,
 
     ActoAdministrativoListaComponent,
+
+    PagoCptDetalleComponent,
+    PagoCptFormularioComponent,
+    PagoCptBuscadorComponent,
+    PagoCptListaComponent,
   ],
   imports: [
     CommonModule,
