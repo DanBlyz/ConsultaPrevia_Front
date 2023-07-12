@@ -16,6 +16,7 @@ import { ActoAdministrativo, PagoCpt } from '../../../modelos';
 import { ActoAdministrativoFilter } from '../../../modelos/filtros';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { PagoCptFacade } from '../../../fachadas';
+import { ViajeFacade } from '../../../fachadas';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -37,11 +38,13 @@ export class ActoAdministrativoListaComponent
   modalTitulo: string;
   modal: NgbModalRef;
   idActo : number;
+  idViaje : number;
 
   constructor(
     private actoAdministrativoFacade: ActoAdministrativoFacade,
     private modalService: NgbModal,
     private pagoCptFacade: PagoCptFacade,
+    private viajeFacade: ViajeFacade,
   ) {}
 
   ngOnInit(): void { 
@@ -130,6 +133,14 @@ export class ActoAdministrativoListaComponent
         this.mostrarModal();
         break;
       }
+      case 'viaje': {
+        this.tipoOperacion = 'viaje';
+        this.idViaje = evento.id;
+        console.log(this.idActo);
+        this.modalTitulo = 'Programar Viaje';
+        this.mostrarModal();
+        break;
+      }
     }
   }
 
@@ -173,6 +184,16 @@ export class ActoAdministrativoListaComponent
         evento.pagoCpt.fk_idActos = this.idActo;
         console.log(this.idActo);
         this.pagoCptFacade.guardar(evento.pagoCpt).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        break;
+      }
+      case 'guardarViaje': {
+        evento.viaje.fk_idActos = this.idViaje;
+        console.log(this.idActo);
+        this.viajeFacade.guardar(evento.viaje).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }

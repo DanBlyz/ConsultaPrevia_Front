@@ -78,6 +78,9 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
       case 'modificar':
         this.botonOperacion = 'Modificar';
         break;
+      case 'viaje':
+        this.botonOperacion = 'Guardar';
+        break;
     }
   }
 
@@ -121,6 +124,21 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
       case 'cancelar': {
         this.accion.emit({
           accion
+        });
+        break;
+      }
+      case 'viaje': {
+        FuncionesHelper.limpiarEspacios(this.formViaje);
+        if (!this.formViaje.valid) {
+          this.formViaje.markAllAsTouched();
+          return;
+        }
+        viaje = { ...this.formViaje.value };
+        viaje.fk_idActos = 12;
+        console.log(viaje.fechaInicio);
+        this.accion.emit({
+          accion: 'guardarViaje',
+          viaje
         });
         break;
       }
