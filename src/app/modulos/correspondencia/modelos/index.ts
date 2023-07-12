@@ -33,3 +33,4 @@ export * from './providencia.model';
 export * from './notificacion.model';
 export * from './acto-administrativo.model';
 export * from './pago-cpt.model';
+export * from './viaje.model';

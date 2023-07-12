@@ -66,6 +66,13 @@ import {
 import { ActoAdministrativoListaComponent } from './componentes/acto-administrativo';
 import { PagoCptListaComponent } from './componentes/pago-cpt';
 
+import { 
+  ViajeListaComponent,
+  ViajeBuscadorComponent,
+  ViajeDetalleComponent,
+  ViajeFormularioComponent
+} from './componentes/viaje';
+
 const routes: Routes = [
   {
     path: '',
@@ -541,6 +548,16 @@ const routes: Routes = [
         data: {
           title: 'Pagos Cpt',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Pagos Cpt' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Identificacion/correspondencia/viaje',
+        component: ViajeListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Viaje',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Viaje' }],
           roles: []
         }
       },

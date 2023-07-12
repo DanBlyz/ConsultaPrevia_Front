@@ -17,3 +17,5 @@ export * from './providencia.filter';
 export * from './notificacion.filter';
 export * from './acto-administrativo.filter';
 export * from './pago-cpt.filter';
+export * from './viaje.filter';
+

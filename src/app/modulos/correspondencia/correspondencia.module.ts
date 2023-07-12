@@ -149,6 +149,12 @@ import {
   PagoCptFormularioComponent,
   PagoCptDetalleComponent
  } from './componentes/pago-cpt';
+ import {
+  ViajeListaComponent,
+  ViajeBuscadorComponent,
+  ViajeFormularioComponent,
+  ViajeDetalleComponent
+ } from './componentes/viaje';
 
 @NgModule({
   declarations: [
@@ -246,13 +252,15 @@ import {
     NotificacionFormularioComponent,
     NotificacionBuscadorComponent,
     NotificacionListaComponent,
-
     ActoAdministrativoListaComponent,
-
     PagoCptDetalleComponent,
     PagoCptFormularioComponent,
     PagoCptBuscadorComponent,
     PagoCptListaComponent,
+    ViajeDetalleComponent,
+    ViajeFormularioComponent,
+    ViajeBuscadorComponent,
+    ViajeListaComponent,
   ],
   imports: [
     CommonModule,
