@@ -100,7 +100,7 @@ export class TramiteListaComponent
     switch (evento.operacion) {
       case 'crear': {
         this.tipoOperacion = 'crear';
-        this.modalTitulo = 'Crear ' + tramiteTitulo;
+        this.modalTitulo = 'Adjuntar ' + tramiteTitulo;
         this.mostrarModal();
         break;
       }

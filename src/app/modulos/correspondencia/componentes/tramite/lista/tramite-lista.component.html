@@ -38,10 +38,16 @@
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
                                     <i  (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>--> 
-                                    <input type="button" value="Providencia" class="btn btn-primary"
+                                    <input type="button" value="Providencia" class="btn btn-info m-1"
                                     (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})">
-                                    <input type="button" value="Notificacion" class="btn btn-primary"
+                                    <input type="button" value="Notificacion" class="btn btn-primary m-1"
                                     (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})">
+                                    <button class="btn btn-sm btn-info m-1" (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})" title="Providencia">
+                                        <i class="far fa-file-alt fa-lg mr-1"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-primary m-1" (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})" title="Notificacion">
+                                        <i class="fas fa-share-square fa-lg mr-1"></i>
+                                    </button>
                                     
                                 </td>
                             </tr>
@@ -58,7 +64,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right mt-3">
-                    <input type="button" value="Nuevo registro" class="btn btn-primary"
+                    <input type="button" value="Nuevo Tramite" class="btn btn-primary"
                         (click)="ejecutarOperacion({operacion: 'crear'})">
                 </div>
             </div>

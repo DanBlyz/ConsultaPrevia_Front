@@ -2,31 +2,61 @@
     <div class="col-12">
         <form [formGroup]="formTramite" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Correlativo:</label>
                     <input type="text" class="form-control" formControlName="correlativo" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Codigo Unico:</label>
                     <input type="number" class="form-control" formControlName="codigoUnico" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Area Minera:</label>
                     <input type="text" class="form-control" formControlName="areaMinera" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Clasificacion:</label>
-                    <input type="text" class="form-control" formControlName="clasificacion" />
+                    <select class="form-control" formControlName="clasificacion">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="'Cooperativa'">Cooperativa</option>
+                        <option [ngValue]="'Empresa'">Empresa</option>
+                    </select>
                 </div>
-                <div class="col-md-12 form-group mb-2">
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Departamento:</label>
-                    <input type="text" class="form-control" formControlName="departamento" />
+                    <select class="form-control" formControlName="departamento">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="dep" *ngFor="let dep of departamentosArray">
+                            {{ dep }}
+                        </option>
+                    </select>
+                    <!--{{formTramite.get('departamento').value}}-->
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Provincia:</label>
-                    <input type="text" class="form-control" formControlName="provincia" />
+                    <!--<input type="text" class="form-control" formControlName="provincia" />-->
+                    <div [ngSwitch]="formTramite.get('departamento').value">
+                        <select *ngSwitchCase="''" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>                            
+                        </select>
+                        <select *ngSwitchCase="'La Paz'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <!-- 'Potosi', 'Chuquisaca', 'Cochabamba', 'Tarija', 'Santa Cruz', 'Beni', 'Pando'-->
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaLp">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Oruro'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaOr">
+                                {{ pro }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Municipio:</label>
                     <input type="text" class="form-control" formControlName="municipio" />
                 </div>
