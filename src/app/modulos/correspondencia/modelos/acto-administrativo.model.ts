@@ -1,4 +1,4 @@
-import { Tramite } from ".";
+import { PagoCpt, Tramite } from ".";
 
 export class ActoAdministrativo {
     id?: number;
@@ -6,7 +6,7 @@ export class ActoAdministrativo {
     viajeRealizado: boolean;
     flujo: string;
     encargado: string;
-    pagoRealizado: boolean;
+    pagoCpt?: PagoCpt;
     tramite?: Tramite;
   }
   
