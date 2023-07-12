@@ -21,12 +21,12 @@
                                 <td class="align-middle"></td>
                                 <td class="align-middle"></td>
                                 <td class="td-auto align-middle">{{ item.viajeRealizado }}</td>
-                                <td class="align-middle">{{ item.pagoRealizado }}</td>
+                                <td class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.pagoRealizado : false }}</td>
                                 <td class="align-middle"></td>
                                 <td class="align-middle">
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
-                                    <input type="button" value="Pago Cpt" class="btn btn-primary"
+                                    <input *ngIf=" item.pagoCpt === null ? true : false"  type="button" value="Pago Cpt" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
                                 </td>
                             </tr>
