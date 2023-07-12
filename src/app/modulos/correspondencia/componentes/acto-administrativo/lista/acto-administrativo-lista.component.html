@@ -30,6 +30,7 @@
                                         (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
                                 <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'viaje',id: item.id})">
+                                        
                                 </td>
                             </tr>
                         </tbody>

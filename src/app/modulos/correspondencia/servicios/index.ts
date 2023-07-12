@@ -24,3 +24,4 @@ export * from './notificacion.service';
 export * from './acto-administrativo.service';
 export * from './pago-cpt.service';
 export * from './viaje.service';
+export * from './informe.service';
