@@ -18,6 +18,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 import { Providencia } from '../../../modelos';
 import { ProvidenciaFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-providencia-formulario',
@@ -34,6 +35,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   providencia: Providencia;
+  public archivos: any = [];
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -52,7 +54,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
       providenciaPdf: ['', Validators.required]
     });
   }
-
+  
   ngOnInit(): void {
     this.suscripcion.add(
       this.providenciaFacade.CorrespondenciaState$.subscribe(({ providencia }) => {
@@ -130,5 +132,10 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
       }
       
     }
+  }
+  capturarEvento(evento):  any{
+    const archivoCapturado = evento.target.files;
+
+    console.log(evento.target.files);
   }
 }
