@@ -128,7 +128,7 @@ export class TramiteListaComponent
       case 'providencia': {
         this.tipoOperacion = 'providencia';
         this.idTra = evento.id;
-        console.log(evento.id);
+        //console.log(evento.id);
         this.modalTitulo = 'Adjuntar ' + "Providencia";
         this.mostrarModal();
         break;
@@ -191,7 +191,7 @@ export class TramiteListaComponent
         break;
       }
       case 'guardarnoti': {
-        console.log(evento.tramiteId);
+        //console.log(evento.tramiteId);
         evento.notificacion.fk_idTramite=this.idTra;
         this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {

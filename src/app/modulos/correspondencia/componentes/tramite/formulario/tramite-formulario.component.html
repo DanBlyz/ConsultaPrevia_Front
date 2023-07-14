@@ -43,7 +43,6 @@
                         </select>
                         <select *ngSwitchCase="'La Paz'" class="form-control" formControlName="provincia">
                             <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
-                            <!-- 'Potosi', 'Chuquisaca', 'Cochabamba', 'Tarija', 'Santa Cruz', 'Beni', 'Pando'-->
                             <option  [ngValue]="pro" *ngFor="let pro of provinciaLp">
                                 {{ pro }}
                             </option>
@@ -51,6 +50,48 @@
                         <select *ngSwitchCase="'Oruro'" class="form-control" formControlName="provincia">
                             <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
                             <option  [ngValue]="pro" *ngFor="let pro of provinciaOr">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Potosi'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaPt">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Chuquisaca'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaCh">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Cochabamba'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaCh">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Tarija'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaTj">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Santa Cruz'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaSc">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Beni'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaBn">
+                                {{ pro }}
+                            </option>
+                        </select>
+                        <select *ngSwitchCase="'Pando'" class="form-control" formControlName="provincia">
+                            <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                            <option  [ngValue]="pro" *ngFor="let pro of provinciaPd">
                                 {{ pro }}
                             </option>
                         </select>
