@@ -23,3 +23,4 @@ export * from './notificacion.actions';
 export * from './acto-administrativo.actions';
 export * from './pago-cpt.actions';
 export * from './viaje.actions';
+export * from './informe.actions';

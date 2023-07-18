@@ -25,3 +25,4 @@ export * from './acto-administrativo.service';
 export * from './pago-cpt.service';
 export * from './viaje.service';
 export * from './informe.service';
+export * from './sujeto-identificado.service';

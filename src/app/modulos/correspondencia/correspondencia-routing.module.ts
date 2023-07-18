@@ -73,6 +73,13 @@ import {
   ViajeFormularioComponent
 } from './componentes/viaje';
 
+import { 
+ InformeListaComponent,
+ InformeBuscadorComponent,
+ InformeDetalleComponent,
+ InformeFormularioComponent
+} from './componentes/informe';
+
 const routes: Routes = [
   {
     path: '',
@@ -558,6 +565,16 @@ const routes: Routes = [
         data: {
           title: 'Viaje',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Viaje' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Identificacion/correspondencia/informe',
+        component: InformeListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Informe',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informe' }],
           roles: []
         }
       },

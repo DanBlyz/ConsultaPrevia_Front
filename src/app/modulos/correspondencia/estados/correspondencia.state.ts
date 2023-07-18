@@ -23,7 +23,8 @@ import {
   Notificacion,
   ActoAdministrativo,
   PagoCpt,
-  Viaje
+  Viaje,
+  Informe
 } from '../modelos';
 import {
   TipoDocumentoFilter,
@@ -44,7 +45,8 @@ import {
   NotificacionFilter,
   ActoAdministrativoFilter,
   PagoCptFilter,
-  ViajeFilter
+  ViajeFilter,
+  InformeFilter
 } from '../modelos/filtros';
 
 export interface CorrespondenciaState {
@@ -198,4 +200,11 @@ export interface CorrespondenciaState {
     lista: Viaje[];
   };
   viaje: Viaje;
+
+  listaInforme: {
+    filtro: InformeFilter;
+    paginado: Paginado;
+    lista: Informe[];
+  };
+  informe: Informe;
 }

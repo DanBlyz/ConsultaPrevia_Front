@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="formInforme" autocomplete="off" class="text-default">
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Correlativo:</label>
+                    <input type="text" class="form-control" formControlName="correlativo" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Referencia:</label>
+                    <input type="text" class="form-control" formControlName="referencia" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Asunto:</label>
+                    <input type="text" class="form-control" formControlName="asunto" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Encargado:</label>
+                    <input type="text" class="form-control" formControlName="encargado" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Nro de Sujetos Identificados:</label>
+                    <input type="text" class="form-control" formControlName="nroSujetos" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Comunidad :</label>
+                    <input type="text" class="form-control" formControlName="comunidad" />
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Representantes:</label>
+                    <input type="text" class="form-control" formControlName="representante" />
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"
+                        [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="button" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <em class="small"><i class="fas fa-info-circle"></i> Los campos obligatorios están marcados con
+                        <span class="required-field-indicator"></span></em>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

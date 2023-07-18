@@ -155,6 +155,12 @@ import {
   ViajeFormularioComponent,
   ViajeDetalleComponent
  } from './componentes/viaje';
+ import {
+ InformeListaComponent,
+ InformeBuscadorComponent,
+ InformeFormularioComponent,
+ InformeDetalleComponent
+ } from './componentes/informe';
 
 @NgModule({
   declarations: [
@@ -261,6 +267,10 @@ import {
     ViajeFormularioComponent,
     ViajeBuscadorComponent,
     ViajeListaComponent,
+    InformeDetalleComponent,
+    InformeFormularioComponent,
+    InformeBuscadorComponent,
+    InformeListaComponent,
   ],
   imports: [
     CommonModule,

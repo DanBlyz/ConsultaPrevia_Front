@@ -153,7 +153,14 @@ export const correspondenciaInicial: CorrespondenciaState = {
     paginado: null,
     lista: []
   },
-  viaje: null
+  viaje: null,
+
+  listaInforme: {
+    filtro: null,
+    paginado: null,
+    lista: []
+  },
+  informe: null
 };
 
 const correspondenciaReducer = createReducer(
@@ -824,6 +831,37 @@ const correspondenciaReducer = createReducer(
           return {
             ...state,
             viaje: { ...objeto }
+          };
+        }),
+        //informe
+        on(CorrespondenciaAcciones.establecerFiltroInforme, (state, { filtro }) => {
+          return {
+            ...state,
+            listaInforme: {
+              ...state.listaInforme,
+              filtro: { ...filtro }
+            },
+            informe: null
+          };
+        }),
+        on(
+          CorrespondenciaAcciones.establecerListaInforme,
+          (state, { lista, paginado }) => {
+            return {
+              ...state,
+              listaInforme: {
+                ...state.listaInforme,
+                lista: [...lista],
+                paginado: { ...paginado }
+              },
+              informe: null
+            };
+          }
+        ),
+        on(CorrespondenciaAcciones.establecerInforme, (state, { objeto }) => {
+          return {
+            ...state,
+            informe: { ...objeto }
           };
         }),
 

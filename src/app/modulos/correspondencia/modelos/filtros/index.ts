@@ -18,4 +18,5 @@ export * from './notificacion.filter';
 export * from './acto-administrativo.filter';
 export * from './pago-cpt.filter';
 export * from './viaje.filter';
-
+export * from './informe.filter'
+export * from './sujeto-identificado.filter'

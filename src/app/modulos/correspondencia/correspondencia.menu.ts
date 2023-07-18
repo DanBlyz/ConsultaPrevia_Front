@@ -180,6 +180,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
+      {
+        ruta: 'Identificacion/correspondencia/informe',
+        titulo: 'Informe',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
       /*{
         ruta: '/correspondencia/plantillas',
         titulo: 'Plantillas',
