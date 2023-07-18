@@ -589,6 +589,16 @@ const routes: Routes = [
           roles: []
         }
       },
+      {
+        path: 'Mediacion/correspondencia/resolucion',
+        component: ResolucionListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Resolucion',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Resolucion' }],
+          roles: []
+        }
+      },
     ]
   }
 ];
