@@ -10,5 +10,8 @@ export class Informe {
   encargado: Date;
   flujo: string;
 
+  nroSujetos?: number;
+  comunidad?: string;
+  representante?:string;
   listaSujetoIdentificado?: SujetoIdentificado[];
 }

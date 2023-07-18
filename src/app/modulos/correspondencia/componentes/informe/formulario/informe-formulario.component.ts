@@ -15,8 +15,9 @@ import { Subscription } from 'rxjs';
 
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
-import { Informe } from '../../../modelos';
+import { Informe, SujetoIdentificado } from '../../../modelos';
 import { InformeFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-correspondencia-informe-formulario',
@@ -26,6 +27,8 @@ import { InformeFacade } from '../../../fachadas';
 export class InformeFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
+
+  listaSujetoIdentificado: SujetoIdentificado []= [];
 
   suscripcion = new Subscription();
 
@@ -38,7 +41,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
     private informeFacade: InformeFacade,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     if (!this.informe) {
       this.informe = new Informe();
@@ -49,7 +53,6 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       referencia: ['', Validators.required],
       asunto: ['', Validators.required],
       encargado: ['', Validators.required],
-      nro: ['', Validators.required],
       nroSujetos: ['', Validators.required],
       comunidad: ['', Validators.required],
       representante: ['', Validators.required],
@@ -66,7 +69,10 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
               correlativo: this.informe.correlativo,
               referencia: this.informe.referencia,
               asunto: this.informe.asunto,
-              encargado: this.informe.encargado
+              encargado: this.informe.encargado,
+              nroSujetos: 1,
+              comunidad: "",
+              representante: ""
             });
           }
         }
@@ -80,6 +86,9 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       case 'modificar':
         this.botonOperacion = 'Modificar';
         break;
+      case 'informe':
+        this.botonOperacion = 'Guardar';
+        break;
     }
   }
 
@@ -90,16 +99,45 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
 
   ejecutarAccion(accion: string): void {
     let informe = new Informe();
+    console.log(accion+" ejhecutar accion");
     switch (accion) {
       case 'crear': {
         FuncionesHelper.limpiarEspacios(this.formInforme);
+        console.log(this.formInforme);
         if (!this.formInforme.valid) {
           this.formInforme.markAllAsTouched();
           return;
         }
         informe = { ...this.formInforme.value };
+        const sujeto = new SujetoIdentificado();
+        sujeto.comunidad = this.formInforme.value.comunidad;
+        sujeto.representante = this.formInforme.value.representante;
+        this.listaSujetoIdentificado[0] = sujeto;
+        informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
         this.accion.emit({
           accion: 'guardar',
+          informe
+        });
+        break;
+      }
+      case 'informe': {
+        FuncionesHelper.limpiarEspacios(this.formInforme);
+        console.log(this.formInforme);
+        if (!this.formInforme.valid) {
+          this.formInforme.markAllAsTouched();
+          return;
+        }
+        informe = { ...this.formInforme.value };
+        const sujeto = new SujetoIdentificado();
+        sujeto.comunidad = this.formInforme.value.comunidad;
+        sujeto.representante = this.formInforme.value.representante;
+        this.listaSujetoIdentificado[0] = sujeto;
+        informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
+        console.log(this.router.url);
+        let arr = this.router.url.split('/');
+        informe.flujo = arr[1];
+        this.accion.emit({
+          accion: 'guardarInforme',
           informe
         });
         break;

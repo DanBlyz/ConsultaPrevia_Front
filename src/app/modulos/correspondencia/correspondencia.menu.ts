@@ -218,6 +218,25 @@ export const CorrespondenciaMenu: MenuItem[] = [
       },*/
     ],
     roles: []
+  },
+  {
+    ruta: '#',
+    titulo: 'DELIBERACION',
+    icono: 'fas fa-user-lock',
+    class: '',
+    esEnlace: true,
+    submenu: [
+      {
+        ruta: 'Deliberacion/correspondencia/resolucion',
+        titulo: 'Resoluciones',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+    ],
+    roles: []
   }
   /*/{
     ruta: '/correspondencia/bandeja-borradores',

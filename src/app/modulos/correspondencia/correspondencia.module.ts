@@ -161,7 +161,13 @@ import {
  InformeFormularioComponent,
  InformeDetalleComponent
  } from './componentes/informe';
-
+ 
+ import {
+  ResolucionListaComponent,
+  ResolucionBuscadorComponent,
+  ResolucionFormularioComponent,
+  ResolucionDetalleComponent
+  } from './componentes/resolucion';
 @NgModule({
   declarations: [
     TipoDocumentoDetalleComponent,
@@ -271,6 +277,10 @@ import {
     InformeFormularioComponent,
     InformeBuscadorComponent,
     InformeListaComponent,
+    ResolucionDetalleComponent,
+    ResolucionFormularioComponent,
+    ResolucionBuscadorComponent,
+    ResolucionListaComponent,
   ],
   imports: [
     CommonModule,

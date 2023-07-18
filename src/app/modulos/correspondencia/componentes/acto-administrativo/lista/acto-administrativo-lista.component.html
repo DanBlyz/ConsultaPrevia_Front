@@ -31,7 +31,7 @@
                                 <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'viaje',id: item.id})">
                                 <input *ngIf=" item.viajeRealizado === true ? true : false"  type="button" value="Adjuntar Informe" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'informe',id: item.id})">
+                                        (click)="ejecutarOperacion({operacion: 'informe',id: item.fk_idTramite})">
                                         
                                 </td>
                             </tr>
@@ -69,6 +69,8 @@
                 (accion)="ejecutarAccion($event)"></app-correspondencia-pago-cpt-formulario>
             <app-correspondencia-viaje-formulario *ngSwitchCase="'viaje'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-viaje-formulario>
+            <app-correspondencia-informe-formulario *ngSwitchCase="'informe'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-informe-formulario>
         </div>
     </div>
     <div class="modal-footer">

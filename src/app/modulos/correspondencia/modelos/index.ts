@@ -36,3 +36,5 @@ export * from './pago-cpt.model';
 export * from './viaje.model';
 export * from './informe.model';
 export * from './sujeto-identificado.model';
+export * from './resolucion.model';
+

@@ -21,4 +21,4 @@ export * from './acto-administrativo.selector';
 export * from './pago-cpt.selector';
 export * from './viaje.selector';
 export * from './informe.selector';
-
+export * from './resolucion.selector';

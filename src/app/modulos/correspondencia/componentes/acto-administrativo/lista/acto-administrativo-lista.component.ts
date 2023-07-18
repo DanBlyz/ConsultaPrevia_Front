@@ -17,6 +17,7 @@ import { ActoAdministrativoFilter } from '../../../modelos/filtros';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { PagoCptFacade } from '../../../fachadas';
 import { ViajeFacade } from '../../../fachadas';
+import { InformeFacade } from '../../../fachadas';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -39,12 +40,14 @@ export class ActoAdministrativoListaComponent
   modal: NgbModalRef;
   idActo : number;
   idViaje : number;
+  fk_idTramite : number;
 
   constructor(
     private actoAdministrativoFacade: ActoAdministrativoFacade,
     private modalService: NgbModal,
     private pagoCptFacade: PagoCptFacade,
     private viajeFacade: ViajeFacade,
+    private informeFacade: InformeFacade
   ) {}
 
   ngOnInit(): void { 
@@ -141,6 +144,13 @@ export class ActoAdministrativoListaComponent
         this.mostrarModal();
         break;
       }
+      case 'informe': {
+        this.tipoOperacion = 'informe';
+        this.fk_idTramite = evento.fk_idTramite
+        this.modalTitulo = 'Adjuntar Informe';
+        this.mostrarModal();
+        break;
+      }
     }
   }
 
@@ -194,6 +204,15 @@ export class ActoAdministrativoListaComponent
         evento.viaje.fk_idActos = this.idViaje;
         console.log(this.idActo);
         this.viajeFacade.guardar(evento.viaje).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        break;
+      }
+      case 'guardarInforme': {
+        evento.informe.fk_idTramite = this.fk_idTramite;
+        this.informeFacade.guardar(evento.informe).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }

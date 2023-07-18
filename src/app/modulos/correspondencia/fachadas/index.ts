@@ -25,4 +25,5 @@ export * from './acto-administrativo.facade';
 export * from './pago-cpt.facade';
 export * from './viaje.facade';
 export * from './informe.facade';
+export * from './resolucion.facade';
 

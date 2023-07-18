@@ -79,6 +79,7 @@ import {
  InformeDetalleComponent,
  InformeFormularioComponent
 } from './componentes/informe';
+import { ResolucionListaComponent } from './componentes/resolucion';
 
 const routes: Routes = [
   {
@@ -575,6 +576,16 @@ const routes: Routes = [
         data: {
           title: 'Informe',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informe' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Deliberacion/correspondencia/resolucion',
+        component: ResolucionListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Resolucion',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Resolucion' }],
           roles: []
         }
       },

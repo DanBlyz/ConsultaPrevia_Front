@@ -12,70 +12,78 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PaginadorComponent } from 'src/app/comun/componentes';
 import { Paginado } from 'src/app/comun/modelos';
 
-import { Informe } from '../../../modelos';
-import { InformeFilter } from '../../../modelos/filtros';
-import { InformeFacade } from '../../../fachadas';
+import { Resolucion } from '../../../modelos';
+import { ResolucionFilter } from '../../../modelos/filtros';
+import { ResolucionFacade } from '../../../fachadas';
 
 @Component({
-  selector: 'app-informe-lista',
-  templateUrl: './informe-lista.component.html',
+  selector: 'app-resolucion-lista',
+  templateUrl: './resolucion-lista.component.html',
   styleUrls: []
 })
-export class InformeListaComponent
+export class ResolucionListaComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild('modalInforme') modalInforme: NgbModal;
+  @ViewChild('modalResolucion') modalResolucion: NgbModal;
   @ViewChild(PaginadorComponent) paginador: PaginadorComponent;
 
   suscripcion = new Subscription();
-  filtro: InformeFilter = new InformeFilter();
+  filtro: ResolucionFilter = new ResolucionFilter();
   tipoOperacion: string;
 
-  informe: Informe = new Informe();
-  lista: Informe[];
+  resolucion: Resolucion = new Resolucion();
+  lista: Resolucion[];
 
   modalTitulo: string;
   modal: NgbModalRef;
 
   constructor(
-    private informeFacade: InformeFacade,
+    private resolucionFacade: ResolucionFacade,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.suscripcion.add(
-      this.informeFacade.CorrespondenciaState$.subscribe(
-        ({ listaInforme, informe }) => {
-          if (listaInforme.lista) {
-            if (listaInforme.lista.length >= 0) {
-              this.lista = listaInforme.lista;
-              if (listaInforme.paginado && this.paginador) {
+      this.resolucionFacade.CorrespondenciaState$.subscribe(
+        ({ listaResolucion, resolucion }) => {
+          if (listaResolucion.lista) {
+            console.log(listaResolucion," 1");
+            if (listaResolucion.lista.length >= 0) {
+              console.log(listaResolucion," 2");
+              this.lista = listaResolucion.lista;
+              console.log(this.lista," 3");
+              if (listaResolucion.paginado && this.paginador) {
+                console.log(listaResolucion," 4");
+
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaInforme.paginado.totalRegistros,
-                  listaInforme.paginado.registrosPorPagina,
-                  listaInforme.paginado.totalPaginas,
-                  listaInforme.paginado.pagina
+                  listaResolucion.paginado.totalRegistros,
+                  listaResolucion.paginado.registrosPorPagina,
+                  listaResolucion.paginado.totalPaginas,
+                  listaResolucion.paginado.pagina
                 );
               }
             }
           }
-          if (informe) {
-            this.informe = informe;
+          if (resolucion) {
+              console.log(resolucion.flujo," 5");
+              this.resolucion = resolucion;
           }
+          console.log("fin");
         }
       )
     );
     this.suscripcion.add(
-      this.informeFacade.Filtro$.subscribe((filtro) => {
+      this.resolucionFacade.Filtro$.subscribe((filtro) => {
         if (filtro && this.paginador) {
           this.filtro = filtro;
-          this.informeFacade.buscar(
+          this.resolucionFacade.buscar(
             this.filtro,
             1,
             this.paginador.registrosPorPagina
           );
         }
+        console.log(filtro);
       })
     );
   }
@@ -90,32 +98,32 @@ export class InformeListaComponent
   }
 
   ejecutarOperacion(evento: any): void {
-    const informeTitulo = 'informe';
+    const resolucionTitulo = 'resolucion';
     switch (evento.operacion) {
       case 'crear': {
         this.tipoOperacion = 'crear';
-        this.modalTitulo = 'Crear ' + informeTitulo;
+        this.modalTitulo = 'Crear ' + resolucionTitulo;
         this.mostrarModal();
         break;
       }
       case 'detalle': {
         this.tipoOperacion = 'detalle';
-        this.informeFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Ver detalles de ' + informeTitulo;
+        this.resolucionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Ver detalles de ' + resolucionTitulo;
         this.mostrarModal();
         break;
       }
       case 'modificar': {
         this.tipoOperacion = 'modificar';
-        this.informeFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Modificar ' + informeTitulo;
+        this.resolucionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Modificar ' + resolucionTitulo;
         this.mostrarModal();
         break;
       }
       case 'eliminar': {
         this.tipoOperacion = 'eliminar';
-        this.informeFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Eliminar ' + informeTitulo;
+        this.resolucionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Eliminar ' + resolucionTitulo;
         this.mostrarModal();
         break;
       }
@@ -123,10 +131,9 @@ export class InformeListaComponent
   }
 
   ejecutarAccion(evento: any): void {
-    console.log(evento.accion+" lista");
     switch (evento.accion) {
       case 'guardar': {
-        this.informeFacade.guardar(evento.informe).then((respuesta) => {
+        this.resolucionFacade.guardar(evento.resolucion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
@@ -134,8 +141,8 @@ export class InformeListaComponent
         break;
       }
       case 'modificar': {
-        this.informeFacade
-          .modificar(evento.informeId, evento.informe)
+        this.resolucionFacade
+          .modificar(evento.resolucionId, evento.resolucion)
           .then((respuesta) => {
             if (respuesta.tipoRespuesta === 'Exito') {
               this.cerrarModal();
@@ -144,7 +151,7 @@ export class InformeListaComponent
         break;
       }
       case 'eliminar': {
-        this.informeFacade.eliminar(evento.informeId).then((respuesta) => {
+        this.resolucionFacade.eliminar(evento.resolucionId).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
@@ -152,7 +159,7 @@ export class InformeListaComponent
         break;
       }
       case 'buscar': {
-        this.informeFacade.establecerFiltro(evento.informe);
+        this.resolucionFacade.establecerFiltro(evento.resolucion);
         break;
       }
       case 'cancelar': {
@@ -164,7 +171,7 @@ export class InformeListaComponent
 
   paginar(): void {
     if (this.paginador) {
-      this.informeFacade.buscar(
+      this.resolucionFacade.buscar(
         this.filtro,
         this.paginador.paginaActual,
         this.paginador.registrosPorPagina
@@ -173,7 +180,7 @@ export class InformeListaComponent
   }
 
   mostrarModal(opciones?: any): void {
-    this.modal = this.modalService.open(this.modalInforme, {
+    this.modal = this.modalService.open(this.modalResolucion, {
       backdrop: 'static',
       size: 'lg',
       ...opciones
