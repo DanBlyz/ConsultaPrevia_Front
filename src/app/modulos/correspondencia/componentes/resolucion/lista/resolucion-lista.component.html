@@ -22,14 +22,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of lista">
-                                <td class="td-auto align-middle">{{ item.informe }}</td>
-                                <td class="align-middle">{{ item.resolucion }}</td>
-                                <td class="align-middle">{{ item.informeAprobado }}</td>
-                                <td class="align-middle">{{ item.actoAdministrativo }}</td>
-                                <td class="align-middle">{{ item.resolucionPdf }}</td>
-                                <td class="align-middle">{{ item.asunto }}</td>
-                                <td class="align-middle">
+                            <tr *ngFor="let item of lista ;let primero = first">
+                                <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.informe }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.resolucion }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.informeAprobado }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.actoAdministrativo }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.resolucionPdf }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"

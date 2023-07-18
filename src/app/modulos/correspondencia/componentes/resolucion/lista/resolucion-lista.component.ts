@@ -15,7 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Resolucion } from '../../../modelos';
 import { ResolucionFilter } from '../../../modelos/filtros';
 import { ResolucionFacade } from '../../../fachadas';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-resolucion-lista',
   templateUrl: './resolucion-lista.component.html',
@@ -30,6 +30,7 @@ export class ResolucionListaComponent
   suscripcion = new Subscription();
   filtro: ResolucionFilter = new ResolucionFilter();
   tipoOperacion: string;
+  arr = this.router.url.split('/');
 
   resolucion: Resolucion = new Resolucion();
   lista: Resolucion[];
@@ -39,7 +40,8 @@ export class ResolucionListaComponent
 
   constructor(
     private resolucionFacade: ResolucionFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,14 +49,9 @@ export class ResolucionListaComponent
       this.resolucionFacade.CorrespondenciaState$.subscribe(
         ({ listaResolucion, resolucion }) => {
           if (listaResolucion.lista) {
-            console.log(listaResolucion," 1");
             if (listaResolucion.lista.length >= 0) {
-              console.log(listaResolucion," 2");
               this.lista = listaResolucion.lista;
-              console.log(this.lista," 3");
               if (listaResolucion.paginado && this.paginador) {
-                console.log(listaResolucion," 4");
-
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
                   listaResolucion.paginado.totalRegistros,
@@ -66,10 +63,8 @@ export class ResolucionListaComponent
             }
           }
           if (resolucion) {
-              console.log(resolucion.flujo," 5");
               this.resolucion = resolucion;
           }
-          console.log("fin");
         }
       )
     );
