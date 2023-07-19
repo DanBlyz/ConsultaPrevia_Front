@@ -141,7 +141,10 @@ import {
   NotificacionDetalleComponent
  } from './componentes/notificacion';
  import {
-  ActoAdministrativoListaComponent
+   ActoAdministrativoDetalleComponent,
+   ActoAdministrativoListaComponent,
+   ActoAdministrativoFormularioComponent,
+   ActoAdministrativoBuscadorComponent
  } from './componentes/acto-administrativo';
  import {
   PagoCptListaComponent,
@@ -271,7 +274,10 @@ import {
     NotificacionFormularioComponent,
     NotificacionBuscadorComponent,
     NotificacionListaComponent,
+    ActoAdministrativoDetalleComponent,
     ActoAdministrativoListaComponent,
+    ActoAdministrativoFormularioComponent,
+    ActoAdministrativoBuscadorComponent,
     PagoCptDetalleComponent,
     PagoCptFormularioComponent,
     PagoCptBuscadorComponent,

@@ -15,6 +15,9 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Reunion } from '../../../modelos';
 import { ReunionFilter } from '../../../modelos/filtros';
 import { ReunionFacade } from '../../../fachadas';
+import { NotificacionFacade } from '../../../fachadas';
+import { ActoAdministrativoFacade } from '../../../fachadas';
+import { InformeFacade } from '../../../fachadas';
 
 @Component({
   selector: 'app-reunion-lista',
@@ -37,9 +40,14 @@ export class ReunionListaComponent
   modalTitulo: string;
   modal: NgbModalRef;
 
+  idTra: number;
+
   constructor(
     private reunionFacade: ReunionFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private notificacionFacade: NotificacionFacade,
+    private actoAdministrativoFacade: ActoAdministrativoFacade,
+    private informeFacade: InformeFacade
   ) {}
 
   ngOnInit(): void {
@@ -119,10 +127,32 @@ export class ReunionListaComponent
         this.mostrarModal();
         break;
       }
+      case 'notificacion': {
+        this.tipoOperacion = 'notificacion';
+        this.idTra = evento.idTramite;
+        this.modalTitulo = 'Adjuntar Notificacion';
+        this.mostrarModal();
+        break;
+      }
+      case 'actoAdministrativo': {
+        this.tipoOperacion = 'actoAdministrativo';
+        this.idTra = evento.idTramite;
+        this.modalTitulo = 'Acto Administrativo';
+        this.mostrarModal();
+        break;
+      }
+      case 'informeDeliberacion': {
+        this.tipoOperacion = 'informeDeliberacion';
+        this.idTra = evento.idTramite;
+        this.modalTitulo = 'Adjuntar Informe';
+        this.mostrarModal();
+        break;
+      }
     }
   }
 
   ejecutarAccion(evento: any): void {
+    console.log(evento.accion,"accion");
     switch (evento.accion) {
       case 'guardar': {
         this.reunionFacade.guardar(evento.reunion).then((respuesta) => {
@@ -156,6 +186,38 @@ export class ReunionListaComponent
       }
       case 'cancelar': {
         this.cerrarModal();
+        break;
+      }
+      case 'guardarnoti': {
+        //console.log(evento.tramiteId);
+        evento.notificacion.fk_idTramite=this.idTra;
+        this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        break;
+      }
+      case 'guardarActoAdministrativo': {
+        console.log("guardar actos");
+        evento.actoAdministrativo.fk_idTramite=this.idTra;
+        console.log(evento.actoAdministrativo)
+        this.actoAdministrativoFacade.guardar(evento.actoAdministrativo).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        break;
+      }
+      case 'guardarInforme': {
+        console.log("guardar informe");
+        evento.informe.fk_idTramite=this.idTra;
+        console.log(evento.informe)
+        this.informeFacade.guardar(evento.informe).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
         break;
       }
     }

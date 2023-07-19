@@ -19,14 +19,18 @@
                     <input type="text" class="form-control" formControlName="encargado" />
                 </div>
                 <div class="col-md-12 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Informe Pdf:</label>
+                    <input type="text" class="form-control" formControlName="informePdf" />
+                </div>
+                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro de Sujetos Identificados:</label>
                     <input type="number" class="form-control" formControlName="nroSujetos"/>
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Comunidad :</label>
                     <input type="text" class="form-control" formControlName="comunidad" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Representantes:</label>
                     <input type="text" class="form-control" formControlName="representante"  />
                 </div>

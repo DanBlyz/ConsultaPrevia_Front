@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 export class InformeFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
+  
 
   listaSujetoIdentificado: SujetoIdentificado []= [];
 
@@ -35,6 +36,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
   formInforme: FormGroup;
   botonOperacion: string;
 
+  arr = this.router.url.split('/');
   informe: Informe;
 
   constructor(
@@ -53,9 +55,10 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       referencia: ['', Validators.required],
       asunto: ['', Validators.required],
       encargado: ['', Validators.required],
-      nroSujetos: ['', Validators.required],
-      comunidad: ['', Validators.required],
-      representante: ['', Validators.required],
+      informePdf: ['',Validators.required],
+      nroSujetos: [0, Validators.required],
+      comunidad: ['vac', Validators.required],
+      representante: ['cc', Validators.required],
     });
   }
 
@@ -70,6 +73,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
               referencia: this.informe.referencia,
               asunto: this.informe.asunto,
               encargado: this.informe.encargado,
+              informePdf: this.informe.informePdf,
               nroSujetos: 1,
               comunidad: "",
               representante: ""
@@ -87,6 +91,9 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         this.botonOperacion = 'Modificar';
         break;
       case 'informe':
+        this.botonOperacion = 'Guardar';
+        break;
+      case 'informeDeliberacion':
         this.botonOperacion = 'Guardar';
         break;
     }
@@ -135,7 +142,23 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
         console.log(this.router.url);
         let arr = this.router.url.split('/');
+        console.log("aqui 1");
         informe.flujo = arr[1];
+        this.accion.emit({
+          accion: 'guardarInforme',
+          informe
+        });
+        break;
+      }
+      case 'informeDeliberacion': {
+        FuncionesHelper.limpiarEspacios(this.formInforme);
+        console.log(this.formInforme," deliberacion");
+        if (!this.formInforme.valid) {
+          this.formInforme.markAllAsTouched();
+          return;
+        }
+        informe = { ...this.formInforme.value };
+        informe.flujo = 'Mediacion';
         this.accion.emit({
           accion: 'guardarInforme',
           informe

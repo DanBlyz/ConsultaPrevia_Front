@@ -26,6 +26,8 @@
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
+                                <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                 <input *ngIf=" item.pagoCpt === null ? true : false"  type="button" value="Pago Cpt" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
                                 <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-primary"
@@ -65,6 +67,10 @@
     </div>
     <div class="modal-body">
         <div [ngSwitch]="tipoOperacion">
+            <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'crear'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
+            <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'modificar'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
             <app-correspondencia-pago-cpt-formulario *ngSwitchCase="'pagoCpt'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-pago-cpt-formulario>
             <app-correspondencia-viaje-formulario *ngSwitchCase="'viaje'" [tipoOperacion]="tipoOperacion"
