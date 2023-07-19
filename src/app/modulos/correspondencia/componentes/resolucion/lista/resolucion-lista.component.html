@@ -32,10 +32,12 @@
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
-                                    <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                    <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id, fk_tramite: item.fk_idTramite})"
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
                                     <i (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>
+                                    <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === true) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'notificacion', fk_tramite: item.fk_idTramite})">
                                 </td>
                             </tr>
                         </tbody>
@@ -76,6 +78,8 @@
                 (accion)="ejecutarAccion($event)"></app-correspondencia-resolucion-formulario>
             <app-correspondencia-resolucion-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-resolucion-detalle>
+            <app-correspondencia-notificacion-formulario *ngSwitchCase="'notificacion'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-notificacion-formulario>
         </div>
     </div>
     <div class="modal-footer">

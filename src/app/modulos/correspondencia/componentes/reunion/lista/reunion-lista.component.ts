@@ -12,69 +12,65 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PaginadorComponent } from 'src/app/comun/componentes';
 import { Paginado } from 'src/app/comun/modelos';
 
-import { Notificacion } from '../../../modelos';
-import { NotificacionFilter } from '../../../modelos/filtros';
-import { NotificacionFacade } from '../../../fachadas';
-import { Router } from '@angular/router';
+import { Reunion } from '../../../modelos';
+import { ReunionFilter } from '../../../modelos/filtros';
+import { ReunionFacade } from '../../../fachadas';
 
 @Component({
-  selector: 'app-notificacion-lista',
-  templateUrl: './notificacion-lista.component.html',
+  selector: 'app-reunion-lista',
+  templateUrl: './reunion-lista.component.html',
   styleUrls: []
 })
-export class NotificacionListaComponent
+export class ReunionListaComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild('modalNotificacion') modalNotificacion: NgbModal;
+  @ViewChild('modalReunion') modalReunion: NgbModal;
   @ViewChild(PaginadorComponent) paginador: PaginadorComponent;
 
   suscripcion = new Subscription();
-  filtro: NotificacionFilter = new NotificacionFilter();
+  filtro: ReunionFilter = new ReunionFilter();
   tipoOperacion: string;
 
-  notificacion: Notificacion = new Notificacion();
-  lista: Notificacion[];
+  reunion: Reunion = new Reunion();
+  lista: Reunion[];
 
   modalTitulo: string;
   modal: NgbModalRef;
 
-  arr = this.router.url.split('/');
-
   constructor(
-    private notificacionFacade: NotificacionFacade,
-    private modalService: NgbModal,
-    private router: Router
+    private reunionFacade: ReunionFacade,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.suscripcion.add(
-      this.notificacionFacade.CorrespondenciaState$.subscribe(
-        ({ listaNotificacion, notificacion }) => {
-          if (listaNotificacion.lista) {
-            if (listaNotificacion.lista.length >= 0) {
-              this.lista = listaNotificacion.lista;
-              if (listaNotificacion.paginado && this.paginador) {
+      this.reunionFacade.CorrespondenciaState$.subscribe(
+        ({ listaReunion, reunion }) => {
+          if (listaReunion.lista) {
+            if (listaReunion.lista.length >= 0) {
+              this.lista = listaReunion.lista;
+              if (listaReunion.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaNotificacion.paginado.totalRegistros,
-                  listaNotificacion.paginado.registrosPorPagina,
-                  listaNotificacion.paginado.totalPaginas,
-                  listaNotificacion.paginado.pagina
+                  listaReunion.paginado.totalRegistros,
+                  listaReunion.paginado.registrosPorPagina,
+                  listaReunion.paginado.totalPaginas,
+                  listaReunion.paginado.pagina
                 );
               }
             }
           }
-          if (notificacion) {
-            this.notificacion = notificacion;
+          if (reunion) {
+            this.reunion = reunion;
           }
         }
       )
     );
     this.suscripcion.add(
-      this.notificacionFacade.Filtro$.subscribe((filtro) => {
+      this.reunionFacade.Filtro$.subscribe((filtro) => {
         if (filtro && this.paginador) {
           this.filtro = filtro;
-          this.notificacionFacade.buscar(
+          this.reunionFacade.buscar(
             this.filtro,
             1,
             this.paginador.registrosPorPagina
@@ -94,32 +90,32 @@ export class NotificacionListaComponent
   }
 
   ejecutarOperacion(evento: any): void {
-    const notificacionTitulo = 'notificacion';
+    const reunionTitulo = 'reunion';
     switch (evento.operacion) {
       case 'crear': {
         this.tipoOperacion = 'crear';
-        this.modalTitulo = 'Crear ' + notificacionTitulo;
+        this.modalTitulo = 'Crear ' + reunionTitulo;
         this.mostrarModal();
         break;
       }
       case 'detalle': {
         this.tipoOperacion = 'detalle';
-        this.notificacionFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Ver detalles de ' + notificacionTitulo;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Ver detalles de ' + reunionTitulo;
         this.mostrarModal();
         break;
       }
       case 'modificar': {
         this.tipoOperacion = 'modificar';
-        this.notificacionFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Modificar ' + notificacionTitulo;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Modificar ' + reunionTitulo;
         this.mostrarModal();
         break;
       }
       case 'eliminar': {
         this.tipoOperacion = 'eliminar';
-        this.notificacionFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Eliminar ' + notificacionTitulo;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Eliminar ' + reunionTitulo;
         this.mostrarModal();
         break;
       }
@@ -129,7 +125,7 @@ export class NotificacionListaComponent
   ejecutarAccion(evento: any): void {
     switch (evento.accion) {
       case 'guardar': {
-        this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
+        this.reunionFacade.guardar(evento.reunion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
@@ -137,8 +133,8 @@ export class NotificacionListaComponent
         break;
       }
       case 'modificar': {
-        this.notificacionFacade
-          .modificar(evento.notificacionId, evento.notificacion)
+        this.reunionFacade
+          .modificar(evento.reunionId, evento.reunion)
           .then((respuesta) => {
             if (respuesta.tipoRespuesta === 'Exito') {
               this.cerrarModal();
@@ -147,7 +143,7 @@ export class NotificacionListaComponent
         break;
       }
       case 'eliminar': {
-        this.notificacionFacade.eliminar(evento.notificacionId).then((respuesta) => {
+        this.reunionFacade.eliminar(evento.reunionId).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
@@ -155,7 +151,7 @@ export class NotificacionListaComponent
         break;
       }
       case 'buscar': {
-        this.notificacionFacade.establecerFiltro(evento.notificacion);
+        this.reunionFacade.establecerFiltro(evento.reunion);
         break;
       }
       case 'cancelar': {
@@ -167,7 +163,7 @@ export class NotificacionListaComponent
 
   paginar(): void {
     if (this.paginador) {
-      this.notificacionFacade.buscar(
+      this.reunionFacade.buscar(
         this.filtro,
         this.paginador.paginaActual,
         this.paginador.registrosPorPagina
@@ -176,7 +172,7 @@ export class NotificacionListaComponent
   }
 
   mostrarModal(opciones?: any): void {
-    this.modal = this.modalService.open(this.modalNotificacion, {
+    this.modal = this.modalService.open(this.modalReunion, {
       backdrop: 'static',
       size: 'lg',
       ...opciones

@@ -17,6 +17,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Resolucion } from '../../../modelos';
 import { ResolucionFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-correspondencia-resolucion-formulario',
@@ -27,6 +28,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
 
+  arr = this.router.url.split('/');
   suscripcion = new Subscription();
 
   formResolucion: FormGroup;
@@ -38,7 +40,8 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
     private resolucionFacade: ResolucionFacade,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     if (!this.resolucion) {
       this.resolucion = new Resolucion();
@@ -111,6 +114,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         resolucion = { ...this.formResolucion.value };
+        resolucion.flujo = this.arr[1];
         this.accion.emit({
           accion,
           resolucionId: this.resolucion.id,

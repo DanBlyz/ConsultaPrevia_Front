@@ -168,6 +168,13 @@ import {
   ResolucionFormularioComponent,
   ResolucionDetalleComponent
   } from './componentes/resolucion';
+
+  import {
+    ReunionListaComponent,
+    ReunionBuscadorComponent,
+    ReunionFormularioComponent,
+    ReunionDetalleComponent
+    } from './componentes/reunion';
 @NgModule({
   declarations: [
     TipoDocumentoDetalleComponent,
@@ -281,6 +288,10 @@ import {
     ResolucionFormularioComponent,
     ResolucionBuscadorComponent,
     ResolucionListaComponent,
+    ReunionDetalleComponent,
+    ReunionFormularioComponent,
+    ReunionBuscadorComponent,
+    ReunionListaComponent,
   ],
   imports: [
     CommonModule,

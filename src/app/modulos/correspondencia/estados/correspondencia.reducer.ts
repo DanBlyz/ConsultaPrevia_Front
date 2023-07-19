@@ -167,7 +167,14 @@ export const correspondenciaInicial: CorrespondenciaState = {
     paginado: null,
     lista: []
   },
-  resolucion: null
+  resolucion: null,
+
+  listaReunion: {
+    filtro: null,
+    paginado: null,
+    lista: []
+  },
+  reunion: null
 };
 
 const correspondenciaReducer = createReducer(
@@ -902,6 +909,38 @@ const correspondenciaReducer = createReducer(
             resolucion: { ...objeto }
           };
         }),
+        //Reunion
+        on(CorrespondenciaAcciones.establecerFiltroReunion, (state, { filtro }) => {
+          return {
+            ...state,
+            listaReunion: {
+              ...state.listaReunion,
+              filtro: { ...filtro }
+            },
+            reunion: null
+          };
+        }),
+        on(
+          CorrespondenciaAcciones.establecerListaReunion,
+          (state, { lista, paginado }) => {
+            return {
+              ...state,
+              listaReunion: {
+                ...state.listaReunion,
+                lista: [...lista],
+                paginado: { ...paginado }
+              },
+              reunion: null
+            };
+          }
+        ),
+        on(CorrespondenciaAcciones.establecerReunion, (state, { objeto }) => {
+          return {
+            ...state,
+            reunion: { ...objeto }
+          };
+        }),
+
 
 
 );

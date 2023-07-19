@@ -25,3 +25,4 @@ export * from './pago-cpt.actions';
 export * from './viaje.actions';
 export * from './informe.actions';
 export * from './resolucion.actions';
+export * from './reunion.actions';

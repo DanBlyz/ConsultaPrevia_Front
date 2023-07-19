@@ -27,3 +27,4 @@ export * from './viaje.service';
 export * from './informe.service';
 export * from './sujeto-identificado.service';
 export * from './resolucion.service';
+export * from './reunion.service';

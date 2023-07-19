@@ -18,6 +18,7 @@ import { ActoAdministrativoFacade } from '../../../fachadas';
 import { PagoCptFacade } from '../../../fachadas';
 import { ViajeFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -35,6 +36,7 @@ export class ActoAdministrativoListaComponent
 
   actoAdministrativo: ActoAdministrativo = new ActoAdministrativo();
   lista: ActoAdministrativo[];
+  arr = this.router.url.split('/');
 
   modalTitulo: string;
   modal: NgbModalRef;
@@ -47,7 +49,8 @@ export class ActoAdministrativoListaComponent
     private modalService: NgbModal,
     private pagoCptFacade: PagoCptFacade,
     private viajeFacade: ViajeFacade,
-    private informeFacade: InformeFacade
+    private informeFacade: InformeFacade,
+    private router: Router
   ) {}
 
   ngOnInit(): void { 
@@ -146,7 +149,8 @@ export class ActoAdministrativoListaComponent
       }
       case 'informe': {
         this.tipoOperacion = 'informe';
-        this.fk_idTramite = evento.fk_idTramite
+        console.log(evento.id," fk_id tamite");
+        this.fk_idTramite = evento.id;
         this.modalTitulo = 'Adjuntar Informe';
         this.mostrarModal();
         break;

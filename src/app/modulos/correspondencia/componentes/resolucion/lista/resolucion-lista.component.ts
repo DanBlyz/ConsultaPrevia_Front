@@ -16,6 +16,7 @@ import { Resolucion } from '../../../modelos';
 import { ResolucionFilter } from '../../../modelos/filtros';
 import { ResolucionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { NotificacionFacade } from '../../../fachadas';
 @Component({
   selector: 'app-resolucion-lista',
   templateUrl: './resolucion-lista.component.html',
@@ -31,6 +32,7 @@ export class ResolucionListaComponent
   filtro: ResolucionFilter = new ResolucionFilter();
   tipoOperacion: string;
   arr = this.router.url.split('/');
+  fkTramite : number;
 
   resolucion: Resolucion = new Resolucion();
   lista: Resolucion[];
@@ -41,7 +43,8 @@ export class ResolucionListaComponent
   constructor(
     private resolucionFacade: ResolucionFacade,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private notificacionFacade: NotificacionFacade
   ) {}
 
   ngOnInit(): void {
@@ -110,6 +113,7 @@ export class ResolucionListaComponent
       }
       case 'modificar': {
         this.tipoOperacion = 'modificar';
+        this.fkTramite = evento.fk_tramite;
         this.resolucionFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Modificar ' + resolucionTitulo;
         this.mostrarModal();
@@ -119,6 +123,13 @@ export class ResolucionListaComponent
         this.tipoOperacion = 'eliminar';
         this.resolucionFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Eliminar ' + resolucionTitulo;
+        this.mostrarModal();
+        break;
+      }
+      case 'notificacion': {
+        this.tipoOperacion = 'notificacion';
+        this.fkTramite = evento.fk_tramite;
+        this.modalTitulo = 'Adjuntar Notificacion ' ;
         this.mostrarModal();
         break;
       }
@@ -136,6 +147,7 @@ export class ResolucionListaComponent
         break;
       }
       case 'modificar': {
+        evento.resolucion.fk_idTramite = this.fkTramite;
         this.resolucionFacade
           .modificar(evento.resolucionId, evento.resolucion)
           .then((respuesta) => {
@@ -159,6 +171,15 @@ export class ResolucionListaComponent
       }
       case 'cancelar': {
         this.cerrarModal();
+        break;
+      }
+      case 'guardarnoti': {
+        evento.notificacion.fk_idTramite = this.fkTramite;
+        this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
         break;
       }
     }

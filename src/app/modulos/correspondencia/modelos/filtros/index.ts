@@ -21,3 +21,4 @@ export * from './viaje.filter';
 export * from './informe.filter'
 export * from './sujeto-identificado.filter'
 export * from './resolucion.filter'
+export * from './reunion.filter'

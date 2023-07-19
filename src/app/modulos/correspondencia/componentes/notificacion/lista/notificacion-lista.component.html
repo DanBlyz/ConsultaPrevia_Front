@@ -20,10 +20,10 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of lista">
-                                <td class="td-auto align-middle">{{ item.notificado }}</td>
-                                <td class="align-middle">{{ item.direccionDpto }}</td>
-                                <td class="align-middle">{{ item.notificacionPdf }}</td>
-                                <td class="align-middle">
+                                <td  *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.notificado }}</td>
+                                <td  *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.direccionDpto }}</td>
+                                <td  *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.notificacionPdf }}</td>
+                                <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                 </td>

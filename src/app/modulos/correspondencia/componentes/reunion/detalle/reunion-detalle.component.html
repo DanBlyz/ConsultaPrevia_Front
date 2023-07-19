@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-row">
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Nro Reunion:</label>
+                    <span>{{ reunion.nroReunion }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Acuerdo :</label>
+                    <span>{{ reunion.acuerdo }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Motivo:</label>
+                    <span>{{ reunion.motivo }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Reunion Realizada:</label>
+                    <span>{{ reunion.reunionRealizada }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Acta Reunion Pdf:</label>
+                    <span>{{ reunion.actaReunionPdf }}</span>
+                </div>
+                <div class="col-md-12 form-group mb-2">
+                    <label class="d-block">Encargado:</label>
+                    <span>{{ reunion.encargado }}</span>
+                </div>
+            </div>
+            <div class="form-row justify-content-end">
+                <div class="form-group">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
+                        {{botonOperacion}}
+                    </button>
+                    <button (click)="ejecutarAccion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

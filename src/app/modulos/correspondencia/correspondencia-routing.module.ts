@@ -80,6 +80,7 @@ import {
  InformeFormularioComponent
 } from './componentes/informe';
 import { ResolucionListaComponent } from './componentes/resolucion';
+import { ReunionListaComponent } from './componentes/reunion';
 
 const routes: Routes = [
   {
@@ -580,12 +581,42 @@ const routes: Routes = [
         }
       },
       {
+        path: 'Deliberacion/correspondencia/notificacion',
+        component: NotificacionListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Notificacion',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Notificacion' }],
+          roles: []
+        }
+      },
+      {
         path: 'Deliberacion/correspondencia/resolucion',
         component: ResolucionListaComponent,
         canActivate: [],
         data: {
           title: 'Resolucion',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Resolucion' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Deliberacion/correspondencia/acto-administrativo',
+        component: ActoAdministrativoListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Actos Administrativos',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Acto Administrativo' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Deliberacion/correspondencia/reunion',
+        component: ReunionListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Reuniones',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Reuniones' }],
           roles: []
         }
       },
@@ -599,6 +630,7 @@ const routes: Routes = [
           roles: []
         }
       },
+      
     ]
   }
 ];

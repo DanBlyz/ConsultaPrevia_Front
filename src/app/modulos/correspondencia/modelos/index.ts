@@ -37,4 +37,4 @@ export * from './viaje.model';
 export * from './informe.model';
 export * from './sujeto-identificado.model';
 export * from './resolucion.model';
-
+export * from './reunion.model';

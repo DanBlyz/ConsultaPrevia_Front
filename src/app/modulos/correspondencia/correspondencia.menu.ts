@@ -227,8 +227,35 @@ export const CorrespondenciaMenu: MenuItem[] = [
     esEnlace: true,
     submenu: [
       {
+        ruta: 'Deliberacion/correspondencia/notificacion',
+        titulo: 'Notificaciones',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
         ruta: 'Deliberacion/correspondencia/resolucion',
         titulo: 'Resoluciones',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
+        ruta: 'Deliberacion/correspondencia/acto-administrativo',
+        titulo: 'Actos Administrativos',
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
+        ruta: 'Deliberacion/correspondencia/reunion',
+        titulo: 'Reuniones',
         icono: 'fas fa-cog',
         class: '',
         esEnlace: true,
