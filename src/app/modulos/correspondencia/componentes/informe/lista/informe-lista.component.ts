@@ -15,6 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Informe } from '../../../modelos';
 import { InformeFilter } from '../../../modelos/filtros';
 import { InformeFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-informe-lista',
@@ -37,9 +38,12 @@ export class InformeListaComponent
   modalTitulo: string;
   modal: NgbModalRef;
 
+  arr = this.router.url.split('/');
+
   constructor(
     private informeFacade: InformeFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

@@ -621,12 +621,32 @@ const routes: Routes = [
         }
       },
       {
+        path: 'Deliberacion/correspondencia/informe',
+        component: InformeListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Informes',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informes' }],
+          roles: []
+        }
+      },
+      {
         path: 'Mediacion/correspondencia/resolucion',
         component: ResolucionListaComponent,
         canActivate: [],
         data: {
           title: 'Resolucion',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Resolucion' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Mediacion/correspondencia/reunion',
+        component: ReunionListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Reunion',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Reunion' }],
           roles: []
         }
       },

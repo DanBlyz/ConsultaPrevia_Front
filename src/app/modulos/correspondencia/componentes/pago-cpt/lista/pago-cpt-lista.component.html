@@ -23,7 +23,10 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of lista">
-                                <td class="td-auto align-middle">{{ item.pagoRealizado }}</td>
+                                <td class="td-auto align-middle">
+                                    <i *ngIf="item.pagoRealizado"  class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="!item.pagoRealizado" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
                                 <td class="align-middle">{{ item.encargado }}</td>
                                 <td class="align-middle">{{ item.diasViaje }}</td>
                                 <td class="align-middle">{{ item.tipoViaje }}</td>

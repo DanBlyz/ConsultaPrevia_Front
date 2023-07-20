@@ -7,8 +7,10 @@ export class Reunion {
     acuerdo: boolean;
     motivo: string;
     reunionRealizada: boolean;
-    actaReunionPdf: boolean;
+    actaReunionPdf: string;
     encargado: string;
+    estado?: string;
+    flujo?: string;
 
     notificacion?: Notificacion;
   }

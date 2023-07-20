@@ -113,7 +113,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
   {
     ruta: '#',
     titulo: 'IDENTIFICACION',
-    icono: 'fas fa-user-lock',
+    icono: 'fas fa-search',
     class: '',
     esEnlace: true,
     submenu: [
@@ -129,7 +129,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/tramites',
         titulo: 'Tramites',
-        icono: 'fas fa-cog',
+        icono: 'far fa-clipboard',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -138,7 +138,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/providencias',
         titulo: 'Providencias',
-        icono: 'fas fa-cog',
+        icono: 'far fa-file-alt',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -147,7 +147,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/notificaciones',
         titulo: 'Notificaciones',
-        icono: 'fas fa-cog',
+        icono: 'far fa-envelope-open',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -156,7 +156,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/actos-administrativos',
         titulo: 'Actos Administrativos',
-        icono: 'fas fa-cog',
+        icono: 'fas fa-paste',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -165,7 +165,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/pagos-cpt',
         titulo: 'Pagos Cpt',
-        icono: 'fas fa-cog',
+        icono: 'far fa-money-bill-alt',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -174,7 +174,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/viaje',
         titulo: 'Viaje',
-        icono: 'fas fa-cog',
+        icono: 'fas fa-map-marked-alt',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -183,7 +183,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Identificacion/correspondencia/informe',
         titulo: 'Informe',
-        icono: 'fas fa-cog',
+        icono: 'fas fa-book',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -222,14 +222,14 @@ export const CorrespondenciaMenu: MenuItem[] = [
   {
     ruta: '#',
     titulo: 'DELIBERACION',
-    icono: 'fas fa-user-lock',
+    icono: 'fas fa-people-arrows',
     class: '',
     esEnlace: true,
     submenu: [
       {
         ruta: 'Deliberacion/correspondencia/notificacion',
         titulo: 'Notificaciones',
-        icono: 'fas fa-cog',
+        icono: 'far fa-envelope-open',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -247,7 +247,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Deliberacion/correspondencia/acto-administrativo',
         titulo: 'Actos Administrativos',
-        icono: 'fas fa-cog',
+        icono: 'fas fa-paste',
         class: '',
         esEnlace: true,
         submenu: [],
@@ -262,19 +262,37 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
+      {
+        ruta: 'Deliberacion/correspondencia/informe',
+        titulo: 'Informes',
+        icono: 'fas fa-book',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
     ],
     roles: []
   },
   {
     ruta: '#',
     titulo: 'MEDIACION',
-    icono: 'fas fa-user-lock',
+    icono: 'fas fa-users',
     class: '',
     esEnlace: true,
     submenu: [
       {
         ruta: 'Mediacion/correspondencia/resolucion',
         titulo: 'Resoluciones',  
+        icono: 'fas fa-cog',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
+        ruta: 'Mediacion/correspondencia/reunion',
+        titulo: 'Reuniones',  
         icono: 'fas fa-cog',
         class: '',
         esEnlace: true,

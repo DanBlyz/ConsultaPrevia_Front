@@ -25,9 +25,17 @@
                             <tr *ngFor="let item of lista ;let primero = first">
                                 <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.informe }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.resolucion }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.informeAprobado }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.actoAdministrativo }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.resolucionPdf }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <i *ngIf="item.informeAprobado" class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="!item.informeAprobado" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <i *ngIf="item.actoAdministrativo" class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="!item.actoAdministrativo" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <i *ngIf="item.resolucionPdf !== null" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"

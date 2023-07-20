@@ -149,8 +149,8 @@ export class ActoAdministrativoListaComponent
       }
       case 'informe': {
         this.tipoOperacion = 'informe';
-        console.log(evento.id," fk_id tamite");
-        this.fk_idTramite = evento.id;
+        this.actoAdministrativoFacade.obtenerPorId(evento.id);
+        this.fk_idTramite = evento.fk_idTramite;
         this.modalTitulo = 'Adjuntar Informe';
         this.mostrarModal();
         break;
@@ -201,6 +201,7 @@ export class ActoAdministrativoListaComponent
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
+        window.location.reload();
         });
         break;
       }
@@ -211,6 +212,7 @@ export class ActoAdministrativoListaComponent
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
+        window.location.reload();
         });
         break;
       }
@@ -219,6 +221,23 @@ export class ActoAdministrativoListaComponent
         this.informeFacade.guardar(evento.informe).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
+            const actoNuevo = {...this.actoAdministrativo};
+            console.log(actoNuevo);
+            var actoV = {
+              fk_idTramite: actoNuevo.fk_idTramite,
+              viajeRealizado: actoNuevo.viajeRealizado,
+              flujo: actoNuevo.flujo,
+              encargado: actoNuevo.encargado,
+              estado: "INFORME"
+            };
+            
+            this.actoAdministrativoFacade
+            .modificar(actoNuevo.id, actoV)
+            .then((respuesta) => {
+              if (respuesta.tipoRespuesta === 'Exito') {
+                this.cerrarModal();
+              }
+            });
           }
         });
         break;

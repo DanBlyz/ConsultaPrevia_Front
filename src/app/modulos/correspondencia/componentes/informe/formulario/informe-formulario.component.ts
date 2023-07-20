@@ -158,7 +158,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         informe = { ...this.formInforme.value };
-        informe.flujo = 'Mediacion';
+        let arr = this.router.url.split('/');
+        informe.flujo = arr[1];
         this.accion.emit({
           accion: 'guardarInforme',
           informe

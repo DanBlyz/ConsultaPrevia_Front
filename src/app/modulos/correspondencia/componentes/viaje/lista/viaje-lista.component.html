@@ -22,11 +22,13 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of lista">
-                                <td class="td-auto align-middle">{{ item.fechaInicio }}</td>
-                                <td class="align-middle">{{ item.fechaFin }}</td>
+                                <td class="td-auto align-middle">{{ item.fechaInicio | date:'dd-MM-yyyy '}}</td>
+                                <td class="align-middle">{{ item.fechaFin  | date:'dd-MM-yyyy '}}</td>
                                 <td class="align-middle">{{ item.descripcion }}</td>
                                 <td class="align-middle">{{ item.nroFormulario }}</td>
-                                <td class="align-middle">{{ item.formularioPdf }}</td>
+                                <td class="align-middle">
+                                    <i *ngIf="item.formularioPdf !== null" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                </td>
                                 <td class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>

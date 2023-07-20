@@ -3,4 +3,5 @@ export class ActoAdministrativoFilter {
   viajeRealizado?: boolean;
   flujo?: string;
   encargado?: string;
+  estado?: string;
 }

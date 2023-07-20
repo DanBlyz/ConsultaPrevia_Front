@@ -6,6 +6,7 @@ export class ActoAdministrativo {
     viajeRealizado: boolean;
     flujo?: string;
     encargado?: string;
+    estado?: string;
     pagoCpt?: PagoCpt;
     tramite?: Tramite;
     viaje?: Viaje;

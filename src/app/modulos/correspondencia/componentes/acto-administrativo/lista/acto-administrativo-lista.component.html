@@ -20,9 +20,19 @@
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.tramite.correlativo }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? item.viaje.nroFormulario : "No Programo Viaje" }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.apm : "No Genero Cpt" }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.viajeRealizado }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.pagoRealizado : "No Genero Cpt" }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? item.viaje.formularioPdf : "No Programo Viaje" }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">
+                                    <i *ngIf="item.viajeRealizado"  class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="!item.viajeRealizado" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <i *ngIf="item.pagoCpt !== null ? item.pagoCpt.pagoRealizado : false"  class="fas fa-check-circle fa-lg text-success"></i>
+                                    <i *ngIf="item.pagoCpt !== null ? !item.pagoCpt.pagoRealizado : false" class="fas fa-times-circle fa-lg text-danger"></i>
+                                </td>
+
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? item.viaje.formularioPdf : "No Programo Viaje" }}
+                                    <i *ngIf="item.viaje !== null ? true :false" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                </td>
+                               
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
@@ -33,7 +43,7 @@
                                 <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'viaje',id: item.id})">
                                 <input *ngIf=" item.viajeRealizado === true ? (item.flujo === 'Deliberacion'? false : true ) :false"  type="button" value="Adjuntar Informe" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'informe',id: item.fk_idTramite})">
+                                        (click)="ejecutarOperacion({operacion: 'informe',fk_idTramite: item.fk_idTramite,id: item.id})" [disabled]="item.estado === 'INFORME' ? true : false">
                                         
                                 </td>
                             </tr>

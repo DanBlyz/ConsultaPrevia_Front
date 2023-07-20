@@ -22,12 +22,14 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of lista">
-                                <td class="td-auto align-middle">{{ item.correlativo }}</td>
-                                <td class="align-middle">{{ item.referencia }}</td>
-                                <td class="align-middle">{{ item.informePdf }}</td>
-                                <td class="align-middle">{{ item.asunto }}</td>
-                                <td class="align-middle">{{ item.encargado }}</td>
-                                <td class="align-middle">
+                                <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.correlativo }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.referencia }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <i *ngIf="item.informePdf !== null ? true :false" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                </td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.encargado }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
