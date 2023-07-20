@@ -50,7 +50,7 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
       encargado: ['', Validators.required],
       diasViaje: ['', Validators.required],
       tipoViaje: ['', Validators.required],
-      montoTotal: ['', Validators.required],
+      montoTotal: ['',Validators.required],
       apm: ['', Validators.required]
     });
   }

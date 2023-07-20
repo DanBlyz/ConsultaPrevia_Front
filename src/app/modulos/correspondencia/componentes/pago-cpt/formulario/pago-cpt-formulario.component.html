@@ -2,30 +2,43 @@
     <div class="col-12">
         <form [formGroup]="formPagoCpt" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Pago Realizado:</label>
-                    <input type="checkbox" class="form-control" formControlName="pagoRealizado">
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Dias de Viaje:</label>
+                    <input type="number" class="form-control" formControlName="diasViaje" />
+                    {{formPagoCpt.get('diasViaje').value}}
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Tipo Viaje:</label>
+                    <select class="form-control" formControlName="tipoViaje">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="'Interdepartamental'">Interdepartamental</option>
+                        <option [ngValue]="'Intradepartamental'">Intradepartamental</option>
+                        <option [ngValue]="'Franja de Frontera'">Franja Frontera</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Monto Total:</label>
+                    <input type="number" class="form-control"  
+                    [value]="formPagoCpt.get('tipoViaje').value === 'Interdepartamental' ? formPagoCpt.get('diasViaje').value * 371 :
+                    formPagoCpt.get('tipoViaje').value === 'Intradepartamental' ? formPagoCpt.get('diasViaje').value * 222 : 
+                    formPagoCpt.get('tipoViaje').value === 'Franja de Frontera' ? formPagoCpt.get('diasViaje').value * 391 :0 " 
+                    formControlName="montoTotal" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Encargado:</label>
                     <input type="text" class="form-control" formControlName="encargado" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Dias de Viaje:</label>
-                    <input type="number" class="form-control" formControlName="diasViaje" />
-                </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Tipo Viaje:</label>
-                    <input type="text" class="form-control" formControlName="tipoViaje" />
-                </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Monto Total:</label>
-                    <input type="number" class="form-control" formControlName="montoTotal" />
-                </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Actor Productivo Minero:</label>
                     <input type="text" class="form-control" formControlName="apm" />
                 </div>
+                <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Pago Realizado:</label>
+                    <input type="checkbox" class="form-control fa-lg" formControlName="pagoRealizado">
+                </div>
+              
             </div>
             <div class="form-row justify-content-end">
                 <div class="form-group">

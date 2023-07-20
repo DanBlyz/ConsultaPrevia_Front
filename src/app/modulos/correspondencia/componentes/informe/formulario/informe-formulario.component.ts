@@ -57,8 +57,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       encargado: ['', Validators.required],
       informePdf: ['',Validators.required],
       nroSujetos: [0, Validators.required],
-      comunidad: ['vac', Validators.required],
-      representante: ['cc', Validators.required],
+      comunidad: ['_', Validators.required],
+      representante: ['_', Validators.required],
     });
   }
 

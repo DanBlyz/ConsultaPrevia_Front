@@ -96,7 +96,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
     switch (accion) {
       case 'providencia': {
         console.log(this.formProvidencia.value);
-        /*FuncionesHelper.limpiarEspacios(this.formProvidencia);
+        FuncionesHelper.limpiarEspacios(this.formProvidencia);
         if (!this.formProvidencia.valid) {
           this.formProvidencia.markAllAsTouched();
           return;
@@ -107,7 +107,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
         this.accion.emit({
           accion: 'guardarpro',
           providencia
-        });*/
+        });
         break;
       }
       case 'modificar': {
@@ -133,9 +133,5 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
       
     }
   }
-  capturarEvento(evento):  any{
-    const archivoCapturado = evento.target.files;
 
-    console.log(evento.target.files);
-  }
 }

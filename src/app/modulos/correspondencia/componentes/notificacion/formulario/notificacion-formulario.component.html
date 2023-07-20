@@ -2,17 +2,26 @@
     <div class="col-12">
         <form [formGroup]="formNotificacion" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Notificado:</label>
                     <input type="text" class="form-control" formControlName="notificado" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Direccion Departamental:</label>
-                    <input type="text" class="form-control" formControlName="direccionDpto" />
-                </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Notificacion Pdf:</label>
                     <input type="text" class="form-control" formControlName="notificacionPdf" />
+                </div>
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Direccion Departamental:</label>
+                    <select class="form-control" formControlName="direccionDpto">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="'LA PAZ - BENI - PANDO'">LA PAZ - BENI - PANDO</option>
+                        <option [ngValue]="'SANTA CRUZ'">SANTA CRUZ</option>
+                        <option [ngValue]="'COCHABAMBA'">COCHABAMBA</option>
+                        <option [ngValue]="'ORURO'">ORURO</option>
+                        <option [ngValue]="'POTOSI'">POTOSI</option>
+                        <option [ngValue]="'CHUQUISACA'">CHUQUISACA</option>
+                        <option [ngValue]="'TUPIZA - TARIJA'">TUPIZA - TARIJA</option>
+                    </select>
                 </div>
             </div>
             <div class="form-row justify-content-end">
