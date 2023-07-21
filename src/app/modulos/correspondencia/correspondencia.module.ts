@@ -131,7 +131,8 @@ import {
   ProvidenciaListaComponent,
   ProvidenciaBuscadorComponent,
   ProvidenciaFormularioComponent,
-  ProvidenciaDetalleComponent
+  ProvidenciaDetalleComponent,
+  FileUploadComponent
  } from './componentes/providencia';
 
  import {
@@ -270,6 +271,8 @@ import {
     ProvidenciaFormularioComponent,
     ProvidenciaBuscadorComponent,
     ProvidenciaListaComponent,
+    FileUploadComponent,
+    
     NotificacionDetalleComponent,
     NotificacionFormularioComponent,
     NotificacionBuscadorComponent,
@@ -298,6 +301,7 @@ import {
     ReunionFormularioComponent,
     ReunionBuscadorComponent,
     ReunionListaComponent,
+
   ],
   imports: [
     CommonModule,

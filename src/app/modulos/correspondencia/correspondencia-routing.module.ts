@@ -54,7 +54,8 @@ import {
   ProvidenciaListaComponent,
   ProvidenciaBuscadorComponent,
   ProvidenciaDetalleComponent,
-  ProvidenciaFormularioComponent
+  ProvidenciaFormularioComponent,
+  FileUploadComponent
 } from './componentes/providencia';
 
 import { 
@@ -647,6 +648,16 @@ const routes: Routes = [
         data: {
           title: 'Reunion',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Reunion' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Mediacion/correspondencia/prueba',
+        component: FileUploadComponent,
+        canActivate: [],
+        data: {
+          title: 'Prueba',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Pruevba' }],
           roles: []
         }
       },
