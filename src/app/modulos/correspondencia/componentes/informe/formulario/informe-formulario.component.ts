@@ -56,9 +56,19 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       asunto: ['', Validators.required],
       encargado: ['', Validators.required],
       informePdf: ['',Validators.required],
-      nroSujetos: [0, Validators.required],
+      nroSujetos: [1, Validators.required],
       comunidad: ['_', Validators.required],
       representante: ['_', Validators.required],
+      comunidad2: ['_', Validators.required],
+      representante2: ['_', Validators.required],
+      comunidad3: ['_', Validators.required],
+      representante3: ['_', Validators.required],
+      comunidad4: ['_', Validators.required],
+      representante4: ['_', Validators.required],
+      comunidad5: ['_', Validators.required],
+      representante5: ['_', Validators.required],
+      comunidad6: ['_', Validators.required],
+      representante6: ['_', Validators.required],
     });
   }
 
@@ -76,7 +86,17 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
               informePdf: this.informe.informePdf,
               nroSujetos: 1,
               comunidad: "",
-              representante: ""
+              representante: "",
+              comunidad2: "",
+              representante2: "",
+              comunidad3: "",
+              representante3: "",
+              comunidad4: "",
+              representante4: "",
+              comunidad5: "",
+              representante5: "",
+              comunidad6: "",
+              representante6: ""
             });
           }
         }
@@ -135,10 +155,42 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         informe = { ...this.formInforme.value };
-        const sujeto = new SujetoIdentificado();
-        sujeto.comunidad = this.formInforme.value.comunidad;
-        sujeto.representante = this.formInforme.value.representante;
-        this.listaSujetoIdentificado[0] = sujeto;
+        if(this.formInforme.value.nroSujetos > 0){
+          const sujeto = new SujetoIdentificado();
+          sujeto.comunidad = this.formInforme.value.comunidad;
+          sujeto.representante = this.formInforme.value.representante;
+          this.listaSujetoIdentificado[0] = sujeto;
+        }
+        if(this.formInforme.value.nroSujetos > 1){
+          const sujeto2 = new SujetoIdentificado();
+          sujeto2.comunidad = this.formInforme.value.comunidad2;
+          sujeto2.representante = this.formInforme.value.representante2;
+          this.listaSujetoIdentificado[1] = sujeto2;
+        }
+        if(this.formInforme.value.nroSujetos > 2){
+          const sujeto3 = new SujetoIdentificado();
+          sujeto3.comunidad = this.formInforme.value.comunidad3;
+          sujeto3.representante = this.formInforme.value.representante3;
+          this.listaSujetoIdentificado[2] = sujeto3;
+        }
+        if(this.formInforme.value.nroSujetos > 3){
+          const sujeto4 = new SujetoIdentificado();
+          sujeto4.comunidad = this.formInforme.value.comunidad4;
+          sujeto4.representante = this.formInforme.value.representante4;
+          this.listaSujetoIdentificado[3] = sujeto4;
+        }
+        if(this.formInforme.value.nroSujetos > 4){
+          const sujeto5 = new SujetoIdentificado();
+          sujeto5.comunidad = this.formInforme.value.comunidad5;
+          sujeto5.representante = this.formInforme.value.representante5;
+          this.listaSujetoIdentificado[4] = sujeto5;
+        }
+        if(this.formInforme.value.nroSujetos > 5){
+          const sujeto6 = new SujetoIdentificado();
+          sujeto6.comunidad = this.formInforme.value.comunidad6;
+          sujeto6.representante = this.formInforme.value.representante6;
+          this.listaSujetoIdentificado[5] = sujeto6;
+        }
         informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
         console.log(this.router.url);
         let arr = this.router.url.split('/');

@@ -2,11 +2,16 @@
     <div class="col-12">
         <form [formGroup]="formReunion" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro Reunion:</label>
-                    <input type="text" class="form-control" formControlName="nroReunion" />
+                    <select class="form-control" formControlName="nroReunion">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="'1ERA'">1ERA</option>
+                        <option [ngValue]="'2DA'">2DA</option>
+                        <option [ngValue]="'3ERA'">3ERA</option>
+                    </select>
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Acuerdo:</label>
                     <input type="checkbox" class="form-control" formControlName="acuerdo" />
                 </div>
@@ -14,11 +19,11 @@
                     <label><span class="required-field-indicator"></span> Motivo:</label>
                     <input type="text" class="form-control" formControlName="motivo" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Reunion Realizada:</label>
                     <input type="checkbox" class="form-control" formControlName="reunionRealizada" />
                 </div>
-                <div class="col-md-12 form-group mb-2">
+                <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Acta Reunion PDF:</label>
                     <input type="text" class="form-control" formControlName="actaReunionPdf" />
                 </div>
