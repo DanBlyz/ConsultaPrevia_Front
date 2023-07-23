@@ -106,7 +106,6 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
         console.log(pagoCpt);
         let arr = this.router.url.split('/');
         pagoCpt.flujo = arr[1];
-        pagoCpt.fk_idActos = 12;
 
         this.accion.emit({
           accion: 'guardar',
