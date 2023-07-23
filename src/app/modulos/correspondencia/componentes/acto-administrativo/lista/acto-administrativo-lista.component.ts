@@ -19,6 +19,7 @@ import { PagoCptFacade } from '../../../fachadas';
 import { ViajeFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -50,7 +51,8 @@ export class ActoAdministrativoListaComponent
     private pagoCptFacade: PagoCptFacade,
     private viajeFacade: ViajeFacade,
     private informeFacade: InformeFacade,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void { 
@@ -266,5 +268,24 @@ export class ActoAdministrativoListaComponent
 
   cerrarModal(): void {
     this.modal.close();
+  }
+  downloadPDF(nombre: string) {
+    const filename = nombre; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/viajes/bajar-archivo/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 }

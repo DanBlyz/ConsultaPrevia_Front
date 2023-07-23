@@ -23,7 +23,8 @@
                                 <td  *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">{{ item.notificado }}</td>
                                 <td  *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.direccionDpto }}</td>
                                 <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
-                                    <i *ngIf="item.notificacionPdf !== null ? true :false" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                    <i (click)="downloadPDF(item.notificacionPdf)"
+                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                 <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"

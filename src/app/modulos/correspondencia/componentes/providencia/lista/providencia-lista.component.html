@@ -23,7 +23,10 @@
                             <tr *ngFor="let item of lista">
                                 <td class="td-auto align-middle">{{ item.correlativo }}</td>
                                 <td class="align-middle">{{ item.referencia }}</td>
-                                <td class="align-middle">{{ item.providenciaPdf }}</td>
+                                <td class="align-middle">
+                                    <i (click)="downloadPDF(item.providenciaPdf)"
+                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
+                                </td>
                                 <td class="align-middle">{{ item.flujo }}</td>
                                 <td class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"

@@ -12,13 +12,12 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Providencia } from '../../../modelos';
 import { ProvidenciaFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-providencia-formulario',
@@ -29,6 +28,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
 
+  selectedFile: File | null = null;
   suscripcion = new Subscription();
 
   formProvidencia: FormGroup;
@@ -42,7 +42,8 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private providenciaFacade: ProvidenciaFacade,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     if (!this.providencia) {
       this.providencia = new Providencia();
@@ -51,7 +52,6 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
     this.formProvidencia = this.fb.group({
       correlativo: ['', Validators.required],
       referencia: ['', Validators.required],
-      providenciaPdf: ['', Validators.required]
     });
   }
   
@@ -101,9 +101,24 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
           this.formProvidencia.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/providencias/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         providencia = { ...this.formProvidencia.value };
         let arr = this.router.url.split('/');
         providencia.flujo = arr[1];
+        providencia.providenciaPdf = "providencia-"+this.selectedFile.name;
         this.accion.emit({
           accion: 'guardarpro',
           providencia
@@ -132,6 +147,9 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
       }
       
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
 }

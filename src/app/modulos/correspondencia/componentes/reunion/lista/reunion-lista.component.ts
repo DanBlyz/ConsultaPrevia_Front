@@ -19,6 +19,7 @@ import { NotificacionFacade } from '../../../fachadas';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-reunion-lista',
@@ -52,7 +53,8 @@ export class ReunionListaComponent
     private notificacionFacade: NotificacionFacade,
     private actoAdministrativoFacade: ActoAdministrativoFacade,
     private informeFacade: InformeFacade,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -207,11 +209,7 @@ export class ReunionListaComponent
           }
         });
         const reunionNueva = {...this.reunion};
-        console.log(reunionNueva);
-        console.log(reunionNueva.motivo);
         reunionNueva.notificacion = null;
-        console.log(this.reunion);
-        console.log(reunionNueva);
         var reunionV = {
           motivo: reunionNueva.motivo,
           nroReunion: reunionNueva.nroReunion,
@@ -262,7 +260,6 @@ export class ReunionListaComponent
         
         this.reunionFacade
           .modificar(reunionNueva.id,reunionV)
-            
           .then((respuesta) => {
             if (respuesta.tipoRespuesta === 'Exito') {
               console.log("exito")
@@ -330,5 +327,24 @@ export class ReunionListaComponent
 
   cerrarModal(): void {
     this.modal.close();
+  }
+  downloadPDF(nombre: string) {
+    const filename = nombre; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/reuniones/bajar-archivo/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 }

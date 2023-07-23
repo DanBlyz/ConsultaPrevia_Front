@@ -32,4 +32,23 @@ export class FileUploadComponent {
       }
     );
   }
+  downloadPDF() {
+    const filename = 'providencia-Citacion HCC 7 JULIO.pdf'; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/files/download/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
 }

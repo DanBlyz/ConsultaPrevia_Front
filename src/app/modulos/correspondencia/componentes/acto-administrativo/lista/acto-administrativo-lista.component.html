@@ -30,7 +30,8 @@
                                 </td>
 
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? "" : "No Programo Viaje" }}
-                                    <i *ngIf="item.viaje !== null ? true :false" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                    <i *ngIf="item.viaje !== null ? true :false" (click)="downloadPDF(item.viaje.formularioPdf)"
+                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">

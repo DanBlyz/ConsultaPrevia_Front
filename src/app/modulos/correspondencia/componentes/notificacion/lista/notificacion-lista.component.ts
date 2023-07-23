@@ -16,6 +16,7 @@ import { Notificacion } from '../../../modelos';
 import { NotificacionFilter } from '../../../modelos/filtros';
 import { NotificacionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-notificacion-lista',
@@ -43,7 +44,8 @@ export class NotificacionListaComponent
   constructor(
     private notificacionFacade: NotificacionFacade,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -185,5 +187,24 @@ export class NotificacionListaComponent
 
   cerrarModal(): void {
     this.modal.close();
+  }
+  downloadPDF(nombre: string) {
+    const filename = nombre; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/notificaciones/bajar-archivo/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 }

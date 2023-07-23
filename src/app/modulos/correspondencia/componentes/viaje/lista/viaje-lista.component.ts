@@ -15,6 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Viaje } from '../../../modelos';
 import { ViajeFilter } from '../../../modelos/filtros';
 import { ViajeFacade } from '../../../fachadas';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-viaje-lista',
@@ -39,7 +40,8 @@ export class ViajeListaComponent
 
   constructor(
     private viajeFacade: ViajeFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -181,5 +183,24 @@ export class ViajeListaComponent
 
   cerrarModal(): void {
     this.modal.close();
+  }
+  downloadPDF(nombre: string) {
+    const filename = nombre; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/viajes/bajar-archivo/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 }

@@ -34,7 +34,8 @@
                                     <i *ngIf="!item.actoAdministrativo" class="fas fa-times-circle fa-lg text-danger"></i>
                                 </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
-                                    <i *ngIf="item.resolucionPdf !== null" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                    <i *ngIf="item.resolucionPdf !== null" (click)="downloadPDF(item.resolucionPdf)"
+                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
