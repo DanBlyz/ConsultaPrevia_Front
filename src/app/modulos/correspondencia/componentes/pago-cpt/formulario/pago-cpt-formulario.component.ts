@@ -48,11 +48,12 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
     this.formPagoCpt = this.fb.group({
       pagoRealizado: [false, Validators.required],
       encargado: ['', Validators.required],
-      diasViaje: ['', Validators.required],
+      diasViaje: [0, Validators.required],
       tipoViaje: ['', Validators.required],
-      montoTotal: ['',Validators.required],
+      montoTotal: [0],
       apm: ['', Validators.required]
     });
+    
   }
 
   ngOnInit(): void {
@@ -103,10 +104,10 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         pagoCpt = { ...this.formPagoCpt.value };
-        console.log(pagoCpt);
         let arr = this.router.url.split('/');
         pagoCpt.flujo = arr[1];
-
+        pagoCpt.montoTotal = this.calculateMontoTotal();
+        console.log(pagoCpt);
         this.accion.emit({
           accion: 'guardar',
           pagoCpt
@@ -143,6 +144,7 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
         console.log(pagoCpt);
         let arr = this.router.url.split('/');
         pagoCpt.flujo = arr[1];
+        pagoCpt.montoTotal = this.calculateMontoTotal();
         this.accion.emit({
           accion: 'guardaPagoCpt',
           pagoCpt
@@ -151,4 +153,20 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
       }
     }
   }
+ calculateMontoTotal(): number {
+    const tipoViajeValue = this.formPagoCpt.get('tipoViaje').value;
+    const diasViajeValue = this.formPagoCpt.get('diasViaje').value;
+
+    // Lógica para calcular el montoTotal basado en tipoViaje y diasViaje
+    if (tipoViajeValue === 'Interdepartamental') {
+      return diasViajeValue * 371;
+    } else if (tipoViajeValue === 'Intradepartamental') {
+      return diasViajeValue * 222;
+    } else if (tipoViajeValue === 'Franja de Frontera') {
+      return diasViajeValue * 391;
+    } else {
+      return 0;
+    }
+  }
+  
 }

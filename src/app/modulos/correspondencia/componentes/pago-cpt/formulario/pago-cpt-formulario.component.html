@@ -18,10 +18,7 @@
                 <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Monto Total:</label>
                     <input type="number" class="form-control"  
-                    [value]="formPagoCpt.get('tipoViaje').value === 'Interdepartamental' ? formPagoCpt.get('diasViaje').value * 371 :
-                    formPagoCpt.get('tipoViaje').value === 'Intradepartamental' ? formPagoCpt.get('diasViaje').value * 222 : 
-                    formPagoCpt.get('tipoViaje').value === 'Franja de Frontera' ? formPagoCpt.get('diasViaje').value * 391 :0 " 
-                    formControlName="montoTotal" />
+                    [value]="calculateMontoTotal()" formControlName="montoTotal" [readonly]="true" />
                 </div>
             </div>
             <div class="form-row">
