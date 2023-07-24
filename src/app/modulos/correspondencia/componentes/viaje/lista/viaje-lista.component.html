@@ -27,7 +27,8 @@
                                 <td class="align-middle">{{ item.descripcion }}</td>
                                 <td class="align-middle">{{ item.nroFormulario }}</td>
                                 <td class="align-middle">
-                                    <i *ngIf="item.formularioPdf !== null" class='fas fa-file-pdf' style='font-size:35px;color:red'></i>
+                                    <i (click)="downloadPDF(item.formularioPdf)"
+                                    class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                 <td class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"

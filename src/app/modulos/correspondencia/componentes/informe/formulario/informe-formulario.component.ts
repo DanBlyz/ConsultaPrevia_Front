@@ -18,6 +18,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 import { Informe, SujetoIdentificado } from '../../../modelos';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-informe-formulario',
@@ -28,7 +29,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
   
-
+  selectedFile: File | null = null;
   listaSujetoIdentificado: SujetoIdentificado []= [];
 
   suscripcion = new Subscription();
@@ -44,7 +45,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private informeFacade: InformeFacade,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     if (!this.informe) {
       this.informe = new Informe();
@@ -55,7 +57,6 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       referencia: ['', Validators.required],
       asunto: ['', Validators.required],
       encargado: ['', Validators.required],
-      informePdf: ['',Validators.required],
       nroSujetos: [1, Validators.required],
       comunidad: ['_', Validators.required],
       representante: ['_', Validators.required],
@@ -154,7 +155,22 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           this.formInforme.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/informes/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         informe = { ...this.formInforme.value };
+        informe.informePdf = "informe-"+this.selectedFile.name;
         if(this.formInforme.value.nroSujetos > 0){
           const sujeto = new SujetoIdentificado();
           sujeto.comunidad = this.formInforme.value.comunidad;
@@ -192,9 +208,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           this.listaSujetoIdentificado[5] = sujeto6;
         }
         informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
-        console.log(this.router.url);
         let arr = this.router.url.split('/');
-        console.log("aqui 1");
         informe.flujo = arr[1];
         this.accion.emit({
           accion: 'guardarInforme',
@@ -209,6 +223,20 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           this.formInforme.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/informes/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         informe = { ...this.formInforme.value };
         let arr = this.router.url.split('/');
         informe.flujo = arr[1];
@@ -239,5 +267,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 }

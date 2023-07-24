@@ -15,7 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Providencia } from '../../../modelos';
 import { ProvidenciaFilter } from '../../../modelos/filtros';
 import { ProvidenciaFacade } from '../../../fachadas';
-
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-providencia-lista',
   templateUrl: './providencia-lista.component.html',
@@ -39,7 +39,8 @@ export class ProvidenciaListaComponent
 
   constructor(
     private providenciaFacade: ProvidenciaFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -181,5 +182,24 @@ export class ProvidenciaListaComponent
 
   cerrarModal(): void {
     this.modal.close();
+  }
+  downloadPDF(nombre: string) {
+    const filename = nombre; // Reemplaza con el nombre del archivo que deseas descargar
+    const url = `http://localhost:3000/providencias/bajar-archivo/${filename}`;
+
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        this.showPDF(data);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
+
+  showPDF(data: ArrayBuffer) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 }

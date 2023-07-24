@@ -17,6 +17,8 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Reunion } from '../../../modelos';
 import { ReunionFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-reunion-formulario',
@@ -28,6 +30,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
   @Output() accion = new EventEmitter<any>();
 
   suscripcion = new Subscription();
+  selectedFile: File | null = null;
 
   formReunion: FormGroup;
   botonOperacion: string;
@@ -38,7 +41,9 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
     private reunionFacade: ReunionFacade,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router,
+    private http: HttpClient
   ) {
     if (!this.reunion) {
       this.reunion = new Reunion();
@@ -49,7 +54,6 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
       acuerdo: ['', Validators.required],
       motivo: ['', Validators.required],
       reunionRealizada: ['', Validators.required],
-      actaReunionPdf: ['', Validators.required],
       encargado: ['', Validators.required]
     });
   }
@@ -65,7 +69,6 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
               acuerdo: this.reunion.acuerdo,
               motivo: this.reunion.motivo,
               reunionRealizada: this.reunion.reunionRealizada,
-              actaReunionPdf: this.reunion.actaReunionPdf,
               encargado: this.reunion.encargado,
             });
           }
@@ -110,7 +113,22 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
           this.formReunion.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/reuniones/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         reunion = { ...this.formReunion.value };
+        reunion.actaReunionPdf = "reunion-"+this.selectedFile.name;
         this.accion.emit({
           accion,
           reunionId: this.reunion.id,
@@ -125,5 +143,8 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 }

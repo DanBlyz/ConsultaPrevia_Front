@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Informe Pdf:</label>
-                    <input type="text" class="form-control" formControlName="informePdf" />
+                    <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
                 </div>
                 <div class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Referencia:</label>

@@ -18,6 +18,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 import { Resolucion } from '../../../modelos';
 import { ResolucionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-resolucion-formulario',
@@ -29,6 +30,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   @Output() accion = new EventEmitter<any>();
 
   arr = this.router.url.split('/');
+  selectedFile: File | null = null;
   suscripcion = new Subscription();
 
   formResolucion: FormGroup;
@@ -41,7 +43,8 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private resolucionFacade: ResolucionFacade,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     if (!this.resolucion) {
       this.resolucion = new Resolucion();
@@ -52,7 +55,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
       resolucion: ['', Validators.required],
       informeAprobado: ['', Validators.required],
       actoAdministrativo: ['', Validators.required],
-      resolucionPdf: ['', Validators.required],
+      //resolucionPdf: ['', Validators.required],
       asunto: ['', Validators.required]
     });
   }
@@ -68,7 +71,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
               resolucion: this.resolucion.resolucion,
               informeAprobado: this.resolucion.informeAprobado,
               actoAdministrativo: this.resolucion.actoAdministrativo,
-              resolucionPdf: this.resolucion.resolucionPdf,
+             // resolucionPdf: this.resolucion.resolucionPdf,
               asunto: this.resolucion.asunto
             });
           }
@@ -113,8 +116,23 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
           this.formResolucion.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/resoluciones/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         resolucion = { ...this.formResolucion.value };
         resolucion.flujo = this.arr[1];
+        resolucion.resolucionPdf = "resolucion-"+this.selectedFile.name;
         this.accion.emit({
           accion,
           resolucionId: this.resolucion.id,
@@ -129,5 +147,8 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 }

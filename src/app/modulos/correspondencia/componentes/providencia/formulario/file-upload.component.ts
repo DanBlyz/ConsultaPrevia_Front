@@ -33,7 +33,11 @@ export class FileUploadComponent {
     );
   }
   downloadPDF() {
+<<<<<<< HEAD
     const filename = '613b63ab43a53c06f74c2f14e4637c58'; // Reemplaza con el nombre del archivo que deseas descargar
+=======
+    const filename = 'providencia-Citacion HCC 7 JULIO.pdf'; // Reemplaza con el nombre del archivo que deseas descargar
+>>>>>>> b8b88a6afaef53ff7d7ce564f0a7efb1eadfcf46
     const url = `http://localhost:3000/files/download/${filename}`;
 
     this.http.get(url, { responseType: 'arraybuffer' }).subscribe(

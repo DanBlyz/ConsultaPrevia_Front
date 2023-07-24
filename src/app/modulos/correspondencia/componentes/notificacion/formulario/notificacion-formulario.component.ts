@@ -18,6 +18,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 import { Notificacion } from '../../../modelos';
 import { NotificacionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-notificacion-formulario',
@@ -27,6 +28,7 @@ import { Router } from '@angular/router';
 export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
+  selectedFile: File | null = null;
 
   suscripcion = new Subscription();
 
@@ -40,7 +42,8 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private notificacionFacade: NotificacionFacade,
     private toastrService: ToastrService,
-    private router : Router
+    private router : Router,
+    private http: HttpClient
   ) {
     if (!this.notificacion) {
       this.notificacion = new Notificacion();
@@ -48,8 +51,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
 
     this.formNotificacion = this.fb.group({
       notificado: ['', Validators.required],
-      direccionDpto: ['', Validators.required],
-      notificacionPdf: ['', Validators.required]
+      direccionDpto: ['', Validators.required]
     });
   }
 
@@ -61,8 +63,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
           if (this.tipoOperacion === 'modificar' && this.notificacion.id) {
             this.formNotificacion.setValue({
               notificado: this.notificacion.notificado,
-              direccionDpto: this.notificacion.direccionDpto,
-              notificacionPdf: this.notificacion.notificacionPdf
+              direccionDpto: this.notificacion.direccionDpto
             });
           }
         }
@@ -96,10 +97,21 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
           this.formNotificacion.markAllAsTouched();
           return;
         }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/notificaciones/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         notificacion = { ...this.formNotificacion.value };
         console.log(this.router.url);
         let arr = this.router.url.split('/');
         notificacion.flujo = arr[1];
+        notificacion.notificacionPdf = "notificacion-"+this.selectedFile.name;
         this.accion.emit({
           accion: 'guardarnoti',
           notificacion
@@ -127,5 +139,8 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 }

@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Formulario PDF:</label>
-                    <input type="text" class="form-control" formControlName="formularioPdf" />
+                    <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
                 </div>
                 <div class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Descripcion:</label>

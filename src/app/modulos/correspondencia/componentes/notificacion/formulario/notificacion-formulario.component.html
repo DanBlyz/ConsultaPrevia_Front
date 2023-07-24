@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Notificacion Pdf:</label>
-                    <input type="text" class="form-control" formControlName="notificacionPdf" />
+                    <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
                 </div>
                 <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Direccion Departamental:</label>

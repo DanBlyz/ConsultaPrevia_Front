@@ -17,6 +17,7 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Viaje } from '../../../modelos';
 import { ViajeFacade } from '../../../fachadas';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-viaje-formulario',
@@ -26,6 +27,7 @@ import { ViajeFacade } from '../../../fachadas';
 export class ViajeFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
+  selectedFile: File | null = null;
 
   suscripcion = new Subscription();
 
@@ -38,7 +40,8 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
     private viajeFacade: ViajeFacade,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private http: HttpClient
   ) {
     if (!this.viaje) {
       this.viaje = new Viaje();
@@ -48,8 +51,7 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required],
       descripcion: ['', Validators.required],
-      nroFormulario: ['', Validators.required],
-      formularioPdf: ['', Validators.required]
+      nroFormulario: ['', Validators.required]
     });
   }
 
@@ -63,8 +65,7 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
               fechaInicio: this.viaje.fechaInicio,
               fechaFin: this.viaje.fechaFin,
               descripcion: this.viaje.descripcion,
-              nroFormulario: this.viaje.nroFormulario,
-              formularioPdf: this.viaje.formularioPdf
+              nroFormulario: this.viaje.nroFormulario
             });
           }
         }
@@ -99,7 +100,6 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         viaje = { ...this.formViaje.value };
-        viaje.fk_idActos = 12;
         console.log(viaje.fechaInicio);
         this.accion.emit({
           accion: 'guardar',
@@ -133,9 +133,23 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
           this.formViaje.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+    
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/viajes/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
         viaje = { ...this.formViaje.value };
-        viaje.fk_idActos = 12;
-        console.log(viaje.fechaInicio);
+        viaje.formularioPdf = "viaje-"+this.selectedFile.name;
         this.accion.emit({
           accion: 'guardarViaje',
           viaje
@@ -143,5 +157,8 @@ export class ViajeFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 }
