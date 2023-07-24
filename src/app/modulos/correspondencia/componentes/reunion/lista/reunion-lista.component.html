@@ -39,20 +39,24 @@
                                 </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.encargado }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
-                                    <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
-                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
-                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
+                                    <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
+                                        class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
-                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>
-                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? true : false" type="button" value="Adjuntar Notificacion" class="btn btn-primary"
+                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
+                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true: false" type="button" value="Adjuntar Notificacion" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'notificacion', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && item.estado ==='NOTIFICACION' ? true : false">
-                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? true : false" type="button" value="Actos Administrativos" class="btn btn-primary"
+                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true : false" type="button" value="Actos Administrativos" class="btn btn-warning"
                                         (click)="ejecutarOperacion({operacion: 'actoAdministrativo', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && (item.estado ==='ACTO ADMINISTRATIVO' || item.estado ==='NOTIFICACION')  ? true : false">
-                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === true) ? true : false" type="button" value="Resolucion Acuerdo" class="btn btn-primary"
+                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === true) ? item.flujo === 'Mediacion' ? false : true : false" type="button" value="Resolucion Acuerdo" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'resolucion', idTramite: item.notificacion.fk_idTramite, id: item.id})">
                                     <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion === '3ERA') ? true : false" type="button" value="Informe Mediacion" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'informeDeliberacion', idTramite: item.notificacion.fk_idTramite,id: item.id})" [disabled]="item.estado ==='DELIBERACION TERMINADA' ? true : false">
+                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false) ? item.flujo === 'Mediacion' ? true : false: false" type="button" value="Remitir A MMyM" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'Remitir a MMyM', idTramite: item.notificacion.fk_idTramite, id: item.id})"> 
+                                        <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === true) ? item.flujo === 'Mediacion' ? true : false: false" type="button" value="Devolver a la DDoDR" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'devolverDo', idTramite: item.notificacion.fk_idTramite, id: item.id})"> 
                                 </td>
                             </tr>
                         </tbody>
@@ -68,8 +72,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right mt-3">
-                    <input type="button" value="Nuevo registro" class="btn btn-primary"
-                        (click)="ejecutarOperacion({operacion: 'crear'})">
+                   <!-- <input type="button" value="Nuevo registro" class="btn btn-primary"
+                        (click)="ejecutarOperacion({operacion: 'crear'})">-->
                 </div>
             </div>
         </div>

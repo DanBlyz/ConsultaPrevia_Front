@@ -37,11 +37,11 @@
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
-                                <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
-                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
+                                <i *ngIf=" item.viaje === null ? false : item.viajeRealizado === true ? false : true" (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
                                 <input *ngIf=" item.pagoCpt === null ? true : false"  type="button" value="Pago Cpt" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
-                                <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-primary"
+                                <input *ngIf=" item.viaje === null ? true : false"  type="button" value="Programar Viaje" class="btn btn-info"
                                         (click)="ejecutarOperacion({operacion: 'viaje',id: item.id})">
                                 <input *ngIf=" item.viajeRealizado === true ? (item.flujo === 'Deliberacion'? false : true ) :false"  type="button" value="Adjuntar Informe" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'informe',fk_idTramite: item.fk_idTramite,id: item.id})" [disabled]="item.estado === 'INFORME' ? true : false">
@@ -61,8 +61,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right mt-3">
-                    <input type="button" value="Nuevo registro" class="btn btn-primary"
-                        (click)="ejecutarOperacion({operacion: 'crear'})">
+                        <!-- <input type="button" value="Nuevo registro" class="btn btn-primary"
+                        (click)="ejecutarOperacion({operacion: 'crear'})">-->
                 </div>
             </div>
         </div>

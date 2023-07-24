@@ -299,15 +299,6 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
-      {
-        ruta: 'Mediacion/correspondencia/prueba',
-        titulo: 'Pruebaas',  
-        icono: 'fas fa-cog',
-        class: '',
-        esEnlace: true,
-        submenu: [],
-        roles: []
-      },
     ],
     roles: []
   }

@@ -47,7 +47,7 @@ export class ActoAdministrativoFormularioComponent implements OnInit, OnDestroy 
     }
 
     this.formActoAdministrativo = this.fb.group({
-      viajeRealizado: ['', Validators.required],
+      viajeRealizado: [false, Validators.required],
       encargado: ['', Validators.required],
     });
   }

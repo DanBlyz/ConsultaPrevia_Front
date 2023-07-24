@@ -132,7 +132,6 @@ import {
   ProvidenciaBuscadorComponent,
   ProvidenciaFormularioComponent,
   ProvidenciaDetalleComponent,
-  FileUploadComponent
  } from './componentes/providencia';
 
  import {
@@ -271,8 +270,6 @@ import {
     ProvidenciaFormularioComponent,
     ProvidenciaBuscadorComponent,
     ProvidenciaListaComponent,
-    FileUploadComponent,
-    
     NotificacionDetalleComponent,
     NotificacionFormularioComponent,
     NotificacionBuscadorComponent,
