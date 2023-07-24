@@ -116,6 +116,7 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
           }
         );
         providencia = { ...this.formProvidencia.value };
+        providencia.correlativo = "AJAM-"+this.formProvidencia.get('correlativo').value;
         let arr = this.router.url.split('/');
         providencia.flujo = arr[1];
         providencia.providenciaPdf = "providencia-"+this.selectedFile.name;

@@ -2,12 +2,16 @@
     <div class="col-12">
         <form [formGroup]="formTramite" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-3 form-group mb-2">
+                <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Correlativo:</label>
-                    <input type="text" class="form-control" formControlName="correlativo" />YERY
+                    <div class="d-flex">
+                        <span class="mr-2">AJAMD-</span>
+                        <input type="text" class="form-control" formControlName="correlativo" />
+                    </div>
+                    <!--AJAMD-LP-SOL-CAM/33/2020-->
                 </div>
                 
-                <div class="col-md-3 form-group mb-2">
+                <div class="col-md-2 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Codigo Unico:</label>
                     <input type="number" class="form-control" formControlName="codigoUnico" />
                 </div>
@@ -16,6 +20,12 @@
                     <input type="text" class="form-control" formControlName="areaMinera" />
                 </div>
                 <div class="col-md-3 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Nro de Cuadriculas:</label>
+                    <input type="number" class="form-control" formControlName="nroCuadricula" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Clasificacion:</label>
                     <select class="form-control" formControlName="clasificacion">
                         <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
@@ -23,9 +33,7 @@
                         <option [ngValue]="'Empresa'">Empresa</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-4 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Departamento:</label>
                     <select class="form-control" formControlName="departamento">
                         <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
@@ -35,7 +43,7 @@
                     </select>
                     <!--{{formTramite.get('departamento').value}}-->
                 </div>
-                <div class="col-md-4 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Provincia:</label>
                     <!--<input type="text" class="form-control" formControlName="provincia" />-->
                     <div [ngSwitch]="formTramite.get('departamento').value">
@@ -98,7 +106,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Municipio:</label>
                     <input type="text" class="form-control" formControlName="municipio" />
                 </div>

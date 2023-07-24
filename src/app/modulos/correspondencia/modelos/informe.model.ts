@@ -3,7 +3,7 @@ import { SujetoIdentificado } from '.';
 export class Informe {
   id?: number;
   fk_idTramite: number;
-  correlativo: number;
+  correlativo: string;
   referencia: string;
   informePdf: string;
   asunto: string;

@@ -56,9 +56,10 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
 
     this.formTramite = this.fb.group({
       correlativo: ['', Validators.required],
-      codigoUnico: ['', Validators.required],
+      codigoUnico: [0, Validators.required],
       areaMinera: ['', Validators.required],
       clasificacion: ['', Validators.required],
+      nroCuadricula: [0, Validators.required],
       departamento: ['', Validators.required],
       provincia: ['', Validators.required],
       municipio: ['', Validators.required]
@@ -110,6 +111,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         tramite = { ...this.formTramite.value };
+        tramite.correlativo = "AJAMD-"+this.formTramite.get('correlativo').value;
         this.accion.emit({
           accion: 'guardar',
           tramite

@@ -171,6 +171,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         );
         informe = { ...this.formInforme.value };
         informe.informePdf = "informe-"+this.selectedFile.name;
+        informe.correlativo = "AJAM/"+this.formInforme.get('correlativo').value;
         if(this.formInforme.value.nroSujetos > 0){
           const sujeto = new SujetoIdentificado();
           sujeto.comunidad = this.formInforme.value.comunidad;

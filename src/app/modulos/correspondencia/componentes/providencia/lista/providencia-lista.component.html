@@ -16,7 +16,7 @@
                                 <th>REFERENCIA</th>
                                 <th>PROVIDENCIA PDF</th>
                                 <th>FLUJO</th>
-                                <th class="td-auto">OPERACIONES</th>
+                                <!--<th class="td-auto">OPERACIONES</th>-->
                             </tr>
                         </thead>
                         <tbody>
@@ -28,14 +28,14 @@
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                 <td class="align-middle">{{ item.flujo }}</td>
-                                <td class="align-middle">
-                                    <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
+                                <!--<td class="align-middle">
+                                    <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i  (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
                                     <i  (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
-                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
-                                </td>
+                                        class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>
+                                </td>-->
                             </tr>
                         </tbody>
                     </table>
@@ -50,8 +50,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right mt-3">
-                    <!--<input type="button" value="Nuevo registro" class="btn btn-primary"
-                        (click)="ejecutarOperacion({operacion: 'crear'})">-->
+                    <input type="button" value="Nuevo registro" class="btn btn-primary"
+                        (click)="ejecutarOperacion({operacion: 'crear'})">
                 </div>
             </div>
         </div>
