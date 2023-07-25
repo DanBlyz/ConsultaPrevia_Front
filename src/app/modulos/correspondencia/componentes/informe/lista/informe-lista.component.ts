@@ -129,7 +129,7 @@ export class InformeListaComponent
   }
 
   ejecutarAccion(evento: any): void {
-    console.log(evento.accion+" lista");
+    console.log(evento.accion+" informe");
     switch (evento.accion) {
       case 'guardar': {
         this.informeFacade.guardar(evento.informe).then((respuesta) => {

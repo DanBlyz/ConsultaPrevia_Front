@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Resolucion:</label>
-                    <input type="text" class="form-control" formControlName="resolucion" />
+                    <input type="text" class="form-control" formControlName="resolucion"/>
                 </div>
                 <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Resolucion Pdf:</label>
@@ -18,13 +18,19 @@
                     <label><span class="required-field-indicator"></span> Asunto:</label>
                     <textarea class="form-control" formControlName="asunto"></textarea>
                 </div>
-                <label><span class="required-field-indicator"></span> Informe Aprobado:</label>
-                <div class="col-md-2 form-group mb-2">
-                    <input type="checkbox" class="form-control" formControlName="informeAprobado" />
+                <br>
+                <br>
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="informeAprobado" formControlName="informeAprobado">
+                        <label class="custom-control-label" for="informeAprobado">Informe Aprobado</label>
+                    </div>
                 </div>
-                <label><span class="required-field-indicator"></span> Actos Administrativos:</label>
-                <div class="col-md-2 form-group mb-2">
-                    <input type="checkbox" class="form-control" formControlName="actoAdministrativo" />
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="actoAdministrativo" formControlName="actoAdministrativo">
+                        <label class="custom-control-label" for="actoAdministrativo">Acto Administrativo</label>
+                    </div>
                 </div>
                 <br>
                 <br>

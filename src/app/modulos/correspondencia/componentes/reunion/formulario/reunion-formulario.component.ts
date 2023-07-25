@@ -71,6 +71,10 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
               reunionRealizada: this.reunion.reunionRealizada,
               encargado: this.reunion.encargado,
             });
+            if(this.reunion.actaReunionPdf !== null){
+              this.downloadFile(this.reunion.actaReunionPdf);
+            }
+        
           }
         }
       })
@@ -118,7 +122,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         const formData: FormData = new FormData();
-        formData.append('file', this.selectedFile);
+        formData.append('file', this.selectedFile,"reunion-"+this.selectedFile.name.replace("reunion-",""));
         this.http.post<any>('http://localhost:3000/reuniones/subir-archivo', formData).subscribe(
           (response) => {
             console.log(response.message); // Mensaje del servidor
@@ -128,7 +132,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
           }
         );
         reunion = { ...this.formReunion.value };
-        reunion.actaReunionPdf = "reunion-"+this.selectedFile.name;
+        reunion.actaReunionPdf = "reunion-"+this.selectedFile.name.replace("reunion-","");
         this.accion.emit({
           accion,
           reunionId: this.reunion.id,
@@ -146,5 +150,20 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+  }
+  downloadFile(nombre : string) {
+    // Aquí realiza una solicitud al servidor para obtener los datos del archivo
+    const filename = nombre;
+    const url = `http://localhost:3000/reuniones/bajar-archivo/${filename}`;
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        const file = new Blob([data], { type: 'application/octet-stream' });
+        this.selectedFile = new File([file], filename); // Puedes cambiar el nombre del archivo según corresponda
+        console.log(this.selectedFile.name);
+      },
+      (error) => {
+        console.error('Error al descargar el archivo:', error);
+      }
+    );
   }
 }

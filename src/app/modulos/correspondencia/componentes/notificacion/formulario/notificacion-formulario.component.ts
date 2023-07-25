@@ -15,10 +15,10 @@ import { Subscription } from 'rxjs';
 
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
-import { Notificacion } from '../../../modelos';
+import { Informe, Notificacion, SujetoIdentificado } from '../../../modelos';
 import { NotificacionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-correspondencia-notificacion-formulario',
@@ -29,9 +29,11 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
   selectedFile: File | null = null;
+  items: Informe [] = [];
+  sujetos: SujetoIdentificado [] = [];
+
 
   suscripcion = new Subscription();
-
   formNotificacion: FormGroup;
   botonOperacion: string;
 
@@ -51,7 +53,11 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
 
     this.formNotificacion = this.fb.group({
       notificado: ['', Validators.required],
-      direccionDpto: ['', Validators.required]
+      direccionDpto: ['', Validators.required],
+      representanteMinero: [false,Validators.required],
+      representanteComunidad: [false,Validators.required],
+      sifde: [false,Validators.required],
+      comunidad: ['']
     });
   }
 
@@ -63,7 +69,11 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
           if (this.tipoOperacion === 'modificar' && this.notificacion.id) {
             this.formNotificacion.setValue({
               notificado: this.notificacion.notificado,
-              direccionDpto: this.notificacion.direccionDpto
+              direccionDpto: this.notificacion.direccionDpto,
+              representanteMinero: this.notificacion.representanteMinero,
+              representanteComunidad: this.notificacion.representanteComunidad,
+              sifde: this.notificacion.sifde,
+              comunidad: this.notificacion.comunidad || ''
             });
           }
         }
@@ -81,6 +91,9 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         this.botonOperacion = 'Guardar';
         break;
     }
+    this.fetchItemsWithParameters();
+    console.log(this.items+ "ngonit");
+    //this.sujetos = this.items.listaSujetoIdentificado;
   }
 
   @HostListener('unloaded')
@@ -142,5 +155,22 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+  }
+  //""fk_idInforme": 75
+  fetchItemsWithParameters() {
+    const body = { fk_idInforme: 75 }; // Aquí defines los parámetros que necesitas enviar en el body
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // Realizar la solicitud HTTP POST con los parámetros en el body
+    this.http.post<any>('http://localhost:3000/sujetos-identificados/buscar', body, { headers }).subscribe(
+      (response) => {
+        this.items = response.lista; // Almacenar los datos en la variable items
+        console.log(this.items);
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+      }
+    );
+    console.log(this.items+ "objeto");
   }
 }

@@ -55,7 +55,6 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
       resolucion: ['', Validators.required],
       informeAprobado: ['', Validators.required],
       actoAdministrativo: ['', Validators.required],
-      resolucionPdf: ['', Validators.required],
       asunto: ['', Validators.required]
     });
   }
@@ -71,9 +70,12 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
               resolucion: this.resolucion.resolucion,
               informeAprobado: this.resolucion.informeAprobado,
               actoAdministrativo: this.resolucion.actoAdministrativo,
-              resolucionPdf: this.resolucion.resolucionPdf,
+             // resolucionPdf: this.resolucion.resolucionPdf,
               asunto: this.resolucion.asunto
             });
+            if(this.resolucion.resolucionPdf !== null){
+              this.downloadFile(this.resolucion.resolucionPdf);
+            }
           }
         }
       })
@@ -121,7 +123,8 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         const formData: FormData = new FormData();
-        formData.append('file', this.selectedFile);
+        
+        formData.append('file',this.selectedFile,"resolucion-"+this.selectedFile.name.replace("resolucion-",""));
         this.http.post<any>('http://localhost:3000/resoluciones/subir-archivo', formData).subscribe(
           (response) => {
             console.log(response.message); // Mensaje del servidor
@@ -132,7 +135,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
         );
         resolucion = { ...this.formResolucion.value };
         resolucion.flujo = this.arr[1];
-        resolucion.resolucionPdf = "resolucion-"+this.selectedFile.name;
+        resolucion.resolucionPdf = "resolucion-"+this.selectedFile.name.replace("resolucion-","");
         this.accion.emit({
           accion,
           resolucionId: this.resolucion.id,
@@ -150,5 +153,21 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+  }
+  
+  downloadFile(nombre : string) {
+    // Aquí realiza una solicitud al servidor para obtener los datos del archivo
+    const filename = nombre;
+    const url = `http://localhost:3000/resoluciones/bajar-archivo/${filename}`;
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe(
+      (data) => {
+        const file = new Blob([data], { type: 'application/octet-stream' });
+        this.selectedFile = new File([file], filename); // Puedes cambiar el nombre del archivo según corresponda
+        console.log(this.selectedFile.name);
+      },
+      (error) => {
+        console.error('Error al descargar el archivo:', error);
+      }
+    );
   }
 }

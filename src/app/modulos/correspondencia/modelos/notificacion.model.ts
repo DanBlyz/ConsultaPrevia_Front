@@ -5,6 +5,11 @@ export class Notificacion {
     direccionDpto: string;
     notificacionPdf: string;
     flujo: string;
+    representanteMinero: boolean;
+    representanteComunidad: boolean;
+    sifde: boolean;
+
+    comunidad?:string;
 
   }
   

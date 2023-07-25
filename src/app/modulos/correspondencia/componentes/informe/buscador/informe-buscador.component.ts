@@ -34,6 +34,7 @@ export class InformeBuscadorComponent implements OnInit {
 
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as InformeFilter;
+    console.log(objeto+"entro aqui buscar");
     this.accion.emit({
       accion: 'buscar',
       informe: FuncionesHelper.quitarNulos(objeto)

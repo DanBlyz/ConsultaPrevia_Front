@@ -15,6 +15,7 @@
                                 <th>NOTIFICADO</th>
                                 <th>DIRECCION DEPARTAMENTAL</th>
                                 <th>NOTIFICACION PDF</th>
+                                <th>REPRESENTANTE</th>
                                 <!--<th class="td-auto">OPERACIONES</th>-->
                             </tr>
                         </thead>
@@ -25,6 +26,11 @@
                                 <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="downloadPDF(item.notificacionPdf)"
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
+                                </td>
+                                <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
+                                    <label *ngIf="item.representanteMinero"> MINERO</label>
+                                    <label *ngIf="item.representanteComunidad"> COMUNIDAD {{item.comunidad.toUpperCase()}}</label>
+                                    <label *ngIf="item.sifde"> OEP </label>
                                 </td>
                                <!-- <td  *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"

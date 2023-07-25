@@ -47,6 +47,8 @@
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
                                     <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === true) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'notificacion', fk_tramite: item.fk_idTramite})">
+                                    <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === false) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-warning"
+                                        (click)="ejecutarOperacion({operacion: 'act', fk_tramite: item.fk_idTramite})">
                                 </td>
                             </tr>
                         </tbody>
