@@ -10,14 +10,14 @@ export const CorrespondenciaMenu: MenuItem[] = [
     submenu: [],
     roles: []
   },
-  {
+ /* {
     ruta: '#',
     titulo: 'Administración',
     icono: 'fas fa-user-lock',
     class: '',
     esEnlace: true,
     submenu: [
-      /*{
+      {
         ruta: '/correspondencia/parametros',
         titulo: 'Parámetros',
         icono: 'fas fa-cog',
@@ -25,7 +25,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
         esEnlace: true,
         submenu: [],
         roles: []
-      },*/
+      },
       {
         ruta: '/correspondencia/tipos-documento',
         titulo: 'Tipos de documento',
@@ -61,7 +61,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
         esEnlace: true,
         submenu: [],
         roles: []
-      },*/
+      },
       {
         ruta: '/correspondencia/contactos',
         titulo: 'Contactos',
@@ -109,7 +109,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
       }
     ],
     roles: []
-  },
+  },*/
   {
     ruta: '#',
     titulo: 'IDENTIFICACION',

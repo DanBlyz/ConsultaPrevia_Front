@@ -27,7 +27,11 @@
                     <label><span class="required-field-indicator"></span> Comunidad:</label>
                       <select class="form-control" formControlName="comunidad">
                         <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
-                        <option *ngFor="let item of items" [ngValue]="item.comunidad">{{item.comunidad}}</option>
+                       <!-- <option *ngFor="let item of items" [ngValue]="item.comunidad">{{item.comunidad}}</option>-->
+                        <option [ngValue]="'TOJRA'">TOJRA</option>
+                        <option [ngValue]="'CHAJNA'">CHAJNA</option>
+                        <option [ngValue]="'POQUELEUQUE'">POQUELEUQUE</option>
+                        <option [ngValue]="'HUARITOLO'">HUARITOLO</option>
                     </select>
                    
                 </div>

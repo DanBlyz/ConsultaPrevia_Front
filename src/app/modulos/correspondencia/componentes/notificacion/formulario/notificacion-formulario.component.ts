@@ -93,7 +93,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     }
     this.fetchItemsWithParameters();
     console.log(this.items+ "ngonit");
-    //this.sujetos = this.items.listaSujetoIdentificado;
+   // this.sujetos = this.items.lis;
   }
 
   @HostListener('unloaded')
@@ -158,11 +158,11 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   }
   //""fk_idInforme": 75
   fetchItemsWithParameters() {
-    const body = { fk_idInforme: 75 }; // Aquí defines los parámetros que necesitas enviar en el body
+    const body = { correlativo: 'AJAM/DJU/CP/INFS/164/2020' }; // Aquí defines los parámetros que necesitas enviar en el body
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     // Realizar la solicitud HTTP POST con los parámetros en el body
-    this.http.post<any>('http://localhost:3000/sujetos-identificados/buscar', body, { headers }).subscribe(
+    this.http.post<any>('http://localhost:3000/informes/buscar', body, { headers }).subscribe(
       (response) => {
         this.items = response.lista; // Almacenar los datos en la variable items
         console.log(this.items);
@@ -171,6 +171,5 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al obtener los datos:', error);
       }
     );
-    console.log(this.items+ "objeto");
   }
 }
