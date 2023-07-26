@@ -189,6 +189,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
+      {
+        ruta: 'Identificacion/correspondencia/sujeto-identificado',
+        titulo: 'Sujeto Identificado',
+        icono: 'fas fa-book',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
       /*{
         ruta: '/correspondencia/plantillas',
         titulo: 'Plantillas',

@@ -174,7 +174,14 @@ export const correspondenciaInicial: CorrespondenciaState = {
     paginado: null,
     lista: []
   },
-  reunion: null
+  reunion: null,
+
+  listaSujetoIdentificado: {
+    filtro: null,
+    paginado: null,
+    lista: []
+  },
+  sujetoIdentificado: null
 };
 
 const correspondenciaReducer = createReducer(
@@ -938,6 +945,37 @@ const correspondenciaReducer = createReducer(
           return {
             ...state,
             reunion: { ...objeto }
+          };
+        }),
+        // sujeto Identificado
+        on(CorrespondenciaAcciones.establecerFiltroSujetoIdentificado, (state, { filtro }) => {
+          return {
+            ...state,
+            listaSujetoIdentificado: {
+              ...state.listaSujetoIdentificado,
+              filtro: { ...filtro }
+            },
+            sujetoIdentificado: null
+          };
+        }),
+        on(
+          CorrespondenciaAcciones.establecerListaSujetoIdentificado,
+          (state, { lista, paginado }) => {
+            return {
+              ...state,
+              listaSujetoIdentificado: {
+                ...state.listaSujetoIdentificado,
+                lista: [...lista],
+                paginado: { ...paginado }
+              },
+              sujetoIdentificado: null
+            };
+          }
+        ),
+        on(CorrespondenciaAcciones.establecerSujetoIdentificado, (state, { objeto }) => {
+          return {
+            ...state,
+            sujetoIdentificado: { ...objeto }
           };
         }),
 

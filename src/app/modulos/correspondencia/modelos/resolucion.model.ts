@@ -7,7 +7,7 @@ export class Resolucion {
     actoAdministrativo: boolean;
     resolucionPdf: string;
     flujo: string;
-    asunto: string;
+    referencia: string;
 
   }
   

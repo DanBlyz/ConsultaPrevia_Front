@@ -20,7 +20,7 @@ export class ResolucionBuscadorComponent implements OnInit {
     this.formBuscador = this.fb.group({
       informe: [''],
       resolucion: [''],
-      asunto: ['']
+      referencia: ['']
     });
   }
 
@@ -28,7 +28,7 @@ export class ResolucionBuscadorComponent implements OnInit {
     this.formBuscador.setValue({
       informe: this.objeto?.informe || '',
       resolucion: this.objeto?.resolucion || '',
-      asunto: this.objeto?.asunto || ''
+      referencia: this.objeto?.referencia || ''
     });
   }
 
@@ -44,7 +44,7 @@ export class ResolucionBuscadorComponent implements OnInit {
     this.formBuscador.reset({
       informe: '',
       resolucion: '',
-      asunto: ''
+      referencia: ''
     });
   }
 }

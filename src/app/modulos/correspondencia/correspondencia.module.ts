@@ -178,6 +178,12 @@ import {
     ReunionFormularioComponent,
     ReunionDetalleComponent
     } from './componentes/reunion';
+    import {
+      SujetoIdentificadoListaComponent,
+      SujetoIdentificadoBuscadorComponent,
+      SujetoIdentificadoFormularioComponent,
+      SujetoIdentificadoDetalleComponent
+      } from './componentes/sujeto-identificado';
 @NgModule({
   declarations: [
     TipoDocumentoDetalleComponent,
@@ -298,6 +304,11 @@ import {
     ReunionFormularioComponent,
     ReunionBuscadorComponent,
     ReunionListaComponent,
+
+    SujetoIdentificadoDetalleComponent,
+    SujetoIdentificadoFormularioComponent,
+    SujetoIdentificadoBuscadorComponent,
+    SujetoIdentificadoListaComponent,
 
   ],
   imports: [

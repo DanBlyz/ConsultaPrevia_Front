@@ -21,5 +21,6 @@ export * from './acto-administrativo.selector';
 export * from './pago-cpt.selector';
 export * from './viaje.selector';
 export * from './informe.selector';
+export * from './sujeto-identificado.selector';
 export * from './resolucion.selector';
 export * from './reunion.selector';

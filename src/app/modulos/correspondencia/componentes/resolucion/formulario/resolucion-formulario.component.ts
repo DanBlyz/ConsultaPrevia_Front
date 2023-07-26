@@ -55,7 +55,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
       resolucion: ['', Validators.required],
       informeAprobado: ['', Validators.required],
       actoAdministrativo: ['', Validators.required],
-      asunto: ['', Validators.required]
+      referencia: ['', Validators.required]
     });
   }
 
@@ -71,7 +71,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
               informeAprobado: this.resolucion.informeAprobado,
               actoAdministrativo: this.resolucion.actoAdministrativo,
              // resolucionPdf: this.resolucion.resolucionPdf,
-              asunto: this.resolucion.asunto
+              referencia: this.resolucion.referencia
             });
             if(this.resolucion.resolucionPdf !== null){
               this.downloadFile(this.resolucion.resolucionPdf);

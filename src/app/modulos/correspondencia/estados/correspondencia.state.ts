@@ -26,7 +26,8 @@ import {
   Viaje,
   Informe,
   Resolucion,
-  Reunion
+  Reunion,
+  SujetoIdentificado
 } from '../modelos';
 import {
   TipoDocumentoFilter,
@@ -50,7 +51,8 @@ import {
   ViajeFilter,
   InformeFilter,
   ResolucionFilter,
-  ReunionFilter
+  ReunionFilter,
+  SujetoIdentificadoFilter
 } from '../modelos/filtros';
 
 export interface CorrespondenciaState {
@@ -225,4 +227,11 @@ export interface CorrespondenciaState {
     lista: Reunion[];
   };
   reunion: Reunion;
+
+  listaSujetoIdentificado: {
+    filtro: SujetoIdentificadoFilter;
+    paginado: Paginado;
+    lista: SujetoIdentificado[];
+  };
+  sujetoIdentificado: SujetoIdentificado;
 }

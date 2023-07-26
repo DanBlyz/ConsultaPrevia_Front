@@ -8,5 +8,6 @@ export class PagoCpt {
     montoTotal: number;
     apm: string;
     flujo: string;
+    descripcion: string;
   }
   

@@ -29,9 +29,10 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
   selectedFile: File | null = null;
+  selectedCheckbox: string | null = null;
   items: Informe [] = [];
   sujetos: SujetoIdentificado [] = [];
-
+  arr = this.router.url.split('/');
 
   suscripcion = new Subscription();
   formNotificacion: FormGroup;
@@ -54,7 +55,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     this.formNotificacion = this.fb.group({
       notificado: ['', Validators.required],
       direccionDpto: ['', Validators.required],
-      representanteMinero: [false,Validators.required],
+      representanteMinero: [true,Validators.required],
       representanteComunidad: [false,Validators.required],
       sifde: [false,Validators.required],
       comunidad: ['']
@@ -92,7 +93,6 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         break;
     }
     this.fetchItemsWithParameters();
-    console.log(this.items+ "ngonit");
    // this.sujetos = this.items.lis;
   }
 
@@ -171,5 +171,21 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al obtener los datos:', error);
       }
     );
+  }
+  onCheckboxChange(checkboxName: string) {
+    if (this.selectedCheckbox === checkboxName) {
+      // Si el checkbox seleccionado ya está marcado, desmárcalo
+      this.formNotificacion.get(checkboxName)?.setValue(false);
+      this.selectedCheckbox = null;
+    } else {
+      // Marca el checkbox seleccionado y desmarca los otros
+      this.selectedCheckbox = checkboxName;
+      Object.keys(this.formNotificacion.controls).forEach((name) => {
+        if (name !== checkboxName && name !== 'notificado' && name !== 'direccionDpto' && name !== 'comunidad') {
+          console.log(name);
+          this.formNotificacion.get(name)?.setValue(false);
+        }
+      });
+    }
   }
 }

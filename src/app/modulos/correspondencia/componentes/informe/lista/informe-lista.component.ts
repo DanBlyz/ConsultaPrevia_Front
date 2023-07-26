@@ -33,6 +33,8 @@ export class InformeListaComponent
   filtro: InformeFilter = new InformeFilter();
   tipoOperacion: string;
 
+  pdfUrl: string;
+
   informe: Informe = new Informe();
   lista: Informe[];
 

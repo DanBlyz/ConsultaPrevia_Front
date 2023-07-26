@@ -37,21 +37,21 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-3 form-group mb-2">
+                <div *ngIf="arr[1] === 'Identificacion' ? false : true" class="col-md-3 form-group mb-2">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="representanteMinero" formControlName="representanteMinero">
+                        <input type="checkbox" class="custom-control-input" id="representanteMinero" formControlName="representanteMinero" (change)="onCheckboxChange('representanteMinero')">
                         <label class="custom-control-label" for="representanteMinero">Representante Minero</label>
                     </div>
                 </div>
-                <div class="col-md-4 form-group mb-2">
+                <div *ngIf="arr[1] === 'Identificacion' ? false : true"class="col-md-4 form-group mb-2">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="representanteComunidad" formControlName="representanteComunidad">
+                        <input type="checkbox" class="custom-control-input" id="representanteComunidad" formControlName="representanteComunidad" (change)="onCheckboxChange('representanteComunidad')">
                         <label class="custom-control-label" for="representanteComunidad">Representante Comunidad</label>
                     </div>
                 </div>
-                <div class="col-md-3 form-group mb-2">
+                <div *ngIf="arr[1] === 'Identificacion' || arr[1] === 'Mediacion'? false : true"class="col-md-3 form-group mb-2">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="sifde" formControlName="sifde">
+                        <input type="checkbox" class="custom-control-input" id="sifde" formControlName="sifde" (change)="onCheckboxChange('sifde')">
                         <label class="custom-control-label" for="sifde">SIFDE</label>
                     </div>
                 </div>

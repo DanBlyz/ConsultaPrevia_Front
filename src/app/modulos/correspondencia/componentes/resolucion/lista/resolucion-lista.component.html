@@ -37,7 +37,7 @@
                                     <i *ngIf="item.resolucionPdf !== null" (click)="downloadPDF(item.resolucionPdf)"
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.referencia }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id, fk_tramite: item.fk_idTramite})"
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
@@ -47,8 +47,8 @@
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
                                     <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === true) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'notificacion', fk_tramite: item.fk_idTramite})">
-                                    <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === false) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-warning"
-                                        (click)="ejecutarOperacion({operacion: 'act', fk_tramite: item.fk_idTramite})">
+                                    <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === false) ? true : false" type="button" value="Acto Administrativo" class="btn btn-warning"
+                                        (click)="ejecutarOperacion({operacion: 'actoAdministrativo', fk_tramite: item.fk_idTramite, id: item.id})">
                                 </td>
                             </tr>
                         </tbody>

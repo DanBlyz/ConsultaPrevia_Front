@@ -51,7 +51,8 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
       diasViaje: [0, Validators.required],
       tipoViaje: ['', Validators.required],
       montoTotal: [0],
-      apm: ['', Validators.required]
+      apm: ['', Validators.required],
+      descripcion: ['',Validators.required]
     });
     
   }
@@ -68,7 +69,8 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
               diasViaje: this.pagoCpt.diasViaje,
               tipoViaje: this.pagoCpt.tipoViaje,
               montoTotal: this.pagoCpt.montoTotal,
-              apm: this.pagoCpt.apm
+              apm: this.pagoCpt.apm,
+              descripcion: this.pagoCpt.descripcion
             });
           }
         }
@@ -159,11 +161,11 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
 
     // Lógica para calcular el montoTotal basado en tipoViaje y diasViaje
     if (tipoViajeValue === 'Interdepartamental') {
-      return diasViajeValue * 371;
+      return Math.round(diasViajeValue * 371);
     } else if (tipoViajeValue === 'Intradepartamental') {
-      return diasViajeValue * 222;
+      return Math.round(diasViajeValue * 222);
     } else if (tipoViajeValue === 'Franja de Frontera') {
-      return diasViajeValue * 391;
+      return Math.round(diasViajeValue * 391);
     } else {
       return 0;
     }

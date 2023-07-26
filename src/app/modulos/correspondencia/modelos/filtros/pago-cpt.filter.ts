@@ -7,4 +7,5 @@ export class PagoCptFilter {
   montoTotal?: number;
   apm?: string;
   flujo?: string;
+  descripcion?: string;
 }

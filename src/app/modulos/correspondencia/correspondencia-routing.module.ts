@@ -81,6 +81,7 @@ import {
 } from './componentes/informe';
 import { ResolucionListaComponent } from './componentes/resolucion';
 import { ReunionListaComponent } from './componentes/reunion';
+import { SujetoIdentificadoListaComponent } from './componentes/sujeto-identificado';
 
 const routes: Routes = [
   {
@@ -577,6 +578,16 @@ const routes: Routes = [
         data: {
           title: 'Informe',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informe' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Identificacion/correspondencia/sujeto-identificado',
+        component: SujetoIdentificadoListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Sujetos Identificados',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Sujeto Identificado' }],
           roles: []
         }
       },

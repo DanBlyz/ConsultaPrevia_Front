@@ -1,7 +1,12 @@
+import { Informe } from "./informe.model";
+
 export class SujetoIdentificado {
     id?: number;
     fk_idInforme?: number;
     comunidad: string;
-    representante: string;
+    autoridad: string;
+    telefono?: number;
+
+    informe?: Informe;
   }
   

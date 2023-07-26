@@ -24,5 +24,7 @@ export * from './acto-administrativo.actions';
 export * from './pago-cpt.actions';
 export * from './viaje.actions';
 export * from './informe.actions';
+export * from './informe.actions';
+export * from './sujeto-identificado.actions';
 export * from './resolucion.actions';
 export * from './reunion.actions';
