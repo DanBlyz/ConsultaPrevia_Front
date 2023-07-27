@@ -47,8 +47,7 @@ export class ActoAdministrativoFormularioComponent implements OnInit, OnDestroy 
     }
 
     this.formActoAdministrativo = this.fb.group({
-      viajeRealizado: [false, Validators.required],
-      encargado: ['', Validators.required],
+      viajeRealizado: [false, Validators.required]
     });
   }
 
@@ -59,8 +58,7 @@ export class ActoAdministrativoFormularioComponent implements OnInit, OnDestroy 
           this.actoAdministrativo = actoAdministrativo;
           if (this.tipoOperacion === 'modificar' && this.actoAdministrativo.id) {
             this.formActoAdministrativo.setValue({
-              viajeRealizado: this.actoAdministrativo.viajeRealizado,
-              encargado: this.actoAdministrativo.encargado
+              viajeRealizado: this.actoAdministrativo.viajeRealizado
             });
           }
         }
@@ -132,6 +130,7 @@ export class ActoAdministrativoFormularioComponent implements OnInit, OnDestroy 
         }
         actoAdministrativo = { ...this.formActoAdministrativo.value };
         let arr = this.router.url.split('/');
+        actoAdministrativo.viajeRealizado = false;
         actoAdministrativo.flujo = arr[1];
         this.accion.emit({
           accion: 'guardarActoAdministrativo',

@@ -142,7 +142,7 @@ export class ReunionFacade {
     });
   }
 
-  modificar(id: number, objeto: Reunion): Promise<RespuestaObjeto<Reunion>> {
+  modificar(id: number, objeto: any): Promise<RespuestaObjeto<Reunion>> {
     this.store.dispatch(
       ComunAcciones.establecerProcesando({ procesando: true })
     );

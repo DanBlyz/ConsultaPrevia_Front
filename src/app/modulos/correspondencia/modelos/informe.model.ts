@@ -7,7 +7,6 @@ export class Informe {
   referencia: string;
   informePdf: string;
   asunto: string;
-  encargado: Date;
   flujo: string;
 
   nroSujetos?: number;

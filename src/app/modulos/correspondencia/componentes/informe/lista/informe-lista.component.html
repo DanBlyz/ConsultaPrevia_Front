@@ -16,7 +16,6 @@
                                 <th>REFERENCIA</th>
                                 <th>INFORME PDF</th>
                                 <th>ASUNTO</th>
-                                <th>ENCARGADO</th>
                                <!--<th class="td-auto">OPERACIONES</th>-->
                             </tr>
                         </thead>
@@ -29,7 +28,6 @@
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.asunto }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.encargado }}</td>
                                 <!--<td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>

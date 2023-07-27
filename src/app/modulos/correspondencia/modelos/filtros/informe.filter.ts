@@ -4,7 +4,6 @@ export class InformeFilter {
     referencia?: string;
     informePdf?: string;
     asunto?: string;
-    encargado?: string;
     flujo?: string;
   }
   

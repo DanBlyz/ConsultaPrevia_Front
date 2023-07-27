@@ -7,5 +7,7 @@ export class NotificacionFilter {
     representanteMinero?: boolean;
     representanteComunidad?: boolean;
     sifde?: boolean;
+    comunidad?: string;
+    nroReunion?: string;
   }
   

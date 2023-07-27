@@ -47,7 +47,6 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
 
     this.formPagoCpt = this.fb.group({
       pagoRealizado: [false, Validators.required],
-      encargado: ['', Validators.required],
       diasViaje: [0, Validators.required],
       tipoViaje: ['', Validators.required],
       montoTotal: [0],
@@ -65,7 +64,6 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
           if (this.tipoOperacion === 'modificar' && this.pagoCpt.id) {
             this.formPagoCpt.setValue({
               pagoRealizado: this.pagoCpt.pagoRealizado,
-              encargado: this.pagoCpt.encargado,
               diasViaje: this.pagoCpt.diasViaje,
               tipoViaje: this.pagoCpt.tipoViaje,
               montoTotal: this.pagoCpt.montoTotal,

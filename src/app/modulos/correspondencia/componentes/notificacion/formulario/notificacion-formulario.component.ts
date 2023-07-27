@@ -110,6 +110,10 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
           this.formNotificacion.markAllAsTouched();
           return;
         }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
         const formData: FormData = new FormData();
         formData.append('file', this.selectedFile);
         this.http.post<any>('http://localhost:3000/notificaciones/subir-archivo', formData).subscribe(

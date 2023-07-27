@@ -18,15 +18,13 @@ export class ActoAdministrativoBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
-      viajeRealizado: [''],
-      encargado: ['']
+      viajeRealizado: ['']
     });
   }
 
   ngOnInit(): void {
     this.formBuscador.setValue({
       viajeRealizado: this.objeto?.viajeRealizado || '',
-      encargado: this.objeto?.encargado || ''
     });
   }
 
@@ -41,7 +39,6 @@ export class ActoAdministrativoBuscadorComponent implements OnInit {
   limpiar(): void {
     this.formBuscador.reset({
       viajeRealizado: '',
-      encargado: ''
     });
   }
 }

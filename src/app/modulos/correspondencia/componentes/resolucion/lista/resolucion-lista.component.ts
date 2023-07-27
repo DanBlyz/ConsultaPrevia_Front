@@ -12,12 +12,14 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PaginadorComponent } from 'src/app/comun/componentes';
 import { Paginado } from 'src/app/comun/modelos';
 
-import { Resolucion } from '../../../modelos';
+import { Resolucion, Reunion } from '../../../modelos';
 import { ResolucionFilter } from '../../../modelos/filtros';
 import { ResolucionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { NotificacionFacade } from '../../../fachadas';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { ActoAdministrativoFacade } from '../../../fachadas';
+import { ReunionFacade } from '../../../fachadas';
 @Component({
   selector: 'app-resolucion-lista',
   templateUrl: './resolucion-lista.component.html',
@@ -34,6 +36,10 @@ export class ResolucionListaComponent
   tipoOperacion: string;
   arr = this.router.url.split('/');
   fkTramite : number;
+  nroReunion :string;
+
+  idTra : number;
+  idResolucion: number;
 
   resolucion: Resolucion = new Resolucion();
   lista: Resolucion[];
@@ -46,7 +52,9 @@ export class ResolucionListaComponent
     private modalService: NgbModal,
     private router: Router,
     private notificacionFacade: NotificacionFacade,
-    private http: HttpClient
+    private http: HttpClient,
+    private actoAdministrativoFacade: ActoAdministrativoFacade,
+    private reunionFacade: ReunionFacade
   ) {}
 
   ngOnInit(): void {
@@ -131,7 +139,17 @@ export class ResolucionListaComponent
       case 'notificacion': {
         this.tipoOperacion = 'notificacion';
         this.fkTramite = evento.fk_tramite;
+        this.nroReunion = evento.nroReunion;
+        console.log(this.nroReunion);
         this.modalTitulo = 'Adjuntar Notificacion ' ;
+        this.mostrarModal();
+        break;
+      }
+      case 'actoAdministrativo': {
+        this.tipoOperacion = 'actoAdministrativo';
+        this.idTra = evento.fk_tramite;
+        this.idResolucion = evento.id;
+        this.modalTitulo = 'Acto Administrativo';
         this.mostrarModal();
         break;
       }
@@ -177,7 +195,21 @@ export class ResolucionListaComponent
       }
       case 'guardarnoti': {
         evento.notificacion.fk_idTramite = this.fkTramite;
+        evento.notificacion.nroReunion = this.nroReunion;
+        console.log( evento.notificacion.nroReunion+" asfdasf");
         this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        
+        break;
+      }
+      case 'guardarActoAdministrativo': {
+        console.log("guardar actos");
+        evento.actoAdministrativo.fk_idResolucion=this.idResolucion;
+        console.log(evento.actoAdministrativo)
+        this.actoAdministrativoFacade.guardar(evento.actoAdministrativo).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }

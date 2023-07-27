@@ -18,14 +18,12 @@ export class PagoCptBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
-      encargado: [''],
       apm: ['']
     });
   }
 
   ngOnInit(): void {
     this.formBuscador.setValue({
-      encargado: this.objeto?.encargado || '',
       apm: this.objeto?.apm || ''
     });
   }
@@ -40,7 +38,6 @@ export class PagoCptBuscadorComponent implements OnInit {
 
   limpiar(): void {
     this.formBuscador.reset({
-      encargado: '',
       apm: ''
     });
   }

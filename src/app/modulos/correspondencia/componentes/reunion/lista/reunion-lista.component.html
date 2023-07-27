@@ -18,7 +18,6 @@
                                 <th>MOTIVO</th>
                                 <th>REUNION REALIZADA</th>
                                 <th>ACTA REUNION PDF</th>
-                                <th>ENCARGADO</th>
                                 <th class="td-auto">OPERACIONES</th>
                             </tr>
                         </thead>
@@ -39,7 +38,6 @@
                                     <i *ngIf="item.actaReunionPdf !== null" (click)="downloadPDF(item.actaReunionPdf)"
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
                                 </td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.encargado }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
@@ -48,8 +46,12 @@
                                     <i (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
                                     <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true: false" type="button" value="Adjuntar Notificacion" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'notificacion', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && item.estado ==='NOTIFICACION' ? true : false">
-                                    <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true : false" type="button" value="Actos Administrativos" class="btn btn-warning"
+                                        (click)="ejecutarOperacion({operacion: 'notificacion', idTramite: item.notificacion.fk_idTramite, id: item.id,nroReunion : item.nroReunion === '1ERA' ? '2DA': '3ERA'})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && item.estado ==='NOTIFICACION' ? true : false">
+
+                                    <!--<input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true: false" type="button" value="Notificacion Acta" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'notificacionActa', idTramite: item.notificacion.fk_idTramite, id: item.id,nroReunion : item.nroReunion === '1ERA' ? '2DA': '3ERA'})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && item.estado ==='NOTIFICACION' ? true : false">
+                                    -->
+                                        <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === false && item.nroReunion !== '3ERA') ? item.flujo === 'Mediacion' ? false : true : false" type="button" value="Acto Administrativo" class="btn btn-warning"
                                         (click)="ejecutarOperacion({operacion: 'actoAdministrativo', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="(item.nroReunion === '1ERA' || item.nroReunion === '2DA') && (item.estado ==='ACTO ADMINISTRATIVO' || item.estado ==='NOTIFICACION')  ? true : false">
                                     <input *ngIf=" (item.reunionRealizada === true && item.acuerdo === true) ? item.flujo === 'Mediacion' ? false : true : false" type="button" value="Resolucion Acuerdo" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'resolucion', idTramite: item.notificacion.fk_idTramite, id: item.id})">

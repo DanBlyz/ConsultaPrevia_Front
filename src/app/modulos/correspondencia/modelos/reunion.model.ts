@@ -8,7 +8,6 @@ export class Reunion {
     motivo: string;
     reunionRealizada: boolean;
     actaReunionPdf: string;
-    encargado: string;
     estado?: string;
     flujo?: string;
 

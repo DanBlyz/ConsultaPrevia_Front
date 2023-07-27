@@ -10,6 +10,7 @@ export class Notificacion {
     sifde: boolean;
 
     comunidad?:string;
+    nroReunion?:string;
 
   }
   

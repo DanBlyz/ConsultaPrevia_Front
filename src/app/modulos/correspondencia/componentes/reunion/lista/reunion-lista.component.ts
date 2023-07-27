@@ -36,6 +36,7 @@ export class ReunionListaComponent
   filtro: ReunionFilter = new ReunionFilter();
   tipoOperacion: string;
 
+
   reunion: Reunion = new Reunion();
   lista: Reunion[];
 
@@ -46,6 +47,7 @@ export class ReunionListaComponent
   idReunion: number;
   aux: Reunion;
   arr = this.router.url.split('/');
+  nroReunion : string;
 
   constructor(
     private reunionFacade: ReunionFacade,
@@ -138,6 +140,7 @@ export class ReunionListaComponent
       case 'notificacion': {
         this.tipoOperacion = 'notificacion';
         this.idTra = evento.idTramite;
+        this.nroReunion = evento.nroReunion;
         this.reunionFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Adjuntar Notificacion';
         this.mostrarModal();
@@ -160,6 +163,21 @@ export class ReunionListaComponent
         this.mostrarModal();
         break;
       }
+      /*case 'notificacionActa': {
+        this.tipoOperacion = 'informeDeliberacion';
+        this.idTra = evento.idTramite;
+        this.idReunion = evento.id;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Adjuntar Informe';
+        const reunionNueva = new Reunion();
+        reunionNueva.nroReunion = evento.nroReunion;
+        console.log(reunionNueva);
+        this.reunionFacade.guardar(reunionNueva).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+          }
+        });
+        break;
+      }*/
     }
   }
 
@@ -203,6 +221,7 @@ export class ReunionListaComponent
       }
       case 'guardarnoti': {
         evento.notificacion.fk_idTramite=this.idTra;
+        evento.notificacion.nroReunion = this.nroReunion;
         this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
@@ -210,14 +229,7 @@ export class ReunionListaComponent
         });
         const reunionNueva = {...this.reunion};
         reunionNueva.notificacion = null;
-        var reunionV = {
-          motivo: reunionNueva.motivo,
-          nroReunion: reunionNueva.nroReunion,
-          encargado: reunionNueva.encargado,
-          fk_idNotificacion: reunionNueva.fk_idNotificacion,
-          acuerdo: reunionNueva.acuerdo,
-          actaReunionPdf: reunionNueva.actaReunionPdf,
-          reunionRealizada: reunionNueva.reunionRealizada,
+        const reunionV = {
           estado: "NOTIFICACION"
         };
         
@@ -232,29 +244,14 @@ export class ReunionListaComponent
         break;
       }
       case 'guardarActoAdministrativo': {
-        console.log("guardar actos");
         evento.actoAdministrativo.fk_idTramite=this.idTra;
-        console.log(evento.actoAdministrativo)
         this.actoAdministrativoFacade.guardar(evento.actoAdministrativo).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
         });
-        
         const reunionNueva = {...this.reunion};
-        console.log(reunionNueva);
-        console.log(reunionNueva.motivo);
-        reunionNueva.notificacion = null;
-        console.log(this.reunion);
-        console.log(reunionNueva);
-        var reunionV = {
-          motivo: reunionNueva.motivo,
-          nroReunion: reunionNueva.nroReunion,
-          encargado: reunionNueva.encargado,
-          fk_idNotificacion: reunionNueva.fk_idNotificacion,
-          acuerdo: reunionNueva.acuerdo,
-          actaReunionPdf: reunionNueva.actaReunionPdf,
-          reunionRealizada: reunionNueva.reunionRealizada,
+        const reunionV = {
           estado: "ACTO ADMINISTRATIVO"
         };
         
@@ -268,35 +265,18 @@ export class ReunionListaComponent
         break;
       }
       case 'guardarInforme': {
-        console.log("guardar informe");
         evento.informe.fk_idTramite=this.idTra;
-        console.log(evento.informe);
         this.informeFacade.guardar(evento.informe).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
         });
-
         const reunionNueva = {...this.reunion};
-        console.log(reunionNueva);
-        console.log(reunionNueva.motivo);
-        reunionNueva.notificacion = null;
-        console.log(this.reunion);
-        console.log(reunionNueva);
-        var reunionV = {
-          motivo: reunionNueva.motivo,
-          nroReunion: reunionNueva.nroReunion,
-          encargado: reunionNueva.encargado,
-          fk_idNotificacion: reunionNueva.fk_idNotificacion,
-          acuerdo: reunionNueva.acuerdo,
-          actaReunionPdf: reunionNueva.actaReunionPdf,
-          reunionRealizada: reunionNueva.reunionRealizada,
+        const reunionV = {
           estado: "DELIBERACION TERMINADA"
         };
-
         this.reunionFacade
           .modificar(this.idReunion,reunionV)
-            
           .then((respuesta) => {
             if (respuesta.tipoRespuesta === 'Exito') {
               console.log("exito")

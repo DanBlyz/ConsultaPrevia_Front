@@ -53,8 +53,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
       nroReunion: ['', Validators.required],
       acuerdo: ['', Validators.required],
       motivo: ['', Validators.required],
-      reunionRealizada: ['', Validators.required],
-      encargado: ['', Validators.required]
+      reunionRealizada: [true, Validators.required]
     });
   }
 
@@ -68,8 +67,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
               nroReunion: this.reunion.nroReunion,
               acuerdo: this.reunion.acuerdo,
               motivo: this.reunion.motivo,
-              reunionRealizada: this.reunion.reunionRealizada,
-              encargado: this.reunion.encargado,
+              reunionRealizada: true
             });
             if(this.reunion.actaReunionPdf !== null){
               this.downloadFile(this.reunion.actaReunionPdf);

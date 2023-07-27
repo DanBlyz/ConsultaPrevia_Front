@@ -4,32 +4,33 @@
             <div class="form-row">
                 <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro Reunion:</label>
-                    <select class="form-control" formControlName="nroReunion">
-                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
-                        <option [ngValue]="'1ERA'">1ERA</option>
-                        <option [ngValue]="'2DA'">2DA</option>
-                        <option [ngValue]="'3ERA'">3ERA</option>
-                    </select>
+                    <input type="text" class="form-control" formControlName="nroReunion" />
                 </div>
-                <div class="col-md-6 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Acuerdo:</label>
-                    <input type="checkbox" class="form-control" formControlName="acuerdo" />
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="acuerdo" formControlName="acuerdo">
+                        <label class="custom-control-label" for="acuerdo"> Acuerdo:</label>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="sinAcuerdo" formControlName="sinAcuerdo">
+                        <label class="custom-control-label" for="sinAcuerdo">Sin Acuerdo:</label>
+                    </div>
                 </div>
                 <div class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Motivo:</label>
                     <input type="text" class="form-control" formControlName="motivo" />
                 </div>
-                <div class="col-md-6 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Reunion Realizada:</label>
-                    <input type="checkbox" class="form-control" formControlName="reunionRealizada" />
+                <div *ngIf="false" class="col-md-3 form-group mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="reunionRealizada" formControlName="reunionRealizada">
+                        <label class="custom-control-label" for="reunionRealizada">Reunion Realizada:</label>
+                    </div>
                 </div>
                 <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Acta Reunion PDF:</label>
                     <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
-                </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Encargado:</label>
-                    <input type="text" class="form-control" formControlName="encargado" />
                 </div>
             </div>
             <div class="form-row justify-content-end">

@@ -59,6 +59,7 @@ export class ActoAdministrativoListaComponent
     this.suscripcion.add(
       this.actoAdministrativoFacade.CorrespondenciaState$.subscribe(
         ({ listaActoAdministrativo, actoAdministrativo }) => {
+          console.log(this.actoAdministrativo);
           if (listaActoAdministrativo.lista) {
             if (listaActoAdministrativo.lista.length >= 0) {
               this.lista = listaActoAdministrativo.lista;
@@ -88,6 +89,7 @@ export class ActoAdministrativoListaComponent
             1,
             this.paginador.registrosPorPagina
           );
+          console.log(this.actoAdministrativo);
         }
       })
     );
@@ -190,6 +192,7 @@ export class ActoAdministrativoListaComponent
       }
       case 'buscar': {
         this.actoAdministrativoFacade.establecerFiltro(evento.actoAdministrativo);
+        console.log(evento.actoAdministrativo);
         break;
       }
       case 'cancelar': {
@@ -229,7 +232,6 @@ export class ActoAdministrativoListaComponent
               fk_idTramite: actoNuevo.fk_idTramite,
               viajeRealizado: actoNuevo.viajeRealizado,
               flujo: actoNuevo.flujo,
-              encargado: actoNuevo.encargado,
               estado: "INFORME"
             };
             
