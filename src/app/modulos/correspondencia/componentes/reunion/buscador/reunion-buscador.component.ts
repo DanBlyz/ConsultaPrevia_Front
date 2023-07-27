@@ -19,7 +19,7 @@ export class ReunionBuscadorComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
       nroReunion: [''],
-      acuerdo: [''],
+      conAcuerdo: [''],
       motivo: [''],
       reunionRealizada: ['']
     });
@@ -28,7 +28,7 @@ export class ReunionBuscadorComponent implements OnInit {
   ngOnInit(): void {
     this.formBuscador.setValue({
       nroReunion: this.objeto?.nroReunion || '',
-      acuerdo: this.objeto?.acuerdo || '',
+      conAcuerdo: this.objeto?.conAcuerdo || '',
       motivo: this.objeto?.motivo || '',
       reunionRealizada: this.objeto?.reunionRealizada || ''
     });
@@ -45,7 +45,7 @@ export class ReunionBuscadorComponent implements OnInit {
   limpiar(): void {
     this.formBuscador.reset({
       nroReunion: '',
-      acuerdo: '',
+      conAcuerdo: '',
       motivo: '',
       reunionRealizada: ''
     });

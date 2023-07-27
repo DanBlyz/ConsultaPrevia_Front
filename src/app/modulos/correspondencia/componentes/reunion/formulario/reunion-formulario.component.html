@@ -2,25 +2,34 @@
     <div class="col-12">
         <form [formGroup]="formReunion" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-6 form-group mb-2">
+                <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro Reunion:</label>
                     <input type="text" class="form-control" formControlName="nroReunion" />
                 </div>
+                <div class="col-md-9 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Motivo:</label>
+                    <ng-select  
+                                [items]="formReunion.get('conAcuerdo').value === true ? conAcuerdoV: sinAcuerdoV"
+                                bindLabel="name"
+                                placeholder="Seleccione los Motivos"
+                                appendTo="body"
+                                [multiple]="true"
+                                [(ngModel)]="selected"
+                                formControlName="motivo">
+                    </ng-select>
+                </div>
                 <div class="col-md-3 form-group mb-2">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="acuerdo" formControlName="acuerdo">
-                        <label class="custom-control-label" for="acuerdo"> Acuerdo:</label>
+                        <input type="checkbox" class="custom-control-input" id="conAcuerdo" formControlName="conAcuerdo"  (change)="onCheckboxChange('conAcuerdo')">
+                        <label class="custom-control-label" for="conAcuerdo"> Acuerdo:</label>
+                        
                     </div>
                 </div>
                 <div class="col-md-3 form-group mb-2">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="sinAcuerdo" formControlName="sinAcuerdo">
+                        <input type="checkbox" class="custom-control-input" id="sinAcuerdo" formControlName="sinAcuerdo"  (change)="onCheckboxChange('sinAcuerdo')">
                         <label class="custom-control-label" for="sinAcuerdo">Sin Acuerdo:</label>
                     </div>
-                </div>
-                <div class="col-md-12 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Motivo:</label>
-                    <input type="text" class="form-control" formControlName="motivo" />
                 </div>
                 <div *ngIf="false" class="col-md-3 form-group mb-2">
                     <div class="custom-control custom-checkbox">

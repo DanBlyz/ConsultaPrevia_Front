@@ -16,6 +16,8 @@ import { AdminLte3Module } from './modulos/admin-lte3';
 import { appReducers } from './app.reducers';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +33,8 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     SeguridadModule,
     ComunModule,
-    AdminLte3Module
+    AdminLte3Module,
+    NgSelectModule 
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es-MX' }],
   bootstrap: [AppComponent]

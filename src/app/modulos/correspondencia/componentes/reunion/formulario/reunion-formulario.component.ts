@@ -31,11 +31,20 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
 
   suscripcion = new Subscription();
   selectedFile: File | null = null;
+  selectedCheckbox: string | null = null;
 
   formReunion: FormGroup;
   botonOperacion: string;
 
   reunion: Reunion;
+  name = 'Angular';
+  
+  conAcuerdoV = ['TRABAJO','ESCUELA','VIAS','DESASTRES NATURALES'];
+  sinAcuerdoV = ['INASISTENCIA','AGRESION','ROTUNDO COTRADICCION','MERCURIO'];
+    
+  selected: any[] = [];
+  cadena : string = "";
+   
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -51,7 +60,8 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
 
     this.formReunion = this.fb.group({
       nroReunion: ['', Validators.required],
-      acuerdo: ['', Validators.required],
+      conAcuerdo: [false, Validators.required],
+      sinAcuerdo: [false,Validators.required],
       motivo: ['', Validators.required],
       reunionRealizada: [true, Validators.required]
     });
@@ -65,7 +75,8 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
           if (this.tipoOperacion === 'modificar' && this.reunion.id) {
             this.formReunion.setValue({
               nroReunion: this.reunion.nroReunion,
-              acuerdo: this.reunion.acuerdo,
+              conAcuerdo: this.reunion.conAcuerdo,
+              sinAcuerdo: this.reunion.sinAcuerdo,
               motivo: this.reunion.motivo,
               reunionRealizada: true
             });
@@ -131,6 +142,20 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
         );
         reunion = { ...this.formReunion.value };
         reunion.actaReunionPdf = "reunion-"+this.selectedFile.name.replace("reunion-","");
+        reunion.estado = 'REUNION';
+        
+          for (let index = 0; index < this.selected.length; index++) {
+          if(index !== this.selected.length-1){
+            this.cadena =  this.cadena + this.selected[index]+" - ";
+          }
+          else{
+            this.cadena =  this.cadena + this.selected[index];
+          }
+          console.log(this.selected[index]+"  aqui");
+          
+        }
+        reunion.motivo = this.cadena;
+       
         this.accion.emit({
           accion,
           reunionId: this.reunion.id,
@@ -163,5 +188,24 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al descargar el archivo:', error);
       }
     );
+  }
+  getSelectedValue(){
+    console.log(this.selected);
+  }
+  onCheckboxChange(checkboxName: string) {
+    if (this.selectedCheckbox === checkboxName) {
+      // Si el checkbox seleccionado ya está marcado, desmárcalo
+      this.formReunion.get(checkboxName)?.setValue(false);
+      this.selectedCheckbox = null;
+    } else {
+      // Marca el checkbox seleccionado y desmarca los otros
+      this.selectedCheckbox = checkboxName;
+      Object.keys(this.formReunion.controls).forEach((name) => {
+        if (name !== checkboxName && name !== 'nroReunion' && name !== 'motivo' && name !== 'reunionRealizada' && name !== 'reunionRealizada') {
+          console.log(name);
+          this.formReunion.get(name)?.setValue(false);
+        }
+      });
+    }
   }
 }

@@ -229,18 +229,19 @@ export class ReunionListaComponent
         });
         const reunionNueva = {...this.reunion};
         reunionNueva.notificacion = null;
-        const reunionV = {
-          estado: "NOTIFICACION"
-        };
-        
-        this.reunionFacade
-          .modificar(reunionNueva.id,reunionV)
-            
-          .then((respuesta) => {
-            if (respuesta.tipoRespuesta === 'Exito') {
-              console.log("exito")
-            }
-          });
+        if(evento.notificacion.representanteComunidad){
+          const reunionV = {
+            estado: "NOTIFICACION"
+          };
+          this.reunionFacade
+            .modificar(reunionNueva.id,reunionV)
+            .then((respuesta) => {
+              if (respuesta.tipoRespuesta === 'Exito') {
+                console.log("exito")
+              }
+            });
+        }
+
         break;
       }
       case 'guardarActoAdministrativo': {
