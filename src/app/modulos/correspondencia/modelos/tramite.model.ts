@@ -8,5 +8,6 @@ export class Tramite {
     departamento: string;
     provincia: string;
     municipio: string;
+    estado: string;
   }
   

@@ -46,7 +46,7 @@
                                     <i (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>-->
                                     <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === true) ? true : false" type="button" value="Adjuntar Notificaciones" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'notificacion', fk_tramite: item.fk_idTramite, nroReunion: (item.flujo !== 'Mediacion' ? '1ERA': 'UNICA')})">
+                                        (click)="ejecutarOperacion({operacion: 'notificacion', fk_tramite: item.fk_idTramite, nroReunion: (item.flujo !== 'Mediacion' ? '1ERA': 'UNICA'), informe: item.informe})"> 
                                     <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === false) ? true : false" type="button" value="Acto Administrativo" class="btn btn-warning"
                                         (click)="ejecutarOperacion({operacion: 'actoAdministrativo', fk_tramite: item.fk_idTramite, id: item.id})">
                                 </td>
@@ -90,7 +90,7 @@
             <app-correspondencia-resolucion-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-resolucion-detalle>
             <app-correspondencia-notificacion-formulario *ngSwitchCase="'notificacion'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-notificacion-formulario>
+                (accion)="ejecutarAccion($event)" [informeCorrelativo] = "informeCorrelativo" ></app-correspondencia-notificacion-formulario>
             <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'actoAdministrativo'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
         </div>

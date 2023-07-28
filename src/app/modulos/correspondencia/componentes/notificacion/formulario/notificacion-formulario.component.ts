@@ -7,18 +7,21 @@ import {
   LOCALE_ID,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-
+import { PaginadorComponent } from 'src/app/comun/componentes';
+import { Paginado } from 'src/app/comun/modelos';
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Informe, Notificacion, SujetoIdentificado } from '../../../modelos';
 import { NotificacionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { InformeFacade } from '../../../fachadas';
 
 @Component({
   selector: 'app-correspondencia-notificacion-formulario',
@@ -28,11 +31,15 @@ import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/c
 export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
+  @ViewChild(PaginadorComponent) paginador: PaginadorComponent;
+  informe: Informe = new Informe();
   selectedFile: File | null = null;
   selectedCheckbox: string | null = null;
   items: Informe [] = [];
   sujetos: SujetoIdentificado [] = [];
   arr = this.router.url.split('/');
+  @Input() public informeCorrelativo: any;
+  datoRecibido: any;
 
   suscripcion = new Subscription();
   formNotificacion: FormGroup;
@@ -46,7 +53,8 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     private notificacionFacade: NotificacionFacade,
     private toastrService: ToastrService,
     private router : Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private informeFacade: InformeFacade
   ) {
     if (!this.notificacion) {
       this.notificacion = new Notificacion();
@@ -92,8 +100,8 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         this.botonOperacion = 'Guardar';
         break;
     }
-    this.fetchItemsWithParameters();
-   // this.sujetos = this.items.lis;
+    this.ObtenerSujetosporInforme(this.informeCorrelativo);
+    console.log(this.informeCorrelativo+" noti")
   }
 
   @HostListener('unloaded')
@@ -160,16 +168,16 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
-  //""fk_idInforme": 75
-  fetchItemsWithParameters() {
-    const body = { correlativo: 'AJAM/DJU/CP/INFS/164/2020' }; // Aquí defines los parámetros que necesitas enviar en el body
+
+  ObtenerSujetosporInforme(informe: string) {
+    const body = { correlativo: informe }; // Aquí defines los parámetros que necesitas enviar en el body
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     // Realizar la solicitud HTTP POST con los parámetros en el body
     this.http.post<any>('http://localhost:3000/informes/buscar', body, { headers }).subscribe(
       (response) => {
-        this.items = response.lista; // Almacenar los datos en la variable items
-        console.log(this.items);
+        this.sujetos = response.lista[0].listaSujetoIdentificado; // Almacenar los datos en la variable items
+        console.log(response.lista);
       },
       (error) => {
         console.error('Error al obtener los datos:', error);
@@ -192,4 +200,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
       });
     }
   }
+  recibirDato(dato: any) {
+    this.datoRecibido = dato;
+   }
 }

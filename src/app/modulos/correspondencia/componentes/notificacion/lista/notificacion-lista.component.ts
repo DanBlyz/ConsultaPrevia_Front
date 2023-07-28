@@ -4,7 +4,8 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  Input
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -28,6 +29,7 @@ export class NotificacionListaComponent
 {
   @ViewChild('modalNotificacion') modalNotificacion: NgbModal;
   @ViewChild(PaginadorComponent) paginador: PaginadorComponent;
+
 
   suscripcion = new Subscription();
   filtro: NotificacionFilter = new NotificacionFilter();

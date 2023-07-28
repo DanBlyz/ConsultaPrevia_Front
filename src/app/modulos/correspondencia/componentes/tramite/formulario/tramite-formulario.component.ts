@@ -111,6 +111,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         tramite = { ...this.formTramite.value };
+        tramite.estado = 'PENDIENTE'
         tramite.correlativo = "AJAMD-"+this.formTramite.get('correlativo').value;
         this.accion.emit({
           accion: 'guardar',

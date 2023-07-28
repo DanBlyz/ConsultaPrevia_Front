@@ -45,12 +45,12 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">
-                    {{ denominacion }}
-                    <span class="d-block small text-muted">Autenticación con LDAP</span>
+                    CONSULTA PREVIA
+                    <span class="d-block small text-muted">Autenticación</span>
                 </p>
                 <form (ngSubmit)="iniciarSesion()" [formGroup]="formAutenticacion" autocomplete="off">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cuenta corporativa" formControlName='usuario'
+                        <input type="text" class="form-control" placeholder="Cuenta Institucional" formControlName='usuario'
                             [disabled]="procesando">
                         <div class="input-group-append">
                             <div class="input-group-text">

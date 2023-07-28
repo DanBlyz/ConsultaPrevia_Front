@@ -61,7 +61,7 @@ export class InformeFacade {
     });
   }
 
-  establecerFiltro(filtro: InformeFilter): void {
+  establecerFiltro(filtro: InformeFilter | any): void {
     this.store.dispatch(
       CorrespondenciaAcciones.establecerFiltroInforme({
         filtro: { ...filtro }
@@ -70,7 +70,7 @@ export class InformeFacade {
   }
 
   buscar(
-    objeto: InformeFilter,
+    objeto: InformeFilter | any,
     pagina: number,
     cantidad: number
   ): Promise<RespuestaLista<Informe>> {

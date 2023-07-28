@@ -4,7 +4,9 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +32,7 @@ export class ResolucionListaComponent
 {
   @ViewChild('modalResolucion') modalResolucion: NgbModal;
   @ViewChild(PaginadorComponent) paginador: PaginadorComponent;
+  @Output() datoEnviado = new EventEmitter<any>();
 
   suscripcion = new Subscription();
   filtro: ResolucionFilter = new ResolucionFilter();
@@ -40,6 +43,7 @@ export class ResolucionListaComponent
 
   idTra : number;
   idResolucion: number;
+  informeCorrelativo : string;
 
   resolucion: Resolucion = new Resolucion();
   lista: Resolucion[];
@@ -140,6 +144,9 @@ export class ResolucionListaComponent
         this.tipoOperacion = 'notificacion';
         this.fkTramite = evento.fk_tramite;
         this.nroReunion = evento.nroReunion;
+        this.informeCorrelativo = evento.informe;
+        this.datoEnviado.emit(evento.informe);
+        console.log("informe "+evento.informe);
         console.log(this.nroReunion);
         this.modalTitulo = 'Adjuntar Notificacion ' ;
         this.mostrarModal();

@@ -7,5 +7,6 @@ export class TramiteFilter {
     departamento?: string;
     provincia?: string;
     municipio?: string;
+    estado?: string;
   }
   
