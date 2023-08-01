@@ -13,21 +13,25 @@
     <div class="card-body">
         <form (ngSubmit)="ejecutarAccion()" [formGroup]="formBuscador">
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="d-block">Correlativo</label>
                     <input type="text" class="form-control" formControlName="correlativo" />
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="d-block">Codigo Unico</label>
                     <input type="number" class="form-control" formControlName="codigoUnico" />
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="d-block">Area Minera</label>
                     <input type="text" class="form-control" formControlName="areaMinera" />
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label class="d-block">Departamento</label>
                     <input type="text" class="form-control" formControlName="departamento" />
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="d-block">Estado</label>
+                    <input type="text" class="form-control" formControlName="estado" />
                 </div>
             </div>
             <div class="form-row justify-content-end">

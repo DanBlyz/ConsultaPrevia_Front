@@ -20,6 +20,7 @@ import { ActoAdministrativoFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { PdfModalComponent } from '../../pdf-modal';
 
 @Component({
   selector: 'app-reunion-lista',
@@ -325,7 +326,15 @@ export class ReunionListaComponent
 
   showPDF(data: ArrayBuffer) {
     const blob = new Blob([data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url, '_blank');
+    const pdfUrl = window.URL.createObjectURL(blob);
+    const modalTitle = 'Vista del PDF'; // Reemplaza con el título que desees mostrar
+    this.openModal(pdfUrl, modalTitle);
+  }
+  
+  openModal(pdfUrl: string, modalTitle: string) {
+    const modalRef = this.modalService.open(PdfModalComponent, { size: 'lg' });
+    modalRef.componentInstance.pdfUrl = pdfUrl;
+    modalRef.componentInstance.modalTitle = modalTitle;
+    modalRef.componentInstance.modalRef = modalRef; // Asigna el NgbModalRef al componente hijo
   }
 }

@@ -20,6 +20,7 @@
                                 <th>DEPARTAMENTO</th>
                                 <th>PROVINCIA</th>
                                 <th>MUNICIPIO</th>
+                                <th>ESTADO</th>
                                 <th class="td-auto">OPERACIONES</th>
                             </tr>
                         </thead>
@@ -34,6 +35,13 @@
                                 <td class="align-middle">{{ item.provincia }}</td>
                                 <td class="align-middle">{{ item.municipio }}</td>
                                 <td class="align-middle">
+                                    <p  *ngIf="item.estado === 'CONCLUIDO'" class="p-2 bg-success text-white rounded d-inline-block fit-content">{{item.estado}}</p>
+                                    <p  *ngIf="item.estado === 'PENDIENTE'" class="p-2 bg-warning text-white rounded d-inline-block fit-content">{{item.estado}}</p>
+                                
+                                </td>
+                                <td class="align-middle">
+
+                                    
                                    <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>
                                     <i  (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
@@ -67,8 +75,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right mt-3">
-                    <input type="button" value="Nuevo Tramite" class="btn btn-primary"
+                    <input type="button" value="Nuevo Tramite" class="btn btn-primary mr-2"
                         (click)="ejecutarOperacion({operacion: 'crear'})">
+                    <input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
+                        (click)="imprimirPdfTramite()">
                 </div>
             </div>
         </div>
@@ -103,3 +113,4 @@
         AJAM
     </div>
 </ng-template>
+

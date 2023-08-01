@@ -22,15 +22,14 @@ import autoTable from 'jspdf-autotable';
 import { Location } from '@angular/common';
 import { ReporteService } from '../../../servicios';
 import { ECNamedCurves } from 'pkijs';
-import { DatePipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-tramite-lista',
-  templateUrl: './tramite-lista.component.html',
+  selector: 'app-tramite-reporte',
+  templateUrl: './vista-reporte.component.html',
   styleUrls: []
 })
-export class TramiteListaComponent
+export class VistaReporteComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild('modalTramite') modalTramite: NgbModal;
@@ -43,11 +42,13 @@ export class TramiteListaComponent
   tramite: Tramite = new Tramite();
   lista: Tramite[];
   cuerpo: any [] = [];
+  cuerpo2: any [] = [];
   listaResolucion: Resolucion[] = [];
   listaProvidencia: Providencia[] = [];
   listaInforme: Informe[] = [];
   listaNotificacion: Notificacion[] = [];
   listaActoAdministrativo: ActoAdministrativo[] = [];
+  
 
   modalTitulo: string;
   modal: NgbModalRef;
@@ -62,7 +63,7 @@ export class TramiteListaComponent
     private notificacionFacade: NotificacionFacade,
     private router : Router,
     private _location: Location,
-    private reporteService: ReporteService
+    private reporte: ReporteService
 
   ) {}
 
@@ -244,16 +245,48 @@ export class TramiteListaComponent
   goBack(){
     this._location.back();
   }
-  imprimirPdfTramite(){
-    let date = new Date();
-    const fecha = date.toLocaleDateString(); // Por ejemplo, "11/07/2023" (depende de la configuración regional del navegador)
-    const hora = date.toLocaleTimeString();
-    console.log(this.filtro);
-    const atributos = Object.keys(this.filtro);
-    console.log(atributos+" atributos");
-    let cadena = this.paginador.totalRegistros+"-"+fecha+"-"+hora;
-    this.reporteService.generatePdf(this.lista, cadena,atributos);
+  /*imprimirPdfTramite(){
+    const encabezado = ["Correlativo","Area Minera","Clasificacion","Nro de Cuadriculas","Departamento",
+          "Provincia", "Municipio","estado"];
+    const encabezadoResolucion = ["Informe","Resolucion","Informe Aprobado","Actos Administrativos","Referencia"];
+    for (let index = 0; index < this.lista.length; index++) {
+      const element = this.lista[index];
+      this.cuerpo[index] = [element.correlativo, element.areaMinera, element.clasificacion, element.nroCuadricula, element.departamento, element.provincia, element.municipio, element.estado];
+     if (this.lista[index].listaResolucion !== null && this.lista[index].listaResolucion !== undefined) {
+      this.listaResolucion = this.lista[index].listaResolucion;
+       for (let j = 0; j < this.listaResolucion.length; j++) {
+        const res = this.listaResolucion[j];
+        this.cuerpo2[j] = [res.informe, res.resolucion, res.informeAprobado,res.actoAdministrativo, res.referencia];
+       }
+      }
+    }
 
-  }
+    this.reporte.imprimirPdf(encabezado,this.cuerpo,"REPORTE DE TRAMITE",true);
+    this.cuerpo = [];
+  }*/
 
+  convertToPDF() {
+    html2canvas(document.querySelector("#capture")).then(function(canvas) {
+      var imgData = canvas.toDataURL('image/png');
+        var imgWidth = 226;
+        var pageHeight = 295;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+  
+        var doc = new jsPDF();
+        var position = 0;
+  
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight+10);
+        heightLeft -= pageHeight;
+  
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight+10);
+            heightLeft -= pageHeight;
+        }
+      doc.save("Dashboard.pdf");
+      });
+    }
+  
 }

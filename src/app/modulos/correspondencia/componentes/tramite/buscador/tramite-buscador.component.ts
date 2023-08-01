@@ -21,7 +21,8 @@ export class TramiteBuscadorComponent implements OnInit {
       correlativo: [''],
       codigoUnico: [''],
       areaMinera: [''],
-      departamento: ['']
+      departamento: [''],
+      estado: ['']
     });
   }
 
@@ -30,7 +31,8 @@ export class TramiteBuscadorComponent implements OnInit {
       correlativo: this.objeto?.correlativo || '',
       codigoUnico: this.objeto?.codigoUnico || '',
       areaMinera: this.objeto?.areaMinera || '',
-      departamento: this.objeto?.departamento || ''
+      departamento: this.objeto?.departamento || '',
+      estado: this.objeto?.estado || ''
     });
   }
 
@@ -47,7 +49,8 @@ export class TramiteBuscadorComponent implements OnInit {
       correlativo: '',
       codigoUnico: '',
       areaMinera: '',
-      departamento: ''
+      departamento: '',
+      estado: ''
     });
   }
 }
