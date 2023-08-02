@@ -111,7 +111,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
     roles: []
   },*/
   {
-    ruta: '#',
+    ruta: 'Inicio/correspondencia/panel',
     titulo: 'IDENTIFICACION',
     icono: 'fas fa-search',
     class: '',

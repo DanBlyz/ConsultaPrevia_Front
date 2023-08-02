@@ -1,0 +1,7 @@
+.container {
+    padding: 20px;
+  }
+  
+  canvas {
+    max-width: 100%;
+  }

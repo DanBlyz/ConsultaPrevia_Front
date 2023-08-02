@@ -30,3 +30,5 @@ export * from './resolucion.service';
 export * from './reunion.service';
 //reporte
 export * from './reporte.service';
+//panel
+export * from './data.service'

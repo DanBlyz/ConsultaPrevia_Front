@@ -184,6 +184,7 @@ import {
       SujetoIdentificadoFormularioComponent,
       SujetoIdentificadoDetalleComponent
       } from './componentes/sujeto-identificado';
+import { PanelComponent } from './componentes/panel/panel.component';
 @NgModule({
   declarations: [
     TipoDocumentoDetalleComponent,
@@ -309,6 +310,7 @@ import {
     SujetoIdentificadoFormularioComponent,
     SujetoIdentificadoBuscadorComponent,
     SujetoIdentificadoListaComponent,
+    PanelComponent,
 
   ],
   imports: [

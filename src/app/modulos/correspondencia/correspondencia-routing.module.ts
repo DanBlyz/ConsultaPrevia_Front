@@ -82,6 +82,7 @@ import {
 import { ResolucionListaComponent } from './componentes/resolucion';
 import { ReunionListaComponent } from './componentes/reunion';
 import { SujetoIdentificadoListaComponent } from './componentes/sujeto-identificado';
+import { PanelComponent } from './componentes/panel/panel.component';
 
 const routes: Routes = [
   {
@@ -659,6 +660,16 @@ const routes: Routes = [
           title: 'Reunion',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Reunion' }],
           roles: []
+        }
+      },
+      {
+        path: 'Inicio/correspondencia/panel',
+        component: PanelComponent,
+        canActivate: [],
+        data: {
+          title: 'Panel',
+          urls: [{ title: 'Inicio', url: '/inicio' },{ title: 'Panel' }],
+          roles: ['']
         }
       },
       
