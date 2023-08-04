@@ -8,5 +8,7 @@ export class PagoCpt {
     apm: string;
     flujo: string;
     descripcion: string;
+
+    estado: string;
   }
   

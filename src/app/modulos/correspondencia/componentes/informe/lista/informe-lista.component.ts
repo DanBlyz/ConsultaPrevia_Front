@@ -43,6 +43,7 @@ export class InformeListaComponent
   modal: NgbModalRef;
 
   arr = this.router.url.split('/');
+  private totalRegistrosEncontrados: number = 0;
 
   constructor(
     private informeFacade: InformeFacade,
@@ -57,11 +58,12 @@ export class InformeListaComponent
         ({ listaInforme, informe }) => {
           if (listaInforme.lista) {
             if (listaInforme.lista.length >= 0) {
-              this.lista = listaInforme.lista;
+              this.lista = listaInforme.lista.filter( item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaInforme.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaInforme.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaInforme.paginado.registrosPorPagina,
                   listaInforme.paginado.totalPaginas,
                   listaInforme.paginado.pagina

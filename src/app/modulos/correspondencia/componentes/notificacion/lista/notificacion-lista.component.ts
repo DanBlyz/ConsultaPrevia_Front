@@ -43,6 +43,7 @@ export class NotificacionListaComponent
   modal: NgbModalRef;
 
   arr = this.router.url.split('/');
+  private totalRegistrosEncontrados: number = 0;
 
   constructor(
     private notificacionFacade: NotificacionFacade,
@@ -58,10 +59,12 @@ export class NotificacionListaComponent
           if (listaNotificacion.lista) {
             if (listaNotificacion.lista.length >= 0) {
               this.lista = listaNotificacion.lista;
+              this.lista = listaNotificacion.lista.filter(item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaNotificacion.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaNotificacion.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaNotificacion.paginado.registrosPorPagina,
                   listaNotificacion.paginado.totalPaginas,
                   listaNotificacion.paginado.pagina

@@ -10,6 +10,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
     submenu: [],
     roles: []
   },
+  {
+    ruta: 'Inicio/correspondencia/panel',
+    titulo: 'PANEL',
+    icono: 'fas fa-users',
+    class: '',
+    esEnlace: true,
+    submenu: [],
+    roles: []
+  },
  /* {
     ruta: '#',
     titulo: 'Administración',
@@ -111,7 +120,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
     roles: []
   },*/
   {
-    ruta: 'Inicio/correspondencia/panel',
+    ruta: '#',
     titulo: 'IDENTIFICACION',
     icono: 'fas fa-search',
     class: '',

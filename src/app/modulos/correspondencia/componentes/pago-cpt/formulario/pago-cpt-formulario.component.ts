@@ -141,10 +141,10 @@ export class PagoCptFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         pagoCpt = { ...this.formPagoCpt.value };
-        console.log(pagoCpt);
         let arr = this.router.url.split('/');
         pagoCpt.flujo = arr[1];
         pagoCpt.montoTotal = this.calculateMontoTotal();
+        pagoCpt.estado = 'EN PROCESO';
         this.accion.emit({
           accion: 'guardaPagoCpt',
           pagoCpt

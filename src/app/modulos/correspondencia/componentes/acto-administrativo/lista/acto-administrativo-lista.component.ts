@@ -34,7 +34,7 @@ export class ActoAdministrativoListaComponent
   suscripcion = new Subscription();
   filtro: ActoAdministrativoFilter = new ActoAdministrativoFilter();
   tipoOperacion: string;
-
+  body = { flujo: 'Deliberacion' };
   actoAdministrativo: ActoAdministrativo = new ActoAdministrativo();
   lista: ActoAdministrativo[];
   arr = this.router.url.split('/');
@@ -44,6 +44,8 @@ export class ActoAdministrativoListaComponent
   idActo : number;
   idViaje : number;
   fk_idTramite : number;
+  
+  private totalRegistrosEncontrados: number = 0;
 
   constructor(
     private actoAdministrativoFacade: ActoAdministrativoFacade,
@@ -59,14 +61,14 @@ export class ActoAdministrativoListaComponent
     this.suscripcion.add(
       this.actoAdministrativoFacade.CorrespondenciaState$.subscribe(
         ({ listaActoAdministrativo, actoAdministrativo }) => {
-          console.log(this.actoAdministrativo);
           if (listaActoAdministrativo.lista) {
             if (listaActoAdministrativo.lista.length >= 0) {
-              this.lista = listaActoAdministrativo.lista;
+              this.lista = listaActoAdministrativo.lista.filter(item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaActoAdministrativo.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaActoAdministrativo.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaActoAdministrativo.paginado.registrosPorPagina,
                   listaActoAdministrativo.paginado.totalPaginas,
                   listaActoAdministrativo.paginado.pagina
@@ -74,6 +76,7 @@ export class ActoAdministrativoListaComponent
               }
             }
           }
+    
           if (actoAdministrativo) {
             this.actoAdministrativo = actoAdministrativo;
           }
@@ -89,7 +92,6 @@ export class ActoAdministrativoListaComponent
             1,
             this.paginador.registrosPorPagina
           );
-          console.log(this.actoAdministrativo);
         }
       })
     );

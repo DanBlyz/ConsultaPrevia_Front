@@ -11,7 +11,7 @@ import { SeguridadFacade } from 'src/app/seguridad/fachadas';
 @Component({
   selector: 'app-admin-lte3-autenticacion-ldap',
   templateUrl: './autenticacion-ldap.component.html',
-  styles: []
+  styleUrls : []
 })
 export class AutenticacionLdapComponent implements OnInit, OnDestroy {
   private env = EnvironmentHelper.obtenerConfiguracion('autenticacion');

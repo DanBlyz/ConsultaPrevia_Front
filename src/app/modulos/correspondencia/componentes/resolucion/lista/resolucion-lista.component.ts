@@ -40,7 +40,6 @@ export class ResolucionListaComponent
   suscripcion = new Subscription();
   filtro: ResolucionFilter = new ResolucionFilter();
   tipoOperacion: string;
-  arr = this.router.url.split('/');
   fkTramite : number;
   nroReunion :string;
 
@@ -53,6 +52,9 @@ export class ResolucionListaComponent
 
   modalTitulo: string;
   modal: NgbModalRef;
+
+  arr = this.router.url.split('/');
+  private totalRegistrosEncontrados: number = 0;
 
   constructor(
     private resolucionFacade: ResolucionFacade,
@@ -71,11 +73,12 @@ export class ResolucionListaComponent
         ({ listaResolucion, resolucion }) => {
           if (listaResolucion.lista) {
             if (listaResolucion.lista.length >= 0) {
-              this.lista = listaResolucion.lista;
+              this.lista = listaResolucion.lista.filter (item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaResolucion.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaResolucion.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaResolucion.paginado.registrosPorPagina,
                   listaResolucion.paginado.totalPaginas,
                   listaResolucion.paginado.pagina

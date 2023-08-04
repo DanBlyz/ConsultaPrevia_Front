@@ -47,8 +47,10 @@ export class ReunionListaComponent
   idTra: number;
   idReunion: number;
   aux: Reunion;
-  arr = this.router.url.split('/');
   nroReunion : string;
+
+  arr = this.router.url.split('/');
+  private totalRegistrosEncontrados: number = 0;
 
   constructor(
     private reunionFacade: ReunionFacade,
@@ -66,11 +68,12 @@ export class ReunionListaComponent
         ({ listaReunion, reunion }) => {
           if (listaReunion.lista) {
             if (listaReunion.lista.length >= 0) {
-              this.lista = listaReunion.lista;
+              this.lista = listaReunion.lista.filter( item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaReunion.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaReunion.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaReunion.paginado.registrosPorPagina,
                   listaReunion.paginado.totalPaginas,
                   listaReunion.paginado.pagina

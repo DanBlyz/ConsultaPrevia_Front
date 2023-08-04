@@ -4,21 +4,25 @@ import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/c
 import { DataService } from '../../servicios';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.css']
 })
-export class PanelComponent implements OnInit, AfterViewInit {
-  nroDpto : number ;
-  laPaz : number;
-  santaCruz : number;
-  cochabamba : number;
-  chuquisaca : number;
-  tarija : number;
-  potosi : number;
-  pando : number;
-  oruro :number;
-  beni :number;
+export class PanelComponent implements AfterViewInit {
+  nroDpto : number = 0;
+  laPaz : number = 0;
+  santaCruz : number = 0;
+  cochabamba : number = 0;
+  chuquisaca : number = 0;
+  tarija : number = 0;
+  potosi : number = 0;
+  pando : number = 0;
+  oruro :number = 0;
+  beni :number = 0;
+
+  concluido : number = 0;
+  pendiente : number = 0;
+  interrumpido : number = 0;
 
 
 
@@ -28,32 +32,37 @@ export class PanelComponent implements OnInit, AfterViewInit {
     private dataService: DataService
   ) { }
 
-  ngOnInit(): void {
-  }
   ngAfterViewInit(): void {
     Chart.register(BarController, BarElement, CategoryScale, LinearScale);
     Chart.register(PieController, ArcElement);
-  
-    // Realizar las solicitudes HTTP para todos los departamentos y almacenar las Promesas resultantes en un arreglo
+
     const promises: Promise<void>[] = [];
     const departamentos = ['La Paz', 'Santa Cruz', 'Cochabamba', 'Chuquisaca', 'Tarija', 'Potosi', 'Pando', 'Oruro', 'Beni'];
+    const promisesEstado: Promise<void>[] = [];
+    const estados = ['PENDIENTE', 'CONCLUIDO', 'INTERRUMPIDO'];
   
     departamentos.forEach((dpto) => {
       const promise = this.obtenerCantidadPorDepartamento(dpto);
       promises.push(promise);
     });
-  
-    // Esperar a que todas las Promesas se resuelvan antes de generar la gráfica de barras
     Promise.all(promises).then(() => {
-      this.generateBarChart();
+      this.totalTramitesDepartamentos();
     });
+
+    estados.forEach((est) => {
+      const promiseEstado = this.obtenerCantidadProceso(est);
+      promisesEstado.push(promiseEstado);
+    });
+    Promise.all(promisesEstado).then(() => {
+      this.tramitesPorEstado();
+    });
+  
   
     this.generatePieChart();
   }
 
-  generateBarChart() {
+  totalTramitesDepartamentos() {
     const ctx = document.getElementById('barChart') as HTMLCanvasElement;
-    console.log(this.nroDpto+" nro dep")
     const data: ChartData = {
       labels: ['La Paz', 'Santa Cruz', 'Cochabamba', 'Chuquisaca', 'Tarija', 'Potosi', 'Pando','Oruro','Beni'],
       datasets: [
@@ -78,6 +87,38 @@ export class PanelComponent implements OnInit, AfterViewInit {
       data: data,
       options: options
     });
+  }
+  tramitesPorEstado() {
+    const ctx = document.getElementById('tramiteEstado') as HTMLCanvasElement;
+  
+    if (this.concluido !== null && this.pendiente !== null && this.interrumpido !== null) {
+      const data: ChartData = {
+        labels: ['CONCLUIDO', 'PENDIENTE', 'INTERRUMPIDO'],
+        datasets: [
+          {
+            label: 'Sales',
+            data: [this.concluido, this.pendiente, this.interrumpido],
+            backgroundColor: ['rgba(107, 230, 98, 0.8)', 'rgba(237, 246, 84, 0.8)', 'rgba(255, 147, 124, 0.8)'],
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }
+        ]
+      };
+      const options: ChartOptions = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      };
+      new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+      });
+    } else {
+      console.log('Uno de los valores (concluido, pendiente o interrumpido) es nulo o no está definido.');
+    }
   }
 
   generatePieChart() {
@@ -140,6 +181,39 @@ export class PanelComponent implements OnInit, AfterViewInit {
             } 
             case 'Chuquisaca': { 
               this.chuquisaca = response.paginado.totalRegistros;
+             break; 
+            } 
+            default: { 
+               break; 
+            } 
+         } 
+          resolve(); 
+        },
+        (error) => {
+          console.error('Error al obtener los datos:', error);
+          reject(error);
+        }
+      );
+    });
+  }
+  obtenerCantidadProceso(est: string): Promise<void> {
+    const body = { estado: est };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    return new Promise<void>((resolve, reject) => {
+      this.http.post<any>('http://localhost:3000/tramites/buscar', body, { headers }).subscribe(
+        (response) => {
+          switch(est) { 
+            case 'PENDIENTE': { 
+                this.pendiente = response.paginado.totalRegistros;
+               break; 
+            } 
+            case 'CONCLUIDO': { 
+                this.concluido = response.paginado.totalRegistros;
+               break; 
+            } 
+            case 'INTERRUMPIDO': { 
+              this.interrumpido = response.paginado.totalRegistros;
              break; 
             } 
             default: { 
