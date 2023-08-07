@@ -663,7 +663,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Inicio/correspondencia/panel',
+        path: 'panel',
         component: PanelComponent,
         canActivate: [],
         data: {

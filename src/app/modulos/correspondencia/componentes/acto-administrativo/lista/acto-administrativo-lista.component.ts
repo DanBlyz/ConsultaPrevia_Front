@@ -20,6 +20,7 @@ import { ViajeFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { ReporteService } from '../../../servicios';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -54,7 +55,8 @@ export class ActoAdministrativoListaComponent
     private viajeFacade: ViajeFacade,
     private informeFacade: InformeFacade,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private reporteService : ReporteService
   ) {}
 
   ngOnInit(): void { 
@@ -291,5 +293,16 @@ export class ActoAdministrativoListaComponent
     const blob = new Blob([data], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
+  }
+  imprimirPdfTramite(){
+    let date = new Date();
+    const fecha = date.toLocaleDateString(); // Por ejemplo, "11/07/2023" (depende de la configuración regional del navegador)
+    const hora = date.toLocaleTimeString();
+    console.log(this.filtro);
+    const atributos = Object.keys(this.filtro);
+    console.log(atributos+" atributos");
+    let cadena = this.paginador.totalRegistros+"-"+fecha+"-"+hora;
+    this.reporteService.generarPdfCpt(this.lista,cadena)
+
   }
 }

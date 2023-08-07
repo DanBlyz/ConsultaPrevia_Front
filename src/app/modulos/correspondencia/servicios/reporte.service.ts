@@ -150,13 +150,90 @@ export class ReporteService {
      //doc.save(`${cadena}.pdf`);
      doc.output('dataurlnewwindow');
     }
-    generarPdfCpt(data: any[],){
+    generarPdfCpt(data: any[], cadena: string){
       const doc = new jsPDF({
         orientation: 'portrait',
         unit: 'px',
         format: 'letter'
       });
+      const [totalRegistros,fecha, hora] = cadena.split("-");
+      doc.setFontSize(20);
+      doc.text("PROFORMA DE PAGO", doc.internal.pageSize.width / 2, 35, { align: 'center' });
+      doc.setFontSize(10);
+      doc.text("Fecha y Hora Generacion  "+ fecha + " a horas "+hora, doc.internal.pageSize.width / 2, 65, { align: 'center' });
       
+      const imgData = 'assets/images/ajamfront.jpg'; // Reemplaza 'ruta_de_la_imagen.jpg' con la ruta de tu imagen
+      const imageWidth = 90; // Ancho de la imagen en el PDF
+      const imageHeight = 90; // Alto de la imagen en el PDF
+      const xPosition = 2; // Posición X de la imagen centrada
+      const yPosition = 5; // Posición Y de la imagen
+      console.log(imgData)
+      doc.addImage(imgData, 'JPG', xPosition, yPosition, imageWidth, imageHeight);
+      const styles = {
+        fontSize: 24, // Tamaño del texto en puntos
+        textColor: [204, 102, 0] // Color marrón (moztaza) en formato RGB
+      };
+      const mainHeaders = ["CPT: "+'7056-6419-1632'];
+      let startY = 100;
+      autoTable(doc,{
+        head: [mainHeaders],
+        startY: startY,
+        styles: {
+          fontSize: 20,
+          halign: 'center'
+        },
+
+      });
+      startY = (doc as any).lastAutoTable.finalY + 20;
+      const mainHeaders3 = ['DATOS DEL SOLICITANTE',''];
+      const mainData3 = [
+        ['TEL / CEL', '2825213'],
+        ['REPRESENTANTE:', 'YERY'],
+        ['CLASIFICACION:', 'COOPERATIVA']
+      ];
+      autoTable(doc, {
+        head: [mainHeaders3],
+        body: mainData3,
+        startY: startY,
+      })
+      startY = (doc as any).lastAutoTable.finalY + 20;
+      const mainHeaders4 = ['CALCULO DE LA DEUDA',''];
+      const mainData4 = [
+        ['CONCEPTO', 'CONSULTA - PREVIA'],
+        ['MONTO A PAGAR:', 'BS '+ 155.00 +".- CIENTO CINCUETA Y CINCO 00/100.- BOLIVIANOS" ]
+      ];
+      autoTable(doc, {
+        head: [mainHeaders4],
+        body: mainData4,
+        startY: startY
+      })
+      startY = (doc as any).lastAutoTable.finalY + 20;
+      const mainHeaders5 = ['DETALLE DE CÁLCULO DE LIQUIDACIÓN DE VIATICOS Y','PASAJES','','',''];
+      const mainData5 = [
+        ['Servicios:', 'Nro. Dia (s)','Tipo de Viaje','Monto por Dia','Total Viaticos'],
+        ['Viatico para la identificación de sujetos de consulta previa, dentro del trámite: AJAMD-LP-SOL-CAM/154/2018 del área denominada TOJRA RL, compuesta por 8 cuadrículas, ubicada en el municipio(s) CAJUATA, Provincia(s) INQUISIVI, departamento(s) LA PAZ.', '0.7','Intradepartamental',222,155 ]
+      ];
+      autoTable(doc, {
+        head: [mainHeaders5],
+        body: mainData5,
+        startY: startY,
+        styles: {
+          halign: 'center'
+        },
+      })
+      startY = (doc as any).lastAutoTable.finalY + 20;
+      const mainHeaders6 = ['NOTAS'];
+      const mainData6 = [['1. El pago podrá realizarse a través de cualquier SUCURSAL O AGENCIA DEL BANCO UNION, UNINET Y UNIMOVIL inidicando solamente el CPT que se muestra en la cabecera de la presente proforma'],
+                         ['2. La presente Proforma de Pago tiene una validez de 30 dias calendario (Hasta el 30/11/2022) a partir de su fecha de generación. Posterior a esta fecha, se deberá generar una nueva Proforma de Pago.'],
+                         ['3. El presente documento no se constituye en un instrumento válido para fines legales. El saldo adeudado está sujeto a actualización, validación y confirmación por parte de la Autoridad Jurisdiccional Administrativa Minera AJAM.'],
+                         ['4. La impresión de la presente Proforma de Pago es opcional, para el pago ewn ewl Banco solo necesita el CPT que se muestra en la cabecera de la presente proforma.']
+    ];
+      autoTable(doc, {
+        head: [mainHeaders6],
+        body: mainData6,
+        startY: startY
+      })
+      doc.output('dataurlnewwindow');
     }
-  
+
 }

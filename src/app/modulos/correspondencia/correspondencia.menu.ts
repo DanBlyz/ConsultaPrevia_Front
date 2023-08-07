@@ -11,7 +11,7 @@ export const CorrespondenciaMenu: MenuItem[] = [
     roles: []
   },
   {
-    ruta: 'Inicio/correspondencia/panel',
+    ruta: 'panel',
     titulo: 'PANEL',
     icono: 'fas fa-users',
     class: '',

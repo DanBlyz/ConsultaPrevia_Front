@@ -18,7 +18,7 @@ export const environment = {
   version: require('../../package.json').version + '-dev',
 
   paginaAutenticacion: 'autenticacion/ldap',
-  paginaInicio: '/',
+  paginaInicio: '/panel',
 
   ...env
 };
