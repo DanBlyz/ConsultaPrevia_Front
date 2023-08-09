@@ -115,6 +115,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
         }
         tramite = { ...this.formTramite.value };
         tramite.estado = 'PENDIENTE';
+        tramite.correlativo = this.correlativo;
         this.accion.emit({
           accion: 'guardar',
           tramite
@@ -157,7 +158,8 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
     
   }
   buscarAreaMinera(){
-    const body = { nombre : this.formTramite.get('areaMinera').value};
+    if(this.formTramite.get('areaMinera').value !== ""){
+      const body = { nombre : this.formTramite.get('areaMinera').value};
     this.vistaAreaMineraService.buscar(body, 1, 1).subscribe(
       (datos) => {
         this.datoRecuperado = datos.lista[0];
@@ -176,9 +178,17 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al buscar los datos:', error);
       }
     );
+    }else{
+      console.log("error de datos");
+    }
   }
   onItemSelected(item: any) {
-    this.selectedItem = item;
-    console.log(this.selectedItem);
+    this.correlativo = item.nombre;
+  }
+  onChangeSearch ( val :string )  { 
+    this.correlativo = val;
+  } 
+  selectEvent(item) {
+    this.correlativo = item.nombre;
   }
 }

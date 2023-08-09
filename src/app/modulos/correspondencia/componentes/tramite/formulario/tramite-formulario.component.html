@@ -13,7 +13,8 @@
                             [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate"
                             formControlName="correlativo"
-                            (itemSelected)="correlativo">                   
+                            (selected)='selectEvent($event)'
+                            >              
                         </ng-autocomplete>
                 
                         <ng-template #itemTemplate let-item>
@@ -23,8 +24,6 @@
                         <ng-template #notFoundTemplate let-notFound>
                             <div [innerHTML]="notFound"></div>
                         </ng-template>
-                        {{formTramite.get('correlativo').value}}
-
                 </div>
                 
                 <div class="col-md-2 form-group mb-2">
@@ -33,9 +32,17 @@
                 </div>
                 <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Area Minera:</label>
-                    <input type="text" class="form-control" formControlName="areaMinera" />
-                    <button type="button" (click)="buscarAreaMinera()">Buscar</button>
-                </div>
+                    <div class="d-flex align-items-center">
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="areaMinera" />
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" (click)="buscarAreaMinera()">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <div class="col-md-3 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro de Cuadriculas:</label>
                     <input type="number" class="form-control" formControlName="nroCuadricula" />
