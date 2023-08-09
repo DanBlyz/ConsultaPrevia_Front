@@ -34,7 +34,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     SeguridadModule,
     ComunModule,
     AdminLte3Module,
-    NgSelectModule 
+    NgSelectModule,
+    
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es-MX' }],
   bootstrap: [AppComponent]

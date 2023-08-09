@@ -17,6 +17,9 @@ import { FuncionesHelper } from 'src/app/comun/auxiliares';
 
 import { Tramite } from '../../../modelos';
 import { TramiteFacade } from '../../../fachadas';
+import { VistaHojaRutaService } from '../../../servicios';
+import { VistaAreaMineraService } from '../../../servicios';
+import { Observable } from 'tinymce';
 
 @Component({
   selector: 'app-correspondencia-tramite-formulario',
@@ -24,6 +27,11 @@ import { TramiteFacade } from '../../../fachadas';
   styles: []
 })
 export class TramiteFormularioComponent implements OnInit, OnDestroy {
+  public keyword = 'nombre';
+  public listaHoja$: Observable<any[]>;
+  selectedItem: any;
+  correlativo : string;
+
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
 
@@ -33,12 +41,16 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   tramite: Tramite;
+  listaHojaRuta : any[] = [];
+  datoRecuperado : any;
  
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
     private tramiteFacade: TramiteFacade,
     private toastrService: ToastrService,
+    private vistaHojaRutaService : VistaHojaRutaService,
+    private vistaAreaMineraService : VistaAreaMineraService
   ) {
     if (!this.tramite) {
       this.tramite = new Tramite();
@@ -57,6 +69,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.hojadeRutaBuscar();
     this.suscripcion.add(
       this.tramiteFacade.CorrespondenciaState$.subscribe(({ tramite }) => {
         if (tramite) {
@@ -101,8 +114,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         tramite = { ...this.formTramite.value };
-        tramite.estado = 'PENDIENTE'
-        tramite.correlativo = "AJAMD-"+this.formTramite.get('correlativo').value;
+        tramite.estado = 'PENDIENTE';
         this.accion.emit({
           accion: 'guardar',
           tramite
@@ -130,5 +142,43 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+  hojadeRutaBuscar(){
+    const body = { };
+    this.vistaHojaRutaService.obtenerCodificador().subscribe(
+      (datos) => {
+        this.listaHojaRuta = datos.lista;
+        console.log(this.listaHojaRuta);      
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    
+  }
+  buscarAreaMinera(){
+    const body = { nombre : this.formTramite.get('areaMinera').value};
+    this.vistaAreaMineraService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+  
+        // Rellenar los campos del formulario
+        this.formTramite.patchValue({
+          codigoUnico: Number(this.datoRecuperado.codigo_unico),
+          nroCuadricula: Number(this.datoRecuperado.cuadriculas_solicitadas),
+          departamento: this.datoRecuperado.departamentos,
+          provincia: this.datoRecuperado.provincias,
+          municipio: this.datoRecuperado.municipios,
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+  }
+  onItemSelected(item: any) {
+    this.selectedItem = item;
+    console.log(this.selectedItem);
   }
 }

@@ -185,6 +185,7 @@ import {
       SujetoIdentificadoDetalleComponent
       } from './componentes/sujeto-identificado';
 import { PanelComponent } from './componentes/panel/panel.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 @NgModule({
   declarations: [
     TipoDocumentoDetalleComponent,
@@ -321,7 +322,8 @@ import { PanelComponent } from './componentes/panel/panel.component';
     NgSelectModule,
     ComunModule,
     CorrespondenciaPlantillaModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    AutocompleteLibModule
   ]
 })
 export class CorrespondenciaModule {}
