@@ -34,6 +34,8 @@
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? "" : "No Programo Viaje" }}
                                     <i *ngIf="item.viaje !== null ? true :false" (click)="downloadPDF(item.viaje.formularioPdf)"
                                         class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
+                                    <input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
+                                        (click)="imprimirPdfTramite(item.pagoCpt.id)">
                                 </td>
                                
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
@@ -66,7 +68,7 @@
                         <!-- <input type="button" value="Nuevo registro" class="btn btn-primary"
                         (click)="ejecutarOperacion({operacion: 'crear'})">-->
                         <input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
-                        (click)="imprimirPdfTramite()">
+                        (click)="imprimirPdfTramite(53)">
                 </div>
             </div>
         </div>

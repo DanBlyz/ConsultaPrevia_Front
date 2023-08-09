@@ -150,7 +150,7 @@ export class ReporteService {
      //doc.save(`${cadena}.pdf`);
      doc.output('dataurlnewwindow');
     }
-    generarPdfCpt(data: any[], cadena: string){
+    generarPdfCpt(data: any, cadena: string){
       const doc = new jsPDF({
         orientation: 'portrait',
         unit: 'px',
@@ -200,7 +200,7 @@ export class ReporteService {
       const mainHeaders4 = ['CALCULO DE LA DEUDA',''];
       const mainData4 = [
         ['CONCEPTO', 'CONSULTA - PREVIA'],
-        ['MONTO A PAGAR:', 'BS '+ 155.00 +".- CIENTO CINCUETA Y CINCO 00/100.- BOLIVIANOS" ]
+        ['MONTO A PAGAR:', 'BS '+ data.montoTotal +".- CIENTO CINCUETA Y CINCO 00/100.- BOLIVIANOS" ]
       ];
       autoTable(doc, {
         head: [mainHeaders4],

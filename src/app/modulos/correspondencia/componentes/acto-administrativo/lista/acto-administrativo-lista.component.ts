@@ -45,6 +45,8 @@ export class ActoAdministrativoListaComponent
   idActo : number;
   idViaje : number;
   fk_idTramite : number;
+
+  pagoCpt : any;
   
   private totalRegistrosEncontrados: number = 0;
 
@@ -294,15 +296,20 @@ export class ActoAdministrativoListaComponent
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
-  imprimirPdfTramite(){
-    let date = new Date();
-    const fecha = date.toLocaleDateString(); // Por ejemplo, "11/07/2023" (depende de la configuración regional del navegador)
-    const hora = date.toLocaleTimeString();
-    console.log(this.filtro);
-    const atributos = Object.keys(this.filtro);
-    console.log(atributos+" atributos");
-    let cadena = this.paginador.totalRegistros+"-"+fecha+"-"+hora;
-    this.reporteService.generarPdfCpt(this.lista,cadena)
-
+  imprimirPdfTramite(id: number) {
+    this.pagoCptFacade.obtenerPorId(id).then((datos) => {
+      console.log(datos['objeto']);     
+      this.pagoCpt = datos['objeto'];    
+      console.log(this.pagoCpt.montoTotal);
+  
+      let date = new Date();
+      const fecha = date.toLocaleDateString();
+      const hora = date.toLocaleTimeString();
+      console.log(this.filtro);
+      const atributos = Object.keys(this.filtro);
+      console.log(atributos + " atributos");
+      let cadena = this.paginador.totalRegistros + "-" + fecha + "-" + hora;
+      this.reporteService.generarPdfCpt(this.pagoCpt, cadena);
+    });
   }
 }

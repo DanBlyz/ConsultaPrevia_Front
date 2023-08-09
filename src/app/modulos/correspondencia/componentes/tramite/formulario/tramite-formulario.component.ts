@@ -33,17 +33,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   tramite: Tramite;
-  departamentosArray = ['La Paz', 'Oruro', 'Potosi', 'Chuquisaca', 'Cochabamba', 'Tarija', 'Santa Cruz', 'Beni', 'Pando'];
-  provinciaLp = ['Aroma', 'Bautista', 'Saavedra', 'Abel Iturralde', 'Caranavi', 'Eliodoro Camacho', 'Franz Tamayo', 'Gualberto Villarroel', 'Ingavi', 'Inquisivi', 'General José Manuel Pando', 'Larecaja', 'José Ramón Loayza', 'Los Andes', 'Manco Kapac', 'Muñecas', 'Nor Yungas', 'Omasuyos', 'Pacajes', 'Pedro Domingo Murillo', 'Sud Yungas'];
-  provinciaOr = ['Tomás Barrón', 'Cercado', 'Pantaleón Dalence', 'Poopó', 'Eduardo Abaroa', 'Sebastián Pagador', 'Saucarí', 'Nor Carangas', 'San Pedro de Totora', 'Carangas', 'Sud Carangas', 'Ladislao Cabrera', 'Litoral', 'Sajama', 'Sabaya', 'Mejillones'];
-  provinciaPt = ['Alonso de Ibáñez', 'Antonio Quijarro', 'General Bilbao', 'Charcas', 'Chayanta', 'Cornelio Saavedra', 'Daniel Campos', 'Enrique Baldivieso', 'José María Linares', 'Modesto Omiste', 'Nor Chichas', 'Nor Lípez', 'Rafael Bustillos', 'Sur Chicas', 'Sur Lípez', 'Tomás Frías'];
-  provinciaCh = ['Juana Azurduy', 'Belisario Boeto', 'Hernando Siles', 'Luis Calvo', 'Nor Cinti', 'Oropeza', 'Sud Cinti', 'Tomina', 'Yamparáez', 'Jaime Zudáñez'];
-  provinciaCb = ['Arani', 'Arque', 'Ayopaya', 'Bolívar', 'Campero', 'Capinota', 'Carrasco', 'Cercado', 'Chapare', 'Esteban Arce', 'Germán Jordán', 'Mizque', 'Punata', 'Quillacollo', 'Tapacarí', 'Tiraque'];
-  provinciaTj = ['Cercado', 'Arce', 'O Connor', 'Gran Chaco', 'Avilez', 'Méndez'];
-  provinciaSc = ['Andrés Ibáñez', 'Angel Sandóval', 'Chiquitos', 'Cordillera', 'Florida', 'Germán Busch', 'Guarayos', 'Ichilo', 'Ignacio Warnes', 'José Miguel de Velasco', 'Manuel María Caballero', 'Ñuflo de Chávez', 'Obispo Santistevan', 'Sara', 'Vallegrande'];
-  provinciaBn = ['Cercado', 'Vaca Diez', 'Gral José Ballivián', 'Yacuma', 'Moxos', 'Marbán', 'Mamoré', 'Iténez'];
-  provinciaPd = ['Nicolás Suárez', 'Manuripi', 'Madre de Dios', 'Federico Román', 'Abuná'];
-
+ 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
