@@ -18,6 +18,7 @@ import { Providencia } from '../../../modelos';
 import { ProvidenciaFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
+import { VistaDocumentoService } from '../../../servicios';
 
 @Component({
   selector: 'app-correspondencia-providencia-formulario',
@@ -36,6 +37,8 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
 
   providencia: Providencia;
   public archivos: any = [];
+  datoRecuperado : any;
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -43,7 +46,8 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
     private providenciaFacade: ProvidenciaFacade,
     private toastrService: ToastrService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private vistaDocumentoService : VistaDocumentoService
   ) {
     if (!this.providencia) {
       this.providencia = new Providencia();
@@ -151,6 +155,32 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
+  
+  }
+  buscarCorrelativo(){
+    if(this.formProvidencia.get('correlativo').value !== ""){
+      const body = { correlativo : this.formProvidencia.get('correlativo').value};
+    this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+        this.formProvidencia.patchValue({
+          referencia: this.datoRecuperado.referencia
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    }else{
+      console.log("error de datos");
+    }
   }
 
 }

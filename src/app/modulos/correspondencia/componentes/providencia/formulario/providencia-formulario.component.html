@@ -4,15 +4,24 @@
             <div class="form-row">
                 <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Correlativo:</label>
-                    <div class="d-flex">
-                        <span class="mr-2">AJAMD-</span>
-                        <input type="text" class="form-control" formControlName="correlativo" />
+                    <div class="d-flex align-items-center">
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="correlativo"/>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" (click)="buscarCorrelativo()">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                </div>
-                <div class="col-md-6 form-group mb-2">
+                  </div>
+                  <div class="col-md-6 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Providencia PDF:</label>
-                    <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
-                </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" accept=".pdf" (change)="onFileSelected($event)" id="fileInput">
+                      <label class="custom-file-label" for="fileInput">{{ nombreArchivoSeleccionado }}</label>
+                    </div>
+                  </div>
             </div>
             <div class="form-row">
                 <div class="col-md-12 form-group mb-2">

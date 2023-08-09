@@ -31,7 +31,8 @@ export * from './reunion.service';
 //reporte
 export * from './reporte.service';
 //panel
-export * from './data.service'
+export * from './data.service';
 // recuperar datos
 export * from './vista-area-minera.service';
 export * from './vista-hota-ruta.service';
+export * from './vista-documento.service';

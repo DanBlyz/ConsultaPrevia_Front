@@ -164,8 +164,6 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
       (datos) => {
         this.datoRecuperado = datos.lista[0];
         console.log(this.datoRecuperado);
-  
-        // Rellenar los campos del formulario
         this.formTramite.patchValue({
           codigoUnico: Number(this.datoRecuperado.codigo_unico),
           nroCuadricula: Number(this.datoRecuperado.cuadriculas_solicitadas),

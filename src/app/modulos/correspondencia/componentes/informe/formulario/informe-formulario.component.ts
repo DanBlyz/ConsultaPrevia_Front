@@ -39,6 +39,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
 
   arr = this.router.url.split('/');
   informe: Informe;
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -288,5 +289,11 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
   }
 }

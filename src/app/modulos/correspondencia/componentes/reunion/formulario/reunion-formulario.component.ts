@@ -44,6 +44,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
     
   selected: any[] = [];
   cadena : string = "";
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
    
 
   constructor(
@@ -173,6 +174,12 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
   }
   downloadFile(nombre : string) {
     // Aquí realiza una solicitud al servidor para obtener los datos del archivo

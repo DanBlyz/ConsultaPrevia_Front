@@ -13,9 +13,12 @@
                     <label><span class="required-field-indicator"></span> Asunto:</label>
                     <input type="text" class="form-control" formControlName="asunto" />
                 </div>
-                <div class="col-md-3 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Informe Pdf:</label>
-                    <input type="file" class="form-control-file" accept=".pdf" (change)="onFileSelected($event)"/>
+                <div class="col-md-6 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Informe PDF:</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" accept=".pdf" (change)="onFileSelected($event)" id="fileInput">
+                      <label class="custom-file-label" for="fileInput">{{ nombreArchivoSeleccionado }}</label>
+                    </div>
                 </div>
                 <div class="col-md-12 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Referencia:</label>

@@ -37,6 +37,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   resolucion: Resolucion;
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -153,6 +154,12 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
   }
   
   downloadFile(nombre : string) {

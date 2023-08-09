@@ -46,6 +46,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   notificacion: Notificacion;
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -167,6 +168,12 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
   }
 
   ObtenerSujetosporInforme(informe: string) {
@@ -202,5 +209,6 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   }
   recibirDato(dato: any) {
     this.datoRecibido = dato;
+    
    }
 }
