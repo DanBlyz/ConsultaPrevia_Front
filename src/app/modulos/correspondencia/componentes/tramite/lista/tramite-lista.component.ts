@@ -146,7 +146,6 @@ export class TramiteListaComponent
       case 'providencia': {
         this.tipoOperacion = 'providencia';
         this.idTra = evento.id;
-        //console.log(evento.id);
         this.modalTitulo = 'Adjuntar ' + "Providencia";
         this.mostrarModal();
         break;
@@ -154,7 +153,6 @@ export class TramiteListaComponent
       case 'notificacion': {
         this.tipoOperacion = 'notificacion';
         this.idTra = evento.id;
-        console.log(evento.id);
         this.modalTitulo = 'Adjuntar ' + "Notificacion";
         this.mostrarModal();
         break;
@@ -206,6 +204,8 @@ export class TramiteListaComponent
             this.cerrarModal();
           }
         });
+        const body = { estadoAccion : 'PROVIDENCIA'}
+        this.tramiteFacade.modificar(this.idTra,body);
         break;
       }
       case 'guardarnoti': {
@@ -215,6 +215,9 @@ export class TramiteListaComponent
             this.cerrarModal();
           }
         });
+        const body = { estadoAccion : 'NOTIFICADO'}
+        this.tramiteFacade.modificar(this.idTra,body);
+        this.router.navigate(['/Identificacion/actos-administrativos']);
         break;
       }
     }

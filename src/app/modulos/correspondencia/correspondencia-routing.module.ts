@@ -513,7 +513,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/tramites',
+        path: 'Identificacion/tramites',
         component: TramiteListaComponent,
         canActivate: [],
         data: {
@@ -523,7 +523,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/providencias',
+        path: 'Identificacion/providencias',
         component: ProvidenciaListaComponent,
         canActivate: [],
         data: {
@@ -533,7 +533,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/notificaciones',
+        path: 'Identificacion/notificaciones',
         component: NotificacionListaComponent,
         canActivate: [],
         data: {
@@ -543,7 +543,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/actos-administrativos',
+        path: 'Identificacion/actos-administrativos',
         component: ActoAdministrativoListaComponent,
         canActivate: [],
         data: {
@@ -553,7 +553,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/pagos-cpt',
+        path: 'Identificacion/pagos-cpt',
         component: PagoCptListaComponent,
         canActivate: [],
         data: {
@@ -563,7 +563,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/viaje',
+        path: 'Identificacion/viaje',
         component: ViajeListaComponent,
         canActivate: [],
         data: {
@@ -573,7 +573,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/informe',
+        path: 'Identificacion/informe',
         component: InformeListaComponent,
         canActivate: [],
         data: {
@@ -583,7 +583,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Identificacion/correspondencia/sujeto-identificado',
+        path: 'Identificacion/sujeto-identificado',
         component: SujetoIdentificadoListaComponent,
         canActivate: [],
         data: {
@@ -593,7 +593,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Deliberacion/correspondencia/notificacion',
+        path: 'Deliberacion/notificacion',
         component: NotificacionListaComponent,
         canActivate: [],
         data: {
@@ -603,7 +603,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Deliberacion/correspondencia/resolucion',
+        path: 'Deliberacion/resolucion',
         component: ResolucionListaComponent,
         canActivate: [],
         data: {
@@ -613,7 +613,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Deliberacion/correspondencia/acto-administrativo',
+        path: 'Deliberacion/acto-administrativo',
         component: ActoAdministrativoListaComponent,
         canActivate: [],
         data: {
@@ -623,7 +623,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Deliberacion/correspondencia/reunion',
+        path: 'Deliberacion/reunion',
         component: ReunionListaComponent,
         canActivate: [],
         data: {
@@ -633,7 +633,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Deliberacion/correspondencia/informe',
+        path: 'Deliberacion/informe',
         component: InformeListaComponent,
         canActivate: [],
         data: {
@@ -643,7 +643,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Mediacion/correspondencia/resolucion',
+        path: 'Mediacion/resolucion',
         component: ResolucionListaComponent,
         canActivate: [],
         data: {
@@ -653,7 +653,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'Mediacion/correspondencia/reunion',
+        path: 'Mediacion/reunion',
         component: ReunionListaComponent,
         canActivate: [],
         data: {

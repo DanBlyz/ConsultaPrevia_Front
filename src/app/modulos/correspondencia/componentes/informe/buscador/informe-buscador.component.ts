@@ -20,7 +20,7 @@ export class InformeBuscadorComponent implements OnInit {
     this.formBuscador = this.fb.group({
       correlativo: [''],
       referencia: [''],
-      asunto: ['']
+      tipoDocumento: ['']
     });
   }
 
@@ -28,7 +28,7 @@ export class InformeBuscadorComponent implements OnInit {
     this.formBuscador.setValue({
       correlativo: this.objeto?.correlativo || '',
       referencia: this.objeto?.referencia || '',
-      asunto: this.objeto?.asunto || ''
+      tipoDocumento: this.objeto?.tipoDocumento || ''
     });
   }
 
@@ -45,7 +45,7 @@ export class InformeBuscadorComponent implements OnInit {
     this.formBuscador.reset({
       correlativo: '',
       referencia: '',
-      asunto: ''
+      tipoDocumento: ''
     });
   }
 }

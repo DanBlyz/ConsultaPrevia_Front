@@ -19,6 +19,7 @@ import { Informe, SujetoIdentificado } from '../../../modelos';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
+import { VistaDocumentoService } from '../../../servicios';
 
 @Component({
   selector: 'app-correspondencia-informe-formulario',
@@ -39,6 +40,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
 
   arr = this.router.url.split('/');
   informe: Informe;
+  datoRecuperado : any;
   nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
@@ -47,7 +49,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
     private informeFacade: InformeFacade,
     private toastrService: ToastrService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private vistaDocumentoService: VistaDocumentoService
   ) {
     if (!this.informe) {
       this.informe = new Informe();
@@ -56,7 +59,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
     this.formInforme = this.fb.group({
       correlativo: ['', Validators.required],
       referencia: ['', Validators.required],
-      asunto: ['', Validators.required],
+      tipoDocumento: ['', Validators.required],
       nroSujetos: [1, Validators.required],
       comunidad: ['_', Validators.required],
       autoridad: ['_', Validators.required],
@@ -88,7 +91,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
             this.formInforme.setValue({
               correlativo: this.informe.correlativo,
               referencia: this.informe.referencia,
-              asunto: this.informe.asunto,
+              asunto: this.informe.tipoDocumento,
               informePdf: this.informe.informePdf,
               nroSujetos: 1,
               comunidad: "",
@@ -294,6 +297,26 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       this.nombreArchivoSeleccionado = file.name;
     } else {
       this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
+  }
+  buscarCorrelativo(){
+    if(this.formInforme.get('correlativo').value !== ""){
+      const body = { correlativo : this.formInforme.get('correlativo').value};
+    this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+        this.formInforme.patchValue({
+          referencia: this.datoRecuperado.referencia,
+          tipoDocumento: this.datoRecuperado.tipoDocumento.nombre
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    }else{
+      console.log("error de datos");
     }
   }
 }

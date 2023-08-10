@@ -19,7 +19,7 @@ export class ResolucionBuscadorComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
       informe: [''],
-      resolucion: [''],
+      correlativo: [''],
       referencia: ['']
     });
   }
@@ -27,7 +27,7 @@ export class ResolucionBuscadorComponent implements OnInit {
   ngOnInit(): void {
     this.formBuscador.setValue({
       informe: this.objeto?.informe || '',
-      resolucion: this.objeto?.resolucion || '',
+      correlativo: this.objeto?.correlativo || '',
       referencia: this.objeto?.referencia || ''
     });
   }
@@ -43,7 +43,7 @@ export class ResolucionBuscadorComponent implements OnInit {
   limpiar(): void {
     this.formBuscador.reset({
       informe: '',
-      resolucion: '',
+      correlativo: '',
       referencia: ''
     });
   }

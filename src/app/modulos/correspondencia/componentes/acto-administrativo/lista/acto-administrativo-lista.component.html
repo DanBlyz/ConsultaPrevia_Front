@@ -8,7 +8,7 @@
                             <tr>
                                 <th *ngIf="arr[1] === 'Identificacion'" >TRAMITE</th>
                                 <th *ngIf="arr[1] === 'Deliberacion' || arr[1] === 'Mediacion'" >RESOLUCION</th>
-                                <th>NRO FORMULARIO</th>
+                                <th>MONTO TOTAL </th>
                                 <th>APM</th>
                                 <th>VIAJE REALIZADO</th>
                                 <th>PAGO REALIZADO</th>
@@ -20,7 +20,7 @@
                             <tr *ngFor="let item of lista">
                                 <td *ngIf="item.resolucion === null && item.flujo === arr[1]" class="align-middle">{{ item.tramite.correlativo }}</td>
                                 <td *ngIf="(item.tramite === null  && arr[1] === item.flujo)  " class="align-middle">{{ item.resolucion.resolucion }}</td>
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? item.viaje.nroFormulario : "No Programo Viaje" }}</td>
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.montoTotal : "No Genero Cpt" }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.apm : "No Genero Cpt" }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">
                                     <i *ngIf="item.viajeRealizado"  class="fas fa-check-circle fa-lg text-success"></i>
@@ -31,22 +31,26 @@
                                     <i *ngIf="item.pagoCpt !== null ? !item.pagoCpt.pagoRealizado : false" class="fas fa-times-circle fa-lg text-danger"></i>
                                 </td>
 
-                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.viaje !== null ? "" : "No Programo Viaje" }}
-                                    <i *ngIf="item.viaje !== null ? true :false" (click)="downloadPDF(item.viaje.formularioPdf)"
-                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>
-                                    <input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
+                                <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? "" : "No Genero Cpt" }}
+                                   <!-- <i *ngIf="item.viaje !== null ? true :false" (click)="downloadPDF(item.viaje.formularioPdf)"
+                                        class='fas fa-file-pdf text-danger mr-1 fa-2x cursor-pointer' title="Visualizar Pdf"></i>-->
+                                    <input *ngIf="item.pagoCpt === null ? false : item.pagoCpt.pagoRealizado === true ? true : false"   type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
                                         (click)="imprimirPdfTramite(item.pagoCpt.id)">
                                 </td>
                                
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
                                         class="far fa-file-alt fa-lg text-info mr-1 cursor-pointer" title="Detalle"></i>-->
-                                <i *ngIf=" item.viaje === null ? false : item.viajeRealizado === true ? false : true" (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
-                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
+                                <!--<i *ngIf=" item.viaje === null ? false : item.viajeRealizado === true ? false : true" (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>-->
+                                <!--<i *ngIf=" item.pagoCpt !== null ? item.pagoCpt.pagoRealizado === true ? item.viajeRealizado === true ? false : true : false : false" (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>-->
+                                <input *ngIf=" item.pagoCpt !== null ? item.pagoCpt.pagoRealizado === true ? item.viajeRealizado === true ? false : true : false : false" type="button" value="Confirmar Viaje" class="btn btn-warning"
+                                        (click)="ejecutarOperacion({operacion: 'modificar', id: item.id})" [disabled]="item.estado === 'REPROGRAMA VIAJE' ? true : false">
+                                <input *ngIf=" item.pagoCpt !== null ? item.pagoCpt.pagoRealizado === true ? item.viajeRealizado === true ? false : true : false : false" type="button" value="Reprogramar Viaje" class="btn btn-danger"
+                                        (click)="ejecutarOperacion({operacion: 'reprogramarViaje', id: item.id, fk_idTramite: item.fk_idTramite })" [disabled]="item.estado === 'REPROGRAMA VIAJE' ? true : false">    
                                 <input *ngIf=" item.pagoCpt === null ? true : false"  type="button" value="Pago Cpt" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id})">
-                                <input *ngIf=" item.viaje === null ? item.pagoCpt !== null ? true : false : false"  type="button" value="Programar Viaje" class="btn btn-info"
-                                        (click)="ejecutarOperacion({operacion: 'viaje',id: item.id})">
+                                        (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id })">
                                 <input *ngIf=" item.viajeRealizado === true ? (item.flujo === 'Deliberacion'? false : true ) :false"  type="button" value="Adjuntar Informe" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'informe',fk_idTramite: item.fk_idTramite,id: item.id})" [disabled]="item.estado === 'INFORME' ? true : false">
                                         
@@ -67,8 +71,8 @@
                 <div class="text-right mt-3">
                         <!-- <input type="button" value="Nuevo registro" class="btn btn-primary"
                         (click)="ejecutarOperacion({operacion: 'crear'})">-->
-                        <input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
-                        (click)="imprimirPdfTramite(53)">
+                        <!--<input type="button" value="Imprimir Reporte" class="btn btn-warning mr-2"
+                        (click)="imprimirPdfTramite(53)">-->
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ import { Resolucion } from '../../../modelos';
 import { ResolucionFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
-
+import { VistaDocumentoService } from '../../../servicios';
 @Component({
   selector: 'app-correspondencia-resolucion-formulario',
   templateUrl: './resolucion-formulario.component.html',
@@ -37,6 +37,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
   botonOperacion: string;
 
   resolucion: Resolucion;
+  datoRecuperado : any;
   nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
@@ -45,7 +46,8 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
     private resolucionFacade: ResolucionFacade,
     private toastrService: ToastrService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private vistaDocumentoService: VistaDocumentoService
   ) {
     if (!this.resolucion) {
       this.resolucion = new Resolucion();
@@ -53,7 +55,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
 
     this.formResolucion = this.fb.group({
       informe: ['', Validators.required],
-      resolucion: ['', Validators.required],
+      correlativo: ['', Validators.required],
       informeAprobado: ['', Validators.required],
       actoAdministrativo: ['', Validators.required],
       referencia: ['', Validators.required]
@@ -68,7 +70,7 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
           if (this.tipoOperacion === 'modificar' && this.resolucion.id) {
             this.formResolucion.setValue({
               informe: this.resolucion.informe,
-              resolucion: this.resolucion.resolucion,
+              correlativo: this.resolucion.correlativo,
               informeAprobado: this.resolucion.informeAprobado,
               actoAdministrativo: this.resolucion.actoAdministrativo,
              // resolucionPdf: this.resolucion.resolucionPdf,
@@ -176,5 +178,24 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al descargar el archivo:', error);
       }
     );
+  }
+  buscarCorrelativo(){
+    if(this.formResolucion.get('correlativo').value !== ""){
+      const body = { correlativo : this.formResolucion.get('correlativo').value};
+    this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+        this.formResolucion.patchValue({
+          referencia: this.datoRecuperado.referencia
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    }else{
+      console.log("error de datos");
+    }
   }
 }

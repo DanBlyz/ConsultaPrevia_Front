@@ -54,10 +54,10 @@
                                     <input type="button" value="Notificacion" class="btn btn-primary m-1"
                                     (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})">-->
 
-                                    <button class="btn btn-sm btn-info m-1" (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})" title="Providencia">
+                                    <button class="btn btn-sm btn-info m-1" (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})" title="Providencia" [disabled]="item.estadoAccion === 'PROVIDENCIA' || item.estadoAccion === 'NOTIFICADO' ? true : false">
                                         <i class="far fa-file-alt fa-lg mr-1"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-primary m-1" (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})" title="Notificacion">
+                                    <button class="btn btn-sm btn-primary m-1" (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})" title="Notificacion" [disabled]="item.estadoAccion === 'NOTIFICADO' ? true : false">
                                         <i class="far fa-envelope-open fa-lg mr-1"></i>
                                     </button>
                                     

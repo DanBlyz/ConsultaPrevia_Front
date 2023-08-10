@@ -142,7 +142,7 @@ export class TramiteFacade {
     });
   }
 
-  modificar(id: number, objeto: Tramite): Promise<RespuestaObjeto<Tramite>> {
+  modificar(id: number, objeto: any): Promise<RespuestaObjeto<Tramite>> {
     this.store.dispatch(
       ComunAcciones.establecerProcesando({ procesando: true })
     );

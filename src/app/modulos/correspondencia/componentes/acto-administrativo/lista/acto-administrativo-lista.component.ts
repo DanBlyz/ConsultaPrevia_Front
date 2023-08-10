@@ -21,6 +21,7 @@ import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { ReporteService } from '../../../servicios';
+import { TramiteFacade } from '../../../fachadas';
 @Component({
   selector: 'app-acto-administrativo-lista',
   templateUrl: './acto-administrativo-lista.component.html',
@@ -58,7 +59,8 @@ export class ActoAdministrativoListaComponent
     private informeFacade: InformeFacade,
     private router: Router,
     private http: HttpClient,
-    private reporteService : ReporteService
+    private reporteService : ReporteService,
+    private tramiteFacade : TramiteFacade
   ) {}
 
   ngOnInit(): void { 
@@ -165,6 +167,14 @@ export class ActoAdministrativoListaComponent
         this.mostrarModal();
         break;
       }
+      case 'reprogramarViaje': {
+        const body = {estado : 'REPROGRAMA VIAJE'};
+        this.actoAdministrativoFacade.modificar(evento.id,body);
+        const bodyTramite = { estado : 'INTERRUMPIDO', estadoAccion: ''};
+        this.tramiteFacade.modificar(evento.fk_idTramite,bodyTramite)
+        this.router.navigate(['/Identificacion/tramites']);
+        break;
+      }
     }
   }
 
@@ -235,9 +245,6 @@ export class ActoAdministrativoListaComponent
             const actoNuevo = {...this.actoAdministrativo};
             console.log(actoNuevo);
             var actoV = {
-              fk_idTramite: actoNuevo.fk_idTramite,
-              viajeRealizado: actoNuevo.viajeRealizado,
-              flujo: actoNuevo.flujo,
               estado: "INFORME"
             };
             

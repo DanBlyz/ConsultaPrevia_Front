@@ -15,6 +15,7 @@ export class Tramite {
     provincia: string;
     municipio: string;
     estado: string;
+    estadoAccion: string;
 
     listaResolucion?: Resolucion [];
     listaProvidencia?: Providencia[];

@@ -2,18 +2,24 @@
     <div class="col-12">
         <form [formGroup]="formInforme" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-3 form-group mb-2">
+                <div class="col-md-5 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Correlativo:</label>
-                    <div class="d-flex">
-                        <span class="mr-2">AJAM/</span>
-                        <input type="text" class="form-control" formControlName="correlativo" />
+                    <div class="d-flex align-items-center">
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="correlativo"/>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" (click)="buscarCorrelativo()">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
                       </div>
+                    </div>
                 </div>
                 <div class="col-md-3 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Asunto:</label>
-                    <input type="text" class="form-control" formControlName="asunto" />
+                    <label><span class="required-field-indicator"></span> Tipo Documento:</label>
+                    <input type="text" class="form-control" formControlName="tipoDocumento" />
                 </div>
-                <div class="col-md-6 form-group mb-2">
+                <div class="col-md-4 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Informe PDF:</label>
                     <div class="custom-file">
                       <input type="file" class="custom-file-input" accept=".pdf" (change)="onFileSelected($event)" id="fileInput">

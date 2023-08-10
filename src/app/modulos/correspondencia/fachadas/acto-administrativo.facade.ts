@@ -142,7 +142,7 @@ export class ActoAdministrativoFacade {
     });
   }
 
-  modificar(id: number, objeto: ActoAdministrativo): Promise<RespuestaObjeto<ActoAdministrativo>> {
+  modificar(id: number, objeto: any): Promise<RespuestaObjeto<ActoAdministrativo>> {
     this.store.dispatch(
       ComunAcciones.establecerProcesando({ procesando: true })
     );

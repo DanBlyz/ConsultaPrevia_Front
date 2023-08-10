@@ -116,6 +116,7 @@ export class TramiteFormularioComponent implements OnInit, OnDestroy {
         tramite = { ...this.formTramite.value };
         tramite.estado = 'PENDIENTE';
         tramite.correlativo = this.correlativo;
+        tramite.estadoAccion = 'INICIO';
         this.accion.emit({
           accion: 'guardar',
           tramite

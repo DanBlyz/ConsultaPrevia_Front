@@ -8,5 +8,6 @@ export class TramiteFilter {
     provincia?: string;
     municipio?: string;
     estado?: string;
+    estadoAccion?: string;
   }
   

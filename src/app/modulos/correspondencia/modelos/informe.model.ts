@@ -6,7 +6,7 @@ export class Informe {
   correlativo: string;
   referencia: string;
   informePdf: string;
-  asunto: string;
+  tipoDocumento: string;
   flujo: string;
 
   nroSujetos?: number;

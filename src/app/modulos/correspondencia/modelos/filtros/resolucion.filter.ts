@@ -1,7 +1,7 @@
 export class ResolucionFilter {
     fk_idTramite?: number;
     informe?: string;
-    resolucion?: string;
+    correlativo?: string;
     informeAprobado?: boolean;
     actoAdministrativo: boolean;
     resolucionPdf: string;
