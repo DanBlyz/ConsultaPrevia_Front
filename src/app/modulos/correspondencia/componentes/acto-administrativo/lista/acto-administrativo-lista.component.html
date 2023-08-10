@@ -19,7 +19,7 @@
                         <tbody>
                             <tr *ngFor="let item of lista">
                                 <td *ngIf="item.resolucion === null && item.flujo === arr[1]" class="align-middle">{{ item.tramite.correlativo }}</td>
-                                <td *ngIf="(item.tramite === null  && arr[1] === item.flujo)  " class="align-middle">{{ item.resolucion.resolucion }}</td>
+                                <td *ngIf="(item.tramite === null  && arr[1] === item.flujo)  " class="align-middle">{{ item.resolucion.correlativo }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.montoTotal : "No Genero Cpt" }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.pagoCpt !== null ? item.pagoCpt.apm : "No Genero Cpt" }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="td-auto align-middle">

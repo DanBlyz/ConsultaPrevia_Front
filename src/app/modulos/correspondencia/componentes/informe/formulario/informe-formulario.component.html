@@ -36,65 +36,21 @@
                 </div>
             </div>
             <div class="form-row">
-                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-4 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Comunidad :</label>
-                    <input type="text" class="form-control" formControlName="comunidad" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-4 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Autoridad:</label>
-                    <input type="text" class="form-control" formControlName="autoridad"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? true : false" class="col-md-4 form-group mb-2">
-                    <label><span class="required-field-indicator"></span> Telefono:</label>
-                    <input type="text" class="form-control" formControlName="telefono"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 1 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="comunidad2" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 1 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="autoridad2"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 1 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="number" class="form-control" formControlName="telefono2"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 2 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="comunidad3" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 2 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="autoridad3"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 2 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="number" class="form-control" formControlName="telefono3"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 3 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="comunidad4" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 3 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="autoridad4"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 3 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="number" class="form-control" formControlName="telefono4"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 4 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="comunidad5" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 4 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="autoridad5"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 4 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="number" class="form-control" formControlName="telefono5"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 5 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="comunidad6" />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 5 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="text" class="form-control" formControlName="autoridad6"  />
-                </div>
-                <div *ngIf=" arr[1] === 'Identificacion' ? (formInforme.get('nroSujetos').value > 5 ? true: false) : false" class="col-md-4 form-group mb-2">
-                    <input type="number" class="form-control" formControlName="telefono6"  />
-                </div>
-                
-            </div>
+                <ng-container *ngFor="let i of generateRange(formInforme.get('nroSujetos').value); let index = index">
+                  <div *ngIf="arr[1] === 'Identificacion'" class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Comunidad {{ index + 1 }}:</label>
+                    <input type="text" class="form-control" [formControlName]="'comunidad' + (index + 1)" />
+                  </div>
+                  <div *ngIf="arr[1] === 'Identificacion'" class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Autoridad {{ index + 1 }}:</label>
+                    <input type="text" class="form-control" [formControlName]="'autoridad' + (index + 1)" />
+                  </div>
+                  <div *ngIf="arr[1] === 'Identificacion'" class="col-md-4 form-group mb-2">
+                    <label><span class="required-field-indicator"></span> Telefono {{ index + 1 }}:</label>
+                    <input type="text" class="form-control" [formControlName]="'telefono' + (index + 1)" />
+                  </div>
+                </ng-container>
+              </div>
             <div class="form-row justify-content-end">
                 <div class="form-group">
                     <button (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1"

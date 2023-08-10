@@ -153,7 +153,6 @@ export class ResolucionListaComponent
         this.nroReunion = evento.nroReunion;
         this.informeCorrelativo = evento.informe;
         this.datoEnviado.emit(evento.informe);
-        console.log("informe "+evento.informe);
         console.log(this.nroReunion);
         this.modalTitulo = 'Adjuntar Notificacion ' ;
         this.mostrarModal();
@@ -210,7 +209,6 @@ export class ResolucionListaComponent
       case 'guardarnoti': {
         evento.notificacion.fk_idTramite = this.fkTramite;
         evento.notificacion.nroReunion = this.nroReunion;
-        console.log( evento.notificacion.nroReunion+" asfdasf");
         this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();

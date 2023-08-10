@@ -32,6 +32,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
   
   selectedFile: File | null = null;
   listaSujetoIdentificado: SujetoIdentificado []= [];
+  listaSujetosIdentificados: any[] = [];
 
   suscripcion = new Subscription();
 
@@ -61,9 +62,9 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       referencia: ['', Validators.required],
       tipoDocumento: ['', Validators.required],
       nroSujetos: [1, Validators.required],
-      comunidad: ['_', Validators.required],
-      autoridad: ['_', Validators.required],
-      telefono: [0, Validators.required],
+      comunidad1: ['_', Validators.required],
+      autoridad1: ['_', Validators.required],
+      telefono1: [0, Validators.required],
       comunidad2: ['_', Validators.required],
       autoridad2: ['_', Validators.required],
       telefono2: [0, Validators.required],
@@ -94,9 +95,9 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
               asunto: this.informe.tipoDocumento,
               informePdf: this.informe.informePdf,
               nroSujetos: 1,
-              comunidad: "",
-              autoridad: "",
-              telefono: 0,
+              comunidad1: "",
+              autoridad1: "",
+              telefono1: 0,
               comunidad2: "",
               autoridad2: "",
               telefono2: 0,
@@ -186,50 +187,16 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         );
         informe = { ...this.formInforme.value };
         informe.informePdf = "informe-"+this.selectedFile.name;
-        informe.correlativo = "AJAM/"+this.formInforme.get('correlativo').value;
-        if(this.formInforme.value.nroSujetos > 0){
+       
+        for (let i = 0; i < this.formInforme.value.nroSujetos; i++) {
           const sujeto = new SujetoIdentificado();
-          sujeto.comunidad = this.formInforme.value.comunidad;
-          sujeto.autoridad = this.formInforme.value.autoridad;
-          sujeto.telefono = this.formInforme.value.telefono;
-          this.listaSujetoIdentificado[0] = sujeto;
-        }
-        if(this.formInforme.value.nroSujetos > 1){
-          const sujeto2 = new SujetoIdentificado();
-          sujeto2.comunidad = this.formInforme.value.comunidad2;
-          sujeto2.autoridad = this.formInforme.value.autoridad2;
-          sujeto2.telefono = this.formInforme.value.telefono2;
-          this.listaSujetoIdentificado[1] = sujeto2;
-        }
-        if(this.formInforme.value.nroSujetos > 2){
-          const sujeto3 = new SujetoIdentificado();
-          sujeto3.comunidad = this.formInforme.value.comunidad3;
-          sujeto3.autoridad = this.formInforme.value.autoridad3;
-          sujeto3.telefono = this.formInforme.value.telefono3;
-          this.listaSujetoIdentificado[2] = sujeto3;
-        }
-        if(this.formInforme.value.nroSujetos > 3){
-          const sujeto4 = new SujetoIdentificado();
-          sujeto4.comunidad = this.formInforme.value.comunidad4;
-          sujeto4.autoridad = this.formInforme.value.autoridad4;
-          sujeto4.telefono = this.formInforme.value.telefono4;
-          this.listaSujetoIdentificado[3] = sujeto4;
-        }
-        if(this.formInforme.value.nroSujetos > 4){
-          const sujeto5 = new SujetoIdentificado();
-          sujeto5.comunidad = this.formInforme.value.comunidad5;
-          sujeto5.autoridad = this.formInforme.value.autoridad5;
-          sujeto5.telefono = this.formInforme.value.telefono5;
-          this.listaSujetoIdentificado[4] = sujeto5;
-        }
-        if(this.formInforme.value.nroSujetos > 5){
-          const sujeto6 = new SujetoIdentificado();
-          sujeto6.comunidad = this.formInforme.value.comunidad6;
-          sujeto6.autoridad = this.formInforme.value.autoridad6;
-          sujeto6.telefono = this.formInforme.value.telefono6;
-          this.listaSujetoIdentificado[5] = sujeto6;
+          sujeto.comunidad = this.formInforme.value['comunidad' + (i + 1)];
+          sujeto.autoridad = this.formInforme.value['autoridad' + (i + 1)];
+          sujeto.telefono = this.formInforme.value['telefono' + (i + 1)];
+          this.listaSujetoIdentificado.push(sujeto);
         }
         informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
+        
         let arr = this.router.url.split('/');
         informe.flujo = arr[1];
         this.accion.emit({
@@ -318,5 +285,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
     }else{
       console.log("error de datos");
     }
+  }
+  generateRange(n: number): number[] {
+    return Array.from({ length: n }, (_, index) => index);
   }
 }
