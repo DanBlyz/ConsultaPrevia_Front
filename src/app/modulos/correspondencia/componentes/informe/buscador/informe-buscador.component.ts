@@ -18,6 +18,7 @@ export class InformeBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
+      tramite:[''],
       correlativo: [''],
       referencia: [''],
       tipoDocumento: ['']
@@ -26,6 +27,7 @@ export class InformeBuscadorComponent implements OnInit {
 
   ngOnInit(): void {
     this.formBuscador.setValue({
+      tramite: this.objeto?.tramite?.correlativo || '',
       correlativo: this.objeto?.correlativo || '',
       referencia: this.objeto?.referencia || '',
       tipoDocumento: this.objeto?.tipoDocumento || ''
@@ -34,6 +36,8 @@ export class InformeBuscadorComponent implements OnInit {
 
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as InformeFilter;
+    const correlativoBuscador = objeto.tramite+"";
+    objeto.tramite = { correlativo : correlativoBuscador};
     console.log(objeto+"entro aqui buscar");
     this.accion.emit({
       accion: 'buscar',

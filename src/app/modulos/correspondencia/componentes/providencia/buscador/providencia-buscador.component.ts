@@ -18,6 +18,7 @@ export class ProvidenciaBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
+      tramite: [''],
       correlativo: [''],
       referencia: ['']
     });
@@ -25,21 +26,25 @@ export class ProvidenciaBuscadorComponent implements OnInit {
 
   ngOnInit(): void {
     this.formBuscador.setValue({
+      tramite: this.objeto?.tramite?.correlativo || '',
       correlativo: this.objeto?.correlativo || '',
       referencia: this.objeto?.referencia || ''
     });
   }
-
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as ProvidenciaFilter;
+    const correlativoBuscador = objeto.tramite+"";
+    objeto.tramite = { correlativo : correlativoBuscador};
     this.accion.emit({
       accion: 'buscar',
       providencia: FuncionesHelper.quitarNulos(objeto)
     });
+    console.log(objeto)
   }
 
   limpiar(): void {
     this.formBuscador.reset({
+      tramite: '',
       correlativo: '',
       referencia: ''
     });

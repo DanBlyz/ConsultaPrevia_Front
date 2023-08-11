@@ -18,18 +18,22 @@ export class ActoAdministrativoBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
+      tramite: [''],
       viajeRealizado: ['']
     });
   }
 
   ngOnInit(): void {
     this.formBuscador.setValue({
+      tramite: this.objeto?.tramite?.correlativo || '',
       viajeRealizado: this.objeto?.viajeRealizado || '',
     });
   }
 
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as ActoAdministrativoFilter;
+    const correlativoBuscador = objeto.tramite+"";
+    objeto.tramite = { correlativo : correlativoBuscador};
     this.accion.emit({
       accion: 'buscar',
       actoAdministrativo: FuncionesHelper.quitarNulos(objeto)
@@ -38,6 +42,7 @@ export class ActoAdministrativoBuscadorComponent implements OnInit {
 
   limpiar(): void {
     this.formBuscador.reset({
+      tramite: '',
       viajeRealizado: '',
     });
   }
