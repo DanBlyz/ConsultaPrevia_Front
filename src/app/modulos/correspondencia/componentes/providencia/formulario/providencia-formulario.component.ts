@@ -85,6 +85,9 @@ export class ProvidenciaFormularioComponent implements OnInit, OnDestroy {
       case 'providencia':
         this.botonOperacion = 'Guardar';
         break;
+      case 'documentoReprogramacion':
+        this.botonOperacion = 'Guardar';
+        break;
     }
 
   }

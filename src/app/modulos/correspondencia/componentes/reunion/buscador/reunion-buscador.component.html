@@ -13,11 +13,21 @@
     <div class="card-body">
         <form (ngSubmit)="ejecutarAccion()" [formGroup]="formBuscador">
             <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label class="d-block">Nro Reunion</label>
-                    <input type="text" class="form-control" formControlName="nroReunion" />
+                <div class="form-group col-md-2">
+                    <label class="d-block">Tramite de Inicio</label>
+                    <input type="text" class="form-control" formControlName="notificacion" />
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
+                    <label class="d-block">Nro Reunion</label>
+                    <select class="form-control" formControlName="nroReunion">
+                        <option selected  [ngValue]="''" [disabled]="'disabled'">Escoja una Opcion</option>
+                        <option [ngValue]="'1ERA'">1ERA</option>
+                        <option [ngValue]="'2DA'">2DA</option>
+                        <option [ngValue]="'3ERA'">3ERA</option>
+                        <option [ngValue]="'UNICA'">UNICA</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
                     <label class="d-block">Acuerdo</label>
                     <input type="checkbox" class="form-control" formControlName="conAcuerdo" />
                 </div>

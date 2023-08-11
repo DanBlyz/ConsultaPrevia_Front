@@ -2,14 +2,14 @@
     <div class="col-12">
         <form [formGroup]="formReunion" autocomplete="off" class="text-default">
             <div class="form-row">
-                <div class="col-md-3 form-group mb-2">
+                <div class="col-md-2 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Nro Reunion:</label>
-                    <input type="text" class="form-control" formControlName="nroReunion" />
+                    <input type="text" class="form-control" formControlName="nroReunion" [readonly]="true"/>
                 </div>
-                <div class="col-md-9 form-group mb-2">
+                <div class="col-md-10 form-group mb-2">
                     <label><span class="required-field-indicator"></span> Motivo:</label>
                     <ng-select  
-                                [items]="formReunion.get('conAcuerdo').value === true ? conAcuerdoV: sinAcuerdoV"
+                                [items]="formReunion.get('conAcuerdo').value === true ? conAcuerdoV: formReunion.get('sinAcuerdo').value === true ? sinAcuerdoV :null"
                                 bindLabel="name"
                                 placeholder="Seleccione los Motivos"
                                 appendTo="body"

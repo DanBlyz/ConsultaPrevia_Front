@@ -47,6 +47,7 @@ export class InformeBuscadorComponent implements OnInit {
 
   limpiar(): void {
     this.formBuscador.reset({
+      tramite: '',
       correlativo: '',
       referencia: '',
       tipoDocumento: ''

@@ -18,6 +18,7 @@ export class NotificacionBuscadorComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
+      tramite: [''],
       notificado: [''],
       direccionDpto: ['']
     });
@@ -25,6 +26,7 @@ export class NotificacionBuscadorComponent implements OnInit {
 
   ngOnInit(): void {
     this.formBuscador.setValue({
+      tramite: this.objeto?.tramite?.correlativo || '',
       notificado: this.objeto?.notificado || '',
       direccionDpto: this.objeto?.direccionDpto || ''
     });
@@ -32,6 +34,8 @@ export class NotificacionBuscadorComponent implements OnInit {
 
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as NotificacionFilter;
+    const correlativoBuscador = objeto.tramite+"";
+    objeto.tramite = { correlativo : correlativoBuscador};
     this.accion.emit({
       accion: 'buscar',
       notificacion: FuncionesHelper.quitarNulos(objeto)
@@ -40,6 +44,7 @@ export class NotificacionBuscadorComponent implements OnInit {
 
   limpiar(): void {
     this.formBuscador.reset({
+      tramite: '',
       notificado: '',
       direccionDpto: ''
     });

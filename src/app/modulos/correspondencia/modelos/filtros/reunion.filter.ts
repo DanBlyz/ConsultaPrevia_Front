@@ -1,3 +1,4 @@
+import { NotificacionFilter } from "./notificacion.filter";
 export class ReunionFilter {
     fk_idNotificacion?: number;
     nroReunion?: string;
@@ -8,5 +9,8 @@ export class ReunionFilter {
     actaReunionPdf?: string;
     estado?: string;
     flujo?: string;
+
+    notificacion?: NotificacionFilter
+
   }
   

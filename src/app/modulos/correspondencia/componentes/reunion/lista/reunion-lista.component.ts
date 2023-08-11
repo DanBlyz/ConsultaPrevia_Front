@@ -158,12 +158,21 @@ export class ReunionListaComponent
         this.mostrarModal();
         break;
       }
-      case 'informeDeliberacion': {
-        this.tipoOperacion = 'informeDeliberacion';
+      case 'documentoDeliberacion': {
+        this.tipoOperacion = 'documentoDeliberacion';
         this.idTra = evento.idTramite;
         this.idReunion = evento.id;
         this.reunionFacade.obtenerPorId(evento.id);
-        this.modalTitulo = 'Adjuntar Informe';
+        this.modalTitulo = 'Adjuntar Documento';
+        this.mostrarModal();
+        break;
+      }
+      case 'documentoReprogramacion': {
+        this.tipoOperacion = 'documentoReprogramacion';
+        this.idTra = evento.idTramite;
+        this.idReunion = evento.id;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Adjuntar Documento';
         this.mostrarModal();
         break;
       }

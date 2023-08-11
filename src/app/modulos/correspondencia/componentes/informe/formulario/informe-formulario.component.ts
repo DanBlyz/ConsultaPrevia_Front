@@ -129,7 +129,7 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
       case 'informe':
         this.botonOperacion = 'Guardar';
         break;
-      case 'informeDeliberacion':
+      case 'documentoDeliberacion':
         this.botonOperacion = 'Guardar';
         break;
     }
@@ -142,7 +142,6 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
 
   ejecutarAccion(accion: string): void {
     let informe = new Informe();
-    console.log(accion+" ejhecutar accion");
     switch (accion) {
       case 'crear': {
         FuncionesHelper.limpiarEspacios(this.formInforme);
@@ -152,12 +151,6 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
           return;
         }
         informe = { ...this.formInforme.value };
-        const sujeto = new SujetoIdentificado();
-        sujeto.comunidad = this.formInforme.value.comunidad;
-        sujeto.autoridad = this.formInforme.value.autoridad;
-        sujeto.telefono = this.formInforme.value.telefono;
-        this.listaSujetoIdentificado[0] = sujeto;
-        informe.listaSujetoIdentificado = this.listaSujetoIdentificado;
         this.accion.emit({
           accion: 'guardar',
           informe
@@ -205,9 +198,8 @@ export class InformeFormularioComponent implements OnInit, OnDestroy {
         });
         break;
       }
-      case 'informeDeliberacion': {
+      case 'documentoDeliberacion': {
         FuncionesHelper.limpiarEspacios(this.formInforme);
-        console.log(this.formInforme," deliberacion");
         if (!this.formInforme.valid) {
           this.formInforme.markAllAsTouched();
           return;

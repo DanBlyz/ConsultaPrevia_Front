@@ -1,3 +1,4 @@
+import { TramiteFilter } from "./tramite.filter";
 export class NotificacionFilter {
     fk_idTramite?: number;
     notificado?: string;
@@ -9,5 +10,7 @@ export class NotificacionFilter {
     sifde?: boolean;
     comunidad?: string;
     nroReunion?: string;
+
+    tramite?:TramiteFilter;
   }
   

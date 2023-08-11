@@ -51,9 +51,9 @@ export class ReporteService {
       });
       data.forEach(item => {
         startY = (doc as any).lastAutoTable.finalY + 20;
-        doc.setFontSize(15);
-        doc.text("Contenido Correspondiente al Tramite "+item.correlativo, doc.internal.pageSize.width / 2, startY, { align: 'center' });
         if (item.listaProvidencia !== undefined && Array.isArray(item.listaProvidencia)) {
+          doc.setFontSize(15);
+          doc.text("Contenido Correspondiente al Tramite "+item.correlativo, doc.internal.pageSize.width / 2, startY, { align: 'center' });
           const nestedHeaders = ["Tramite","Correlativo Providencia","Referencia"];
           const nestedData = item.listaProvidencia.map(res =>[item.correlativo,res.correlativo, res.referencia]);
           if(item.listaProvidencia.length > 0){
