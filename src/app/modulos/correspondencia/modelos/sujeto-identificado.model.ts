@@ -1,4 +1,4 @@
-import { Informe } from "./informe.model";
+import { Documento } from "./documento.model";
 
 export class SujetoIdentificado {
     id?: number;
@@ -7,6 +7,6 @@ export class SujetoIdentificado {
     autoridad: string;
     telefono?: number;
 
-    informe?: Informe;
+    documento?: Documento;
   }
   

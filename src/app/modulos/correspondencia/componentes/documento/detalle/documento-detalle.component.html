@@ -3,46 +3,21 @@
         <form>
             <div class="form-row">
                 <div class="col-md-12 form-group mb-2">
-                    <span class="h3 d-block m-0 text-center">{{ documento.tipoDocumentoNombre }}</span>
-                    <span class="h4 d-block m-0 text-center">{{ documento.cite }}</span>
-                    <span class="h5 d-block m-0 text-center text-muted">{{ documento.citeExterno }}</span>
-                    <span class="h4 d-block m-0 text-center">H.R. {{ documento.hojaRutaNumero }}</span>
+                    <label class="d-block">Correlativo:</label>
+                    <span>{{ documento.correlativo }}</span>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-3 form-group mb-2">
-                    <label class="d-block">Lugar:</label>
-                    <span>{{ documento.lugar }}</span>
-                </div>
-                <div class="col-md-3 form-group mb-2">
-                    <label class="d-block">Fecha:</label>
-                    <span>{{ documento.fecha }}</span>
-                </div>
-                <div class="col-md-3 form-group mb-2">
-                    <label class="d-block">Prioridad:</label>
-                    <span>{{ documento.prioridad }}</span>
-                </div>
-                <div class="col-md-3 form-group mb-2">
-                    <label class="d-block">Clasificación:</label>
-                    <span>{{ documento.clasificacionNombre }}</span>
-                </div>
-            </div>
-            <div class="form-row">
                 <div class="col-md-12 form-group mb-2">
                     <label class="d-block">Referencia:</label>
                     <span>{{ documento.referencia }}</span>
                 </div>
-            </div>
-            <div class="form-row">
                 <div class="col-md-12 form-group mb-2">
-                    <label class="d-block">Observación:</label>
-                    <span>{{ documento.observacion }}</span>
+                    <label class="d-block">Asunto:</label>
+                    <span>{{ documento.tipoDocumento }}</span>
                 </div>
             </div>
             <div class="form-row justify-content-end">
                 <div class="form-group">
-                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit"
-                        class="btn btn-primary mr-1" [title]="botonOperacion">
+                    <button *ngIf="tipoOperacion !== 'detalle'" (click)="ejecutarAccion(tipoOperacion)" type="submit" class="btn btn-primary mr-1" [title]="botonOperacion">
                         {{botonOperacion}}
                     </button>
                     <button (click)="ejecutarAccion('cancelar')" type="submit" class="btn btn-dark" title="Cancelar">

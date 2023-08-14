@@ -1,14 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Codificador } from 'src/app/comun/modelos';
 import { FuncionesHelper } from '../../../../../comun/auxiliares';
 
-import {
-  TipoDocumentoFacade,
-  ClasificacionFacade,
-  UniOrganizacionalFacade
-} from '../../../fachadas';
 import { DocumentoFilter } from '../../../modelos/filtros';
 
 @Component({
@@ -19,68 +13,32 @@ import { DocumentoFilter } from '../../../modelos/filtros';
 export class DocumentoBuscadorComponent implements OnInit {
   @Output() accion = new EventEmitter<any>();
   @Input() objeto: DocumentoFilter;
-  @Input() colapsado = true;
-  @Input() filtrarPorUniOrganizacional = false;
 
   formBuscador: FormGroup;
 
-  listaTipoDocumentoCodificador: Codificador[];
-  listaClasificacionCodificador: Codificador[];
-  listaUniOrganizacionalCodificador: Codificador[];
-
-  constructor(
-    private fb: FormBuilder,
-    private tipoDocumentoFacade: TipoDocumentoFacade,
-    private clasificacionFacade: ClasificacionFacade,
-    private uniOrganizacionalFacade: UniOrganizacionalFacade
-  ) {
+  constructor(private fb: FormBuilder) {
     this.formBuscador = this.fb.group({
-      cite: [''],
-      citeExterno: [''],
+      tramite:[''],
+      correlativo: [''],
       referencia: [''],
-      // prioridad: [''],
-      observacion: [''],
-      estaImpreso: [''],
-      tipoDocumentoId: [''],
-      clasificacionId: [''],
-      fechaDesde: [''],
-      fechaHasta: [''],
-      hojaRutaNumero: [''],
-      uniOrganizacionalId: ['']
+      tipoDocumento: ['']
     });
   }
 
   ngOnInit(): void {
     this.formBuscador.setValue({
-      cite: this.objeto?.cite || '',
-      citeExterno: this.objeto?.citeExterno || '',
+      tramite: this.objeto?.tramite?.correlativo || '',
+      correlativo: this.objeto?.correlativo || '',
       referencia: this.objeto?.referencia || '',
-      observacion: this.objeto?.observacion || '',
-      // prioridad: this.objeto?.prioridad || '',
-      estaImpreso: this.objeto?.estaImpreso || '',
-      tipoDocumentoId: this.objeto?.tipoDocumentoId || '',
-      clasificacionId: this.objeto?.clasificacionId || '',
-      fechaDesde: this.objeto?.fechaDesde || '',
-      fechaHasta: this.objeto?.fechaHasta || '',
-      hojaRutaNumero: this.objeto?.hojaRutaNumero || '',
-      uniOrganizacionalId: this.objeto?.uniOrganizacionalId || ''
+      tipoDocumento: this.objeto?.tipoDocumento || ''
     });
-
-    this.tipoDocumentoFacade.obtenerCodificador().then((respuesta) => {
-      this.listaTipoDocumentoCodificador = respuesta.lista;
-    });
-    this.clasificacionFacade.obtenerCodificador().then((respuesta) => {
-      this.listaClasificacionCodificador = respuesta.lista;
-    });
-    if (this.filtrarPorUniOrganizacional) {
-      this.uniOrganizacionalFacade.obtenerCodificador().then((respuesta) => {
-        this.listaUniOrganizacionalCodificador = respuesta.lista;
-      });
-    }
   }
 
   ejecutarAccion(): void {
     const objeto = { ...this.formBuscador.value } as DocumentoFilter;
+    const correlativoBuscador = objeto.tramite+"";
+    objeto.tramite = { correlativo : correlativoBuscador};
+    console.log(objeto+"entro aqui buscar");
     this.accion.emit({
       accion: 'buscar',
       documento: FuncionesHelper.quitarNulos(objeto)
@@ -89,17 +47,10 @@ export class DocumentoBuscadorComponent implements OnInit {
 
   limpiar(): void {
     this.formBuscador.reset({
-      cite: '',
-      citeExterno: '',
+      tramite: '',
+      correlativo: '',
       referencia: '',
-      // prioridad: '',
-      estaImpreso: '',
-      tipoDocumentoId: '',
-      clasificacionId: '',
-      fechaDesde: '',
-      fechaHasta: '',
-      hojaRutaNumero: '',
-      uniOrganizacionalId: ''
+      tipoDocumento: ''
     });
   }
 }

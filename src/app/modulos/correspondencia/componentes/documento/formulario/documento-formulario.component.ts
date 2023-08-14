@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -8,32 +7,19 @@ import {
   LOCALE_ID,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild
+  Output
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
-import { Codificador } from 'src/app/comun/modelos';
 
-import {
-  Documento,
-  HojaRuta,
-  Participante,
-  TipoDocumento
-} from 'src/app/modulos/correspondencia/modelos';
-import {
-  ClasificacionFacade,
-  DocumentoFacade,
-  TipoDocumentoFacade,
-  HojaRutaFacade,
-  ParticipanteFacade
-} from '../../../fachadas';
-import { ParticipanteSeleccionComponent } from '../../participante';
-import { ParticipanteContactoSeleccionComponent } from '../../participante-contacto';
-import { ParticipanteGrupoSeleccionComponent } from '../../participante-grupo';
+import { Documento, SujetoIdentificado } from '../../../modelos';
+import { DocumentoFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
+import { HttpClient,HttpEventType, HttpResponse } from '@angular/common/http';
+import { VistaDocumentoService } from '../../../servicios';
 
 @Component({
   selector: 'app-correspondencia-documento-formulario',
@@ -43,191 +29,111 @@ import { ParticipanteGrupoSeleccionComponent } from '../../participante-grupo';
 export class DocumentoFormularioComponent implements OnInit, OnDestroy {
   @Input() public tipoOperacion: string;
   @Output() accion = new EventEmitter<any>();
-
-  @ViewChild('destinatarios') destinatarios: ParticipanteSeleccionComponent;
-  @ViewChild('vias') vias: ParticipanteSeleccionComponent;
-  @ViewChild('remitentes') remitentes: ParticipanteSeleccionComponent;
-  @ViewChild('externos') externos: ParticipanteContactoSeleccionComponent;
-  @ViewChild('grupos') grupos: ParticipanteGrupoSeleccionComponent;
-
-  fecInicial: string;
+  
+  selectedFile: File | null = null;
+  listaSujetoIdentificado: SujetoIdentificado []= [];
+  listaSujetosIdentificados: any[] = [];
 
   suscripcion = new Subscription();
 
   formDocumento: FormGroup;
   botonOperacion: string;
 
+  arr = this.router.url.split('/');
   documento: Documento;
-  listaTipoDocumentoCodificador: Codificador[];
-  tipoDocumentoSeleccionado: TipoDocumento;
-  listaClasificacionCodificador: Codificador[];
-
-  participantePorDefecto: Participante;
-
-  hojaRutaEncontrada: HojaRuta = null;
-  hojaRutaSeleccionada = false;
+  datoRecuperado : any;
+  nombreArchivoSeleccionado: string = 'Seleccionar archivo PDF...';
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private fb: FormBuilder,
-    private toastrService: ToastrService,
-    private tipoDocumentoFacade: TipoDocumentoFacade,
-    private clasificacionFacade: ClasificacionFacade,
-    private participanteFacade: ParticipanteFacade,
     private documentoFacade: DocumentoFacade,
-    private hojaRutaFacade: HojaRutaFacade
+    private toastrService: ToastrService,
+    private router: Router,
+    private http: HttpClient,
+    private vistaDocumentoService: VistaDocumentoService
   ) {
-    this.fecInicial = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
-
     if (!this.documento) {
       this.documento = new Documento();
     }
 
     this.formDocumento = this.fb.group({
-      fecha: [this.fecInicial, Validators.required],
-      citeExterno: [''],
-      lugar: ['La Paz', Validators.required],
+      correlativo: ['', Validators.required],
       referencia: ['', Validators.required],
-      prioridad: ['NORMAL', Validators.required],
-      observacion: [''],
-      dandoContinuidad: [''],
-      tipoDocumentoId: ['', Validators.required],
-      clasificacionId: [1, Validators.required],
-      hojaRutaId: [null]
+      tipoDocumento: ['', Validators.required],
+      nroSujetos: [1, Validators.required],
+      comunidad1: ['_', Validators.required],
+      autoridad1: ['_', Validators.required],
+      telefono1: [0, Validators.required],
+      comunidad2: ['_', Validators.required],
+      autoridad2: ['_', Validators.required],
+      telefono2: [0, Validators.required],
+      comunidad3: ['_', Validators.required],
+      autoridad3: ['_', Validators.required],
+      telefono3: [0, Validators.required],
+      comunidad4: ['_', Validators.required],
+      autoridad4: ['_', Validators.required],
+      telefono4: [0, Validators.required],
+      comunidad5: ['_', Validators.required],
+      autoridad5: ['_', Validators.required],
+      telefono5: [0, Validators.required],
+      comunidad6: ['_', Validators.required],
+      autoridad6: ['_', Validators.required],
+      telefono6: [0, Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.suscripcion.add(
-      this.documentoFacade.CorrespondenciaState$.subscribe(
-        async ({ documento }) => {
-          if (documento && this.documento !== documento) {
-            this.documento = documento;
-            if (this.tipoOperacion === 'modificar' && this.documento.id) {
-              const respuesta = await this.tipoDocumentoFacade.obtenerPorId(
-                this.documento.tipoDocumentoId
-              );
-              this.tipoDocumentoSeleccionado = respuesta.objeto;
-              if (this.destinatarios) {
-                this.destinatarios.listaParticipante =
-                  this.documento.listaParticipante.filter(
-                    (item) => item.tipo === 'DESTINATARIO'
-                  );
-              }
-              if (this.vias) {
-                this.vias.listaParticipante =
-                  this.documento.listaParticipante.filter(
-                    (item) => item.tipo === 'VIA'
-                  );
-              }
-              if (this.remitentes) {
-                this.remitentes.listaParticipante =
-                  this.documento.listaParticipante.filter(
-                    (item) => item.tipo === 'REMITENTE'
-                  );
-              }
-              if (this.externos) {
-                this.externos.listaParticipante =
-                  this.documento.listaParticipante.filter(
-                    (item) => item.tipo === 'REMITENTE-EXTERNO'
-                  );
-              }
-              if (this.grupos) {
-                this.grupos.listaParticipante =
-                  this.documento.listaParticipante.filter(
-                    (item) => item.tipo === 'GRUPO'
-                  );
-              }
-
-              this.formDocumento.patchValue({
-                fecha: formatDate(
-                  this.documento.fecha,
-                  'yyyy-MM-dd',
-                  this.locale,
-                  'UTC'
-                ),
-                citeExterno: this.documento.citeExterno,
-                lugar: this.documento.lugar,
-                referencia: this.documento.referencia,
-                prioridad: this.documento.prioridad,
-                observacion: this.documento.observacion,
-                dandoContinuidad: this.documento.dandoContinuidad,
-                hojaRutaId: this.documento.hojaRutaId
-              });
-              this.tipoDocumentoFacade
-                .obtenerCodificador()
-                .then((respuesta) => {
-                  this.listaTipoDocumentoCodificador = respuesta.lista;
-                  if (this.documento.tipoDocumentoId) {
-                    this.formDocumento.controls['tipoDocumentoId'].setValue(
-                      this.documento.tipoDocumentoId
-                    );
-                  }
-                });
-              this.clasificacionFacade
-                .obtenerCodificador()
-                .then((respuesta) => {
-                  this.listaClasificacionCodificador = respuesta.lista;
-                  if (this.documento.clasificacionId) {
-                    this.formDocumento.controls['clasificacionId'].setValue(
-                      this.documento.clasificacionId
-                    );
-                  }
-                });
-
-              this.hojaRutaEncontrada = new HojaRuta();
-              this.hojaRutaEncontrada.id = this.documento.hojaRutaId;
-              const hojaRutaNumero = this.documento.hojaRutaNumero.split('.');
-              this.hojaRutaEncontrada.numero = Number(hojaRutaNumero[0]);
-              this.hojaRutaEncontrada.gestion = Number(hojaRutaNumero[1]);
-              this.hojaRutaSeleccionada = true;
-            }
+      this.documentoFacade.CorrespondenciaState$.subscribe(({ documento }) => {
+        if (documento) {
+          this.documento = documento;
+          if (this.tipoOperacion === 'modificar' && this.documento.id) {
+            this.formDocumento.setValue({
+              correlativo: this.documento.correlativo,
+              referencia: this.documento.referencia,
+              asunto: this.documento.tipoDocumento,
+              documentoPdf: this.documento.documentoPdf,
+              nroSujetos: 1,
+              comunidad1: "",
+              autoridad1: "",
+              telefono1: 0,
+              comunidad2: "",
+              autoridad2: "",
+              telefono2: 0,
+              comunidad3: "",
+              autoridad3: "",
+              telefono3: 0,
+              comunidad4: "",
+              autoridad4: "",
+              telefono4: 0,
+              comunidad5: "",
+              autoridad5: "",
+              telefono5: 0,
+              comunidad6: "",
+              autoridad6: "",
+              telefono6: 0
+            });
           }
         }
-      )
+      })
     );
 
     switch (this.tipoOperacion) {
       case 'crear':
         this.botonOperacion = 'Guardar';
-        this.tipoDocumentoFacade.obtenerCodificador().then((respuesta) => {
-          this.listaTipoDocumentoCodificador = respuesta.lista;
-        });
-        this.clasificacionFacade.obtenerCodificador().then((respuesta) => {
-          this.listaClasificacionCodificador = respuesta.lista;
-        });
-        this.participanteFacade.obtenerPorToken().then((respuesta) => {
-          this.participantePorDefecto = {
-            buzonId: respuesta.objeto.buzonId,
-            entidad: respuesta.objeto.entidad,
-            nombre: respuesta.objeto.nombre,
-            puesto: respuesta.objeto.puesto,
-            tipo: 'REMITENTE',
-            uniOrganizacional: respuesta.objeto.uniOrganizacional
-          } as Participante;
-        });
         break;
       case 'modificar':
         this.botonOperacion = 'Modificar';
         break;
-      case 'crearPrevio':
-        this.botonOperacion = 'Guardar Previo';
-        this.tipoDocumentoFacade.obtenerCodificador().then((respuesta) => {
-          this.listaTipoDocumentoCodificador = respuesta.lista;
-        });
-        this.clasificacionFacade.obtenerCodificador().then((respuesta) => {
-          this.listaClasificacionCodificador = respuesta.lista;
-        });
-        this.participanteFacade.obtenerPorToken().then((respuesta) => {
-          this.participantePorDefecto = {
-            buzonId: respuesta.objeto.buzonId,
-            entidad: respuesta.objeto.entidad,
-            nombre: respuesta.objeto.nombre,
-            puesto: respuesta.objeto.puesto,
-            tipo: 'REMITENTE',
-            uniOrganizacional: respuesta.objeto.uniOrganizacional
-          } as Participante;
-        });
+      case 'Documento':
+        this.botonOperacion = 'Guardar';
+        break;
+      case 'documentoDeliberacion':
+        this.botonOperacion = 'Guardar';
+        break;
+      case 'documento':
+        this.botonOperacion = 'Guardar';
         break;
     }
   }
@@ -237,156 +143,106 @@ export class DocumentoFormularioComponent implements OnInit, OnDestroy {
     this.suscripcion.unsubscribe();
   }
 
-  ejecutarOperacion(evento: any): void {
-    switch (evento.operacion) {
-      case 'buscar-hoja-ruta': {
-        if (evento.valor === '' || evento.valor.indexOf('.') < 0) {
-          return;
-        }
-        this.hojaRutaFacade.obtenerPorNumero(evento.valor).then((respuesta) => {
-          if (respuesta.tipoRespuesta === 'Exito') {
-            this.hojaRutaEncontrada = respuesta.objeto;
-          }
-        });
-        break;
-      }
-      case 'seleccionar-hoja-ruta': {
-        this.hojaRutaSeleccionada = true;
-        this.formDocumento.controls['hojaRutaId'].setValue(
-          this.hojaRutaEncontrada.id
-        );
-        break;
-      }
-      case 'quitar-hoja-ruta': {
-        this.hojaRutaEncontrada = null;
-        this.hojaRutaSeleccionada = null;
-        this.formDocumento.controls['hojaRutaId'].setValue(null);
-        break;
-      }
-      case 'cancelar-busqueda': {
-        this.hojaRutaEncontrada = null;
-        this.hojaRutaSeleccionada = false;
-        break;
-      }
-      case 'seleccionar-tipo-documento': {
-        if (evento.id !== '') {
-          this.tipoDocumentoFacade.obtenerPorId(evento.id).then((respuesta) => {
-            this.tipoDocumentoSeleccionado = respuesta.objeto;
-          });
-        } else {
-          this.tipoDocumentoSeleccionado = null;
-        }
-        break;
-      }
-    }
-  }
-
-  ejecutarAccion(evento: any): void {
+  ejecutarAccion(accion: string): void {
     let documento = new Documento();
-    switch (evento.accion) {
+    switch (accion) {
       case 'crear': {
-        if (this.destinatarios) {
-          if (this.destinatarios.listaParticipante.length === 0) {
-            this.toastrService.error(
-              'No se ha seleccionado ningún destinatario'
-            );
-            return;
-          }
-        } else {
-          if (this.grupos && this.grupos.listaParticipante.length === 0) {
-            this.toastrService.error('No se ha seleccionado ningún grupo');
-            return;
-          }
-        }
-        if (this.remitentes.listaParticipante.length === 0) {
-          this.toastrService.error('No se ha seleccionado ningún remitente');
-          return;
-        }
-        if (this.externos && this.externos.listaParticipante.length === 0) {
-          this.toastrService.error(
-            'No se ha seleccionado ningún remitente externo'
-          );
-          return;
-        }
         FuncionesHelper.limpiarEspacios(this.formDocumento);
+        console.log(this.formDocumento);
         if (!this.formDocumento.valid) {
           this.formDocumento.markAllAsTouched();
           return;
         }
-        if (!this.externos) {
-          if (!this.grupos) {
-            documento = {
-              ...this.formDocumento.value,
-              listaParticipante: [
-                ...this.destinatarios.listaParticipante,
-                ...this.vias.listaParticipante,
-                ...this.remitentes.listaParticipante
-              ]
-            };
-          } else {
-            documento = {
-              ...this.formDocumento.value,
-              listaParticipante: [
-                ...this.grupos.listaParticipante,
-                ...this.vias.listaParticipante,
-                ...this.remitentes.listaParticipante
-              ]
-            };
-          }
-        } else {
-          documento = {
-            ...this.formDocumento.value,
-            listaParticipante: [
-              ...this.destinatarios.listaParticipante,
-              ...this.vias.listaParticipante,
-              ...this.remitentes.listaParticipante,
-              ...this.externos.listaParticipante
-            ]
-          };
-        }
+        documento = { ...this.formDocumento.value };
         this.accion.emit({
           accion: 'guardar',
           documento
         });
         break;
       }
-      case 'modificar': {
-        if (this.destinatarios.listaParticipante.length === 0) {
-          this.toastrService.error('No se ha seleccionado ningún destinatario');
+      case 'documento': {
+        FuncionesHelper.limpiarEspacios(this.formDocumento);
+        console.log(this.formDocumento);
+        if (!this.formDocumento.valid) {
+          this.formDocumento.markAllAsTouched();
           return;
         }
-        if (this.remitentes.listaParticipante.length === 0) {
-          this.toastrService.error('No se ha seleccionado ningún remitente');
+        documento = { ...this.formDocumento.value };
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
           return;
         }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile,documento.tipoDocumento+"-"+this.selectedFile.name);
+        this.http.post<any>('http://localhost:3000/documentos/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
+        documento.documentoPdf = documento.tipoDocumento+"-"+this.selectedFile.name;
+       
+          if(documento.tipoDocumento === 'Informe Social'){
+            for (let i = 0; i < this.formDocumento.value.nroSujetos; i++) {
+              const sujeto = new SujetoIdentificado();
+              sujeto.comunidad = this.formDocumento.value['comunidad' + (i + 1)];
+              sujeto.autoridad = this.formDocumento.value['autoridad' + (i + 1)];
+              sujeto.telefono = this.formDocumento.value['telefono' + (i + 1)];
+              console.log(sujeto+ "sujeto ident");
+              this.listaSujetoIdentificado.push(sujeto);
+            }
+            documento.listaSujetoIdentificado = this.listaSujetoIdentificado;
+          }
+        
+        let arr = this.router.url.split('/');
+        documento.flujo = arr[1];
+        this.accion.emit({
+          accion: 'guardarDocumento',
+          documento
+        });
+        break;
+      }
+      case 'documentoDeliberacion': {
         FuncionesHelper.limpiarEspacios(this.formDocumento);
         if (!this.formDocumento.valid) {
           this.formDocumento.markAllAsTouched();
           return;
         }
-        if (!this.externos) {
-          documento = {
-            ...this.formDocumento.value,
-            listaParticipante: [
-              ...this.destinatarios.listaParticipante,
-              ...this.vias.listaParticipante,
-              ...this.remitentes.listaParticipante
-            ]
-          };
-        } else {
-          documento = {
-            ...this.formDocumento.value,
-            listaParticipante: [
-              ...this.destinatarios.listaParticipante,
-              ...this.vias.listaParticipante,
-              ...this.remitentes.listaParticipante,
-              ...this.externos.listaParticipante
-            ]
-          };
+        documento = { ...this.formDocumento.value };
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
         }
-        delete documento.tipoDocumentoId;
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile,documento.tipoDocumento+"-"+this.selectedFile.name);
+        this.http.post<any>('http://localhost:3000/documentos/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
+        documento.documentoPdf = documento.tipoDocumento+"-"+this.selectedFile.name;
+        let arr = this.router.url.split('/');
+        documento.flujo = arr[1];
         this.accion.emit({
-          accion: evento.accion,
+          accion: 'guardarDocumentoDeliberacion',
+          documento
+        });
+        break;
+      }
+      case 'modificar': {
+        FuncionesHelper.limpiarEspacios(this.formDocumento);
+        if (!this.formDocumento.valid) {
+          this.formDocumento.markAllAsTouched();
+          return;
+        }
+        documento = { ...this.formDocumento.value };
+        this.accion.emit({
+          accion,
           documentoId: this.documento.id,
           documento
         });
@@ -394,77 +250,42 @@ export class DocumentoFormularioComponent implements OnInit, OnDestroy {
       }
       case 'cancelar': {
         this.accion.emit({
-          accion: evento.accion
-        });
-        break;
-      }
-      case 'crearPrevio': {
-        if (this.destinatarios) {
-          if (this.destinatarios.listaParticipante.length === 0) {
-            this.toastrService.error(
-              'No se ha seleccionado ningún destinatario'
-            );
-            return;
-          }
-        } else {
-          if (this.grupos && this.grupos.listaParticipante.length === 0) {
-            this.toastrService.error('No se ha seleccionado ningún grupo');
-            return;
-          }
-        }
-        if (this.remitentes.listaParticipante.length === 0) {
-          this.toastrService.error('No se ha seleccionado ningún remitente');
-          return;
-        }
-        if (this.externos && this.externos.listaParticipante.length === 0) {
-          this.toastrService.error(
-            'No se ha seleccionado ningún remitente externo'
-          );
-          return;
-        }
-        FuncionesHelper.limpiarEspacios(this.formDocumento);
-        if (!this.formDocumento.valid) {
-          this.formDocumento.markAllAsTouched();
-          return;
-        }
-        if (!this.externos) {
-          if (!this.grupos) {
-            documento = {
-              ...this.formDocumento.value,
-              listaParticipante: [
-                ...this.destinatarios.listaParticipante,
-                ...this.vias.listaParticipante,
-                ...this.remitentes.listaParticipante
-              ]
-            };
-          } else {
-            documento = {
-              ...this.formDocumento.value,
-              listaParticipante: [
-                ...this.grupos.listaParticipante,
-                ...this.vias.listaParticipante,
-                ...this.remitentes.listaParticipante
-              ]
-            };
-          }
-        } else {
-          documento = {
-            ...this.formDocumento.value,
-            listaParticipante: [
-              ...this.destinatarios.listaParticipante,
-              ...this.vias.listaParticipante,
-              ...this.remitentes.listaParticipante,
-              ...this.externos.listaParticipante
-            ]
-          };
-        }
-        documento.prioridad = 'PREVIO';
-        this.accion.emit({
-          accion: 'guardar',
-          documento
+          accion
         });
         break;
       }
     }
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.nombreArchivoSeleccionado = file.name;
+    } else {
+      this.nombreArchivoSeleccionado = 'Seleccionar archivo PDF...';
+    }
+  }
+  buscarCorrelativo(){
+    if(this.formDocumento.get('correlativo').value !== ""){
+      const body = { correlativo : this.formDocumento.get('correlativo').value};
+    this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+        this.formDocumento.patchValue({
+          referencia: this.datoRecuperado.referencia,
+          tipoDocumento: this.datoRecuperado.tipoDocumento.nombre
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    }else{
+      console.log("error de datos");
+    }
+  }
+  generateRange(n: number): number[] {
+    return Array.from({ length: n }, (_, index) => index);
   }
 }

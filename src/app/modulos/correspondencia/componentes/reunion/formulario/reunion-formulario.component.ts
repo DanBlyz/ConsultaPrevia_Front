@@ -40,7 +40,7 @@ export class ReunionFormularioComponent implements OnInit, OnDestroy {
   name = 'Angular';
   
   conAcuerdoV = ['TRABAJO','ESCUELA','VIAS','DESASTRES NATURALES'];
-  sinAcuerdoV = ['INASISTENCIA','AGRESION','NEGATIVA ROTUNDA','MERCURIO'];
+  sinAcuerdoV = ['INASISTENCIA','AGRESION','NEGATIVA ROTUNDA','MERCURIO','COMPLEMENTAR INFORME'];
     
   selected: any[] = [];
   cadena : string = "";

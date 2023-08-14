@@ -179,9 +179,9 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   ObtenerSujetosporInforme(informe: string) {
     const body = { correlativo: informe }; // Aquí defines los parámetros que necesitas enviar en el body
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
+    console.log(body.correlativo+" correltaito");
     // Realizar la solicitud HTTP POST con los parámetros en el body
-    this.http.post<any>('http://localhost:3000/informes/buscar', body, { headers }).subscribe(
+    this.http.post<any>('http://localhost:3000/documentos/buscar', body, { headers }).subscribe(
       (response) => {
         this.sujetos = response.lista[0].listaSujetoIdentificado; // Almacenar los datos en la variable items
         console.log(response.lista);

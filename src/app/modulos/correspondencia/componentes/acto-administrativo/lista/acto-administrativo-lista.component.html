@@ -57,8 +57,8 @@
                                         (click)="ejecutarOperacion({operacion: 'reprogramarViaje', id: item.id, fk_idTramite: item.fk_idTramite })" [disabled]="item.estado === 'REPROGRAMA VIAJE' ? true : false">    
                                 <input *ngIf=" item.pagoCpt === null ? true : false"  type="button" value="Pago Cpt" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'pagoCpt',id: item.id })">
-                                <input *ngIf=" item.viajeRealizado === true ? (item.flujo === 'Deliberacion'? false : true ) :false"  type="button" value="Adjuntar Informe" class="btn btn-primary"
-                                        (click)="ejecutarOperacion({operacion: 'informe',fk_idTramite: item.fk_idTramite,id: item.id})" [disabled]="item.estado === 'INFORME' ? true : false">
+                                <input *ngIf=" item.viajeRealizado === true ? (item.flujo === 'Deliberacion'? false : true ) :false"  type="button" value="Adjuntar Documento" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'documento',fk_idTramite: item.fk_idTramite,id: item.id})" [disabled]="item.estado === 'INFORME' ? true : false">
                                         
                                 </td>
                             </tr>
@@ -104,6 +104,8 @@
                 (accion)="ejecutarAccion($event)"></app-correspondencia-viaje-formulario>
             <app-correspondencia-informe-formulario *ngSwitchCase="'informe'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-informe-formulario>
+            <app-correspondencia-documento-formulario *ngSwitchCase="'documento'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-documento-formulario>
         </div>
     </div>
     <div class="modal-footer">

@@ -199,6 +199,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
         roles: []
       },
       {
+        ruta: 'Identificacion/documento',
+        titulo: 'Documento',
+        icono: 'fas fa-book',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
         ruta: 'Identificacion/sujeto-identificado',
         titulo: 'Sujeto Identificado',
         icono: 'fas fa-book',
@@ -283,6 +292,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
       {
         ruta: 'Deliberacion/informe',
         titulo: 'Informes',
+        icono: 'fas fa-book',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
+      {
+        ruta: 'Deliberacion/documento',
+        titulo: 'Documentos',
         icono: 'fas fa-book',
         class: '',
         esEnlace: true,

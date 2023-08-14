@@ -14,7 +14,7 @@ import { Paginado } from 'src/app/comun/modelos';
 
 import { ActoAdministrativo, Informe, Notificacion, Providencia, Resolucion, Tramite } from '../../../modelos';
 import { TramiteFilter } from '../../../modelos/filtros';
-import { ProvidenciaFacade, TramiteFacade,NotificacionFacade } from '../../../fachadas';
+import { ProvidenciaFacade, TramiteFacade,NotificacionFacade,DocumentoFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -62,7 +62,8 @@ export class TramiteListaComponent
     private notificacionFacade: NotificacionFacade,
     private router : Router,
     private _location: Location,
-    private reporteService: ReporteService
+    private reporteService: ReporteService,
+    private documentoFacade: DocumentoFacade
 
   ) {}
 
@@ -157,6 +158,13 @@ export class TramiteListaComponent
         this.mostrarModal();
         break;
       }
+      case 'documento': {
+        this.tipoOperacion = 'documento';
+        this.idTra = evento.id;
+        this.modalTitulo = 'Adjuntar ' + "Documento";
+        this.mostrarModal();
+        break;
+      }
     }
   }
 
@@ -218,6 +226,18 @@ export class TramiteListaComponent
         const body = { estadoAccion : 'NOTIFICADO'}
         this.tramiteFacade.modificar(this.idTra,body);
         this.router.navigate(['/Identificacion/actos-administrativos']);
+        break;
+      }
+      case 'guardarDocumento': {
+        evento.documento.fk_idTramite=this.idTra;
+        this.documentoFacade.guardar(evento.documento).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        const body = { estadoAccion : 'PROVIDENCIA'}
+        this.tramiteFacade.modificar(this.idTra,body);
+        //this.router.navigate(['/Identificacion/actos-administrativos']);
         break;
       }
     }

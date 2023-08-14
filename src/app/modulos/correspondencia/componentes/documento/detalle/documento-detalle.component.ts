@@ -31,7 +31,7 @@ export class DocumentoDetalleComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
-    private documentoFacade: DocumentoFacade
+    private DocumentoFacade: DocumentoFacade
   ) {
     if (!this.documento) {
       this.documento = new Documento();
@@ -40,7 +40,7 @@ export class DocumentoDetalleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.suscripcion.add(
-      this.documentoFacade.CorrespondenciaState$.subscribe(({ documento }) => {
+      this.DocumentoFacade.CorrespondenciaState$.subscribe(({ documento }) => {
         if (documento) {
           this.documento = documento;
         }

@@ -15,7 +15,7 @@ import { Paginado, RespuestaObjeto } from 'src/app/comun/modelos';
 import { ActoAdministrativo, PagoCpt } from '../../../modelos';
 import { ActoAdministrativoFilter } from '../../../modelos/filtros';
 import { ActoAdministrativoFacade } from '../../../fachadas';
-import { PagoCptFacade } from '../../../fachadas';
+import { PagoCptFacade, DocumentoFacade } from '../../../fachadas';
 import { ViajeFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
@@ -60,7 +60,8 @@ export class ActoAdministrativoListaComponent
     private router: Router,
     private http: HttpClient,
     private reporteService : ReporteService,
-    private tramiteFacade : TramiteFacade
+    private tramiteFacade : TramiteFacade,
+    private documentoFacade: DocumentoFacade
   ) {}
 
   ngOnInit(): void { 
@@ -167,6 +168,14 @@ export class ActoAdministrativoListaComponent
         this.mostrarModal();
         break;
       }
+      case 'documento': {
+        this.tipoOperacion = 'documento';
+        this.actoAdministrativoFacade.obtenerPorId(evento.id);
+        this.fk_idTramite = evento.fk_idTramite;
+        this.modalTitulo = 'Adjuntar Documento';
+        this.mostrarModal();
+        break;
+      }
       case 'reprogramarViaje': {
         const body = {estado : 'REPROGRAMA VIAJE'};
         this.actoAdministrativoFacade.modificar(evento.id,body);
@@ -248,6 +257,27 @@ export class ActoAdministrativoListaComponent
               estado: "INFORME"
             };
             
+            this.actoAdministrativoFacade
+            .modificar(actoNuevo.id, actoV)
+            .then((respuesta) => {
+              if (respuesta.tipoRespuesta === 'Exito') {
+                this.cerrarModal();
+              }
+            });
+          }
+        });
+        break;
+      }
+      case 'guardarDocumento': {
+        evento.documento.fk_idTramite = this.fk_idTramite;
+        this.documentoFacade.guardar(evento.documento).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+            const actoNuevo = {...this.actoAdministrativo};
+            console.log(actoNuevo);
+            var actoV = {
+              estado: "INFORME"
+            };
             this.actoAdministrativoFacade
             .modificar(actoNuevo.id, actoV)
             .then((respuesta) => {

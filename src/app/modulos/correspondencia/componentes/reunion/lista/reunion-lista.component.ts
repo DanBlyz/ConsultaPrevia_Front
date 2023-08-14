@@ -15,7 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Reunion } from '../../../modelos';
 import { ReunionFilter } from '../../../modelos/filtros';
 import { ReunionFacade } from '../../../fachadas';
-import { NotificacionFacade } from '../../../fachadas';
+import { NotificacionFacade, DocumentoFacade } from '../../../fachadas';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
@@ -59,7 +59,8 @@ export class ReunionListaComponent
     private actoAdministrativoFacade: ActoAdministrativoFacade,
     private informeFacade: InformeFacade,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private documentoFacade: DocumentoFacade
   ) {}
 
   ngOnInit(): void {
@@ -167,8 +168,8 @@ export class ReunionListaComponent
         this.mostrarModal();
         break;
       }
-      case 'documentoReprogramacion': {
-        this.tipoOperacion = 'documentoReprogramacion';
+      case 'documento': {
+        this.tipoOperacion = 'documento';
         this.idTra = evento.idTramite;
         this.idReunion = evento.id;
         this.reunionFacade.obtenerPorId(evento.id);
@@ -278,16 +279,35 @@ export class ReunionListaComponent
           });
         break;
       }
-      case 'guardarInforme': {
-        evento.informe.fk_idTramite=this.idTra;
-        this.informeFacade.guardar(evento.informe).then((respuesta) => {
+      case 'guardarDocumentoDeliberacion': {
+        evento.documento.fk_idTramite=this.idTra;
+        this.documentoFacade.guardar(evento.documento).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        const reunionV = {
+          estado: "DELIBERACION TERMINADA"
+        };
+        this.reunionFacade
+          .modificar(this.idReunion,reunionV)
+          .then((respuesta) => {
+            if (respuesta.tipoRespuesta === 'Exito') {
+              console.log("exito")
+            }
+          });
+        break;
+      }
+      case 'guardarDocumento': {
+        evento.documento.fk_idTramite=this.idTra;
+        this.documentoFacade.guardar(evento.documento).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {
             this.cerrarModal();
           }
         });
         const reunionNueva = {...this.reunion};
         const reunionV = {
-          estado: "DELIBERACION TERMINADA"
+          estado: "REPROGRAMACION VIAJE"
         };
         this.reunionFacade
           .modificar(this.idReunion,reunionV)

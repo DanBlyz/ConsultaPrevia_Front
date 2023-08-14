@@ -49,17 +49,17 @@
                                         class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Modificar"></i>
                                     <i  (click)="ejecutarOperacion({operacion: 'eliminar', id: item.id})"
                                         class="far fa-trash-alt fa-lg text-danger mr-1 cursor-pointer" title="Eliminar"></i>--> 
-                                    <!--<input type="button" value="Providencia" class="btn btn-info m-1"
-                                    (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})">
+                                    <input type="button" value="Adjuntar Documento" class="btn btn-info m-1"
+                                    (click)="ejecutarOperacion({operacion: 'documento', id: item.id})" [disabled]="item.estadoAccion === 'PROVIDENCIA' || item.estadoAccion === 'NOTIFICADO' ? true : false">
                                     <input type="button" value="Notificacion" class="btn btn-primary m-1"
-                                    (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})">-->
+                                    (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})" [disabled]="item.estadoAccion === 'NOTIFICADO' ? true : false">
 
-                                    <button class="btn btn-sm btn-info m-1" (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})" title="Providencia" [disabled]="item.estadoAccion === 'PROVIDENCIA' || item.estadoAccion === 'NOTIFICADO' ? true : false">
+                                    <!--<button class="btn btn-sm btn-info m-1" (click)="ejecutarOperacion({operacion: 'providencia', id: item.id})" title="Providencia" [disabled]="item.estadoAccion === 'PROVIDENCIA' || item.estadoAccion === 'NOTIFICADO' ? true : false">
                                         <i class="far fa-file-alt fa-lg mr-1"></i>
                                     </button>
                                     <button class="btn btn-sm btn-primary m-1" (click)="ejecutarOperacion({operacion: 'notificacion', id: item.id})" title="Notificacion" [disabled]="item.estadoAccion === 'NOTIFICADO' ? true : false">
                                         <i class="far fa-envelope-open fa-lg mr-1"></i>
-                                    </button>
+                                    </button>-->
                                     
                                 </td>
                             </tr>
@@ -106,8 +106,10 @@
                 (accion)="ejecutarAccion($event)"></app-correspondencia-tramite-detalle>
             <app-correspondencia-providencia-formulario *ngSwitchCase="'providencia'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-providencia-formulario>
-                <app-correspondencia-notificacion-formulario *ngSwitchCase="'notificacion'" [tipoOperacion]="tipoOperacion"
+            <app-correspondencia-notificacion-formulario *ngSwitchCase="'notificacion'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-notificacion-formulario>
+            <app-correspondencia-documento-formulario *ngSwitchCase="'documento'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-documento-formulario>
         </div>
     </div>
     <div class="modal-footer">

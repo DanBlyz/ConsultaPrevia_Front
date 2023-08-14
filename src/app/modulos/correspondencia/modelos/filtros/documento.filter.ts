@@ -1,17 +1,12 @@
+import { TramiteFilter } from "./tramite.filter";
+
 export class DocumentoFilter {
-  // numero?: number;
-  // gestion?: number;
-  cite?: string;
-  citeExterno?: string;
-  fechaDesde?: Date;
-  fechaHasta?: Date;
+  fk_idTramite?: number;
+  correlativo?: string;
   referencia?: string;
-  // prioridad?: string;
-  observacion?: string;
-  estaImpreso?: boolean;
-  // hojaRutaId?: number;
-  tipoDocumentoId?: number;
-  clasificacionId?: number;
-  hojaRutaNumero?: string;
-  uniOrganizacionalId?: number;
+  documentoPdf?: string;
+  tipoDocumento?: string;
+  flujo?: string;
+
+  tramite?: TramiteFilter;
 }

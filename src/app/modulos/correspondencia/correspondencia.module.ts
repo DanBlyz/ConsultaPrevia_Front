@@ -39,19 +39,7 @@ import {
   DocumentoDetalleComponent,
   DocumentoFormularioComponent,
   DocumentoBuscadorComponent,
-  DocumentoSeguimientoComponent,
-  DocumentoEnviarComponent,
-  DocumentoAprobarComponent,
-  DocumentoDerivarComponent,
-  DocumentoRecibirComponent,
-  DocumentoArchivoComponent,
-  DocumentoArchivoCentralComponent,
-  DocumentoArchivoDetalleComponent,
-  DocumentoArchivoCentralDetalleComponent,
-  DocumentoAnexoComponent,
-  DocumentoVistaPreviaComponent,
-  DocumentoRespaldoComponent,
-  DocumentoResumenComponent
+  DocumentoListaComponent
 } from './componentes/documento';
 import { ParticipantesPipe } from './auxiliares/pipes';
 import {
@@ -68,22 +56,6 @@ import {
 } from './componentes/parametro';
 import { CorrespondenciaPlantillaModule } from '../correspondencia-plantilla';
 import { ParticipanteSeleccionComponent } from './componentes/participante';
-import {
-  BandejaDetalleAprobarComponent,
-  BandejaArchivadoComponent,
-  BandejaDetalleArchivarComponent,
-  BandejaBorradorComponent,
-  BandejaDetalleDerivarComponent,
-  BandejaDetalleVerComponent,
-  BandejaEntradaComponent,
-  BandejaEnviadoComponent,
-  BandejaDetalleEnviarComponent,
-  BandejaSalidaComponent,
-  BandejaBuscadorComponent
-} from './componentes/bandeja';
-import { HojaRutaDetalleComponent } from './componentes/hoja-ruta';
-import { HojaRutaVincularComponent } from './componentes/hoja-ruta';
-import { ContenidoFormularioComponent } from './componentes/contenido';
 import {
   SeguimientoArchivadoComponent,
   SeguimientoProveidoComponent
@@ -209,45 +181,20 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     DocumentoDetalleComponent,
     DocumentoFormularioComponent,
     DocumentoBuscadorComponent,
+    DocumentoListaComponent,
     ParticipantesPipe,
-    DocumentoSeguimientoComponent,
     PlantillaDetalleComponent,
     PlantillaFormularioComponent,
     PlantillaBuscadorComponent,
     PlantillaListaComponent,
     ParticipanteSeleccionComponent,
-    BandejaBorradorComponent,
-    BandejaEntradaComponent,
-    BandejaEnviadoComponent,
-    BandejaSalidaComponent,
-    HojaRutaDetalleComponent,
-    HojaRutaVincularComponent,
-    DocumentoEnviarComponent,
-    DocumentoAprobarComponent,
-    DocumentoDerivarComponent,
-    ContenidoFormularioComponent,
     SeguimientoProveidoComponent,
-    BandejaDetalleEnviarComponent,
-    BandejaDetalleAprobarComponent,
-    BandejaDetalleDerivarComponent,
-    BandejaDetalleVerComponent,
     ParametroBuscadorComponent,
     ParametroDetalleComponent,
     ParametroFormularioComponent,
     ParametroListaComponent,
-    DocumentoRecibirComponent,
-    BandejaArchivadoComponent,
-    BandejaDetalleArchivarComponent,
-    DocumentoArchivoComponent,
-    DocumentoArchivoCentralComponent,
     SeguimientoArchivadoComponent,
-    DocumentoArchivoDetalleComponent,
-    DocumentoArchivoCentralDetalleComponent,
-    DocumentoAnexoComponent,
-    DocumentoVistaPreviaComponent,
-    BandejaBuscadorComponent,
     ParticipanteContactoSeleccionComponent,
-    DocumentoRespaldoComponent,
     GrupoDetalleComponent,
     GrupoFormularioComponent,
     GrupoBuscadorComponent,
@@ -256,7 +203,6 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     GrupoBuzonFormularioComponent,
     GrupoBuzonListaComponent,
     ParticipanteGrupoSeleccionComponent,
-    DocumentoResumenComponent,
     RolDetalleComponent,
     RolFormularioComponent,
     RolBuscadorComponent,

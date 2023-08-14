@@ -3,29 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AutenticacionGuard } from '../../seguridad/guardias';
 import { ContenedorComponent } from '../admin-lte3/componentes';
-import {
-  BandejaDetalleAprobarComponent,
-  BandejaArchivadoComponent,
-  BandejaDetalleArchivarComponent,
-  BandejaBorradorComponent,
-  BandejaDetalleDerivarComponent,
-  BandejaDetalleVerComponent,
-  BandejaEntradaComponent,
-  BandejaEnviadoComponent,
-  BandejaDetalleEnviarComponent,
-  BandejaSalidaComponent
-} from './componentes/bandeja';
 
 import { BuzonListaComponent } from './componentes/buzon';
 import { BuzonUsuarioListaComponent } from './componentes/buzon-usuario';
 import { ClasificacionListaComponent } from './componentes/clasificacion';
 import { ContactoListaComponent } from './componentes/contacto';
-import {
-  DocumentoArchivoCentralComponent,
-  DocumentoArchivoCentralDetalleComponent,
-  DocumentoArchivoComponent,
-  DocumentoArchivoDetalleComponent
-} from './componentes/documento';
 import { ParametroListaComponent } from './componentes/parametro';
 import {
   PlantillaListaComponent,
@@ -83,6 +65,7 @@ import { ResolucionListaComponent } from './componentes/resolucion';
 import { ReunionListaComponent } from './componentes/reunion';
 import { SujetoIdentificadoListaComponent } from './componentes/sujeto-identificado';
 import { PanelComponent } from './componentes/panel/panel.component';
+import { DocumentoListaComponent } from './componentes/documento';
 
 const routes: Routes = [
   {
@@ -251,210 +234,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'correspondencia/bandeja-borradores',
-        component: BandejaBorradorComponent,
-        canActivate: [],
-        data: {
-          title: 'Bandeja de borradores',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Borradores' }],
-          roles: []
-        }
-      },
-      {
-        path: 'correspondencia/bandeja-entrada',
-        component: BandejaEntradaComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Bandeja de entrada',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Entrada' }],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/bandeja-salida',
-        component: BandejaSalidaComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Bandeja de salida',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Salida' }],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/bandeja-enviados',
-        component: BandejaEnviadoComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Bandeja de enviados',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Enviados' }],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/bandeja-archivados',
-        component: BandejaArchivadoComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Bandeja de archivados',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Archivados' }],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/documentos/:id/enviar',
-        component: BandejaDetalleEnviarComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Enviar documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/documentos' },
-            { title: 'Enviar' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/documentos/:id/aprobar',
-        component: BandejaDetalleAprobarComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Aprobar documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/documentos' },
-            { title: 'Aprobar' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/documentos/:id/derivar',
-        component: BandejaDetalleDerivarComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Derivar documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/documentos' },
-            { title: 'Derivar' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/documentos/:id/detalle',
-        component: BandejaDetalleVerComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Detalle de documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/documentos' },
-            { title: 'Detalle de documento' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/documentos/:id/archivado',
-        component: BandejaDetalleArchivarComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Documento archivado',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/documentos' },
-            { title: 'Documento archivado' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/archivo',
-        component: DocumentoArchivoComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Archivo',
-          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Archivo' }],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/archivo/:id/detalle',
-        component: DocumentoArchivoDetalleComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Detalle de documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/archivo' },
-            { title: 'Detalle de documento' }
-          ],
-          roles: [
-            'CORRESPONDENCIA - ADMINISTRADOR',
-            'CORRESPONDENCIA - USUARIO'
-          ]
-        }
-      },
-      {
-        path: 'correspondencia/archivo-central',
-        component: DocumentoArchivoCentralComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Archivo central',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Archivo central' }
-          ],
-          roles: ['CORRESPONDENCIA - ARCHIVO CENTRAL']
-        }
-      },
-      {
-        path: 'correspondencia/archivo-central/:id/detalle',
-        component: DocumentoArchivoCentralDetalleComponent,
-        canActivate: [AutenticacionGuard],
-        data: {
-          title: 'Detalle de documento',
-          urls: [
-            { title: 'Inicio', url: '/inicio' },
-            { title: 'Documentos', url: '/correspondencia/archivo-central' },
-            { title: 'Detalle de documento' }
-          ],
-          roles: ['CORRESPONDENCIA - ARCHIVO CENTRAL']
-        }
-      },
-      {
         path: 'correspondencia/roles',
         component: RolListaComponent,
         canActivate: [],
@@ -583,6 +362,16 @@ const routes: Routes = [
         }
       },
       {
+        path: 'Identificacion/documento',
+        component: DocumentoListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Documento',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informe' }],
+          roles: []
+        }
+      },
+      {
         path: 'Identificacion/sujeto-identificado',
         component: SujetoIdentificadoListaComponent,
         canActivate: [],
@@ -639,6 +428,16 @@ const routes: Routes = [
         data: {
           title: 'Informes',
           urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Informes' }],
+          roles: []
+        }
+      },
+      {
+        path: 'Deliberacion/documento',
+        component: DocumentoListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Documentos',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Documentos' }],
           roles: []
         }
       },

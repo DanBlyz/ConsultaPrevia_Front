@@ -1,35 +1,24 @@
 import { Adjunto, Participante, Seguimiento } from '.';
-
+import { SujetoIdentificado } from '.';
 export class Documento {
   id?: number;
-  numero: number;
-  gestion: number;
-  cite: string;
-  citeExterno: string;
-  instRegistro: Date;
-  lugar: string;
-  fecha: Date;
+  fk_idTramite: number;
+  correlativo: string;
   referencia: string;
-  prioridad: string;
-  observacion?: string;
-  dandoContinuidad?: string;
-  esBorrador: boolean;
-  estaImpreso: boolean;
-  hojaRutaId?: number;
-  tipoDocumentoId: number;
-  clasificacionId: number;
-  estaObservado?: boolean;
+  documentoPdf: string;
+  tipoDocumento: string;
+  flujo: string;
 
-  hojaRutaNumero: string;
-  tipoDocumentoNombre: string;
-  clasificacionNombre: string;
-  tieneContenido: boolean;
-  tieneDocumentoAdjunto: boolean;
-
-  listaParticipante?: Participante[];
-  listaSeguimiento?: Seguimiento[];
-  listaAdjunto?: Adjunto[];
-
-  sePuedeModificar?: boolean;
-  sePuedeEliminar?: boolean;
+  nroSujetos?: number;
+  comunidad?: string;
+  representante?:string;
+  comunidad2?: string;
+  representante2?:string;
+  comunidad3?: string;
+  representante3?:string;
+  comunidad4?: string;
+  representante4?:string;
+  comunidad5?: string;
+  representante6?:string;
+  listaSujetoIdentificado?: SujetoIdentificado[];
 }
