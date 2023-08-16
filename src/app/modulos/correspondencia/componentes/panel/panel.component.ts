@@ -99,7 +99,7 @@ export class PanelComponent implements AfterViewInit {
             label: 'Sales',
             data: [this.concluido, this.pendiente, this.interrumpido],
             backgroundColor: ['rgba(107, 230, 98, 0.8)', 'rgba(237, 246, 84, 0.8)', 'rgba(255, 147, 124, 0.8)'],
-            borderColor: 'rgba(54, 162, 235, 1)',
+            borderColor: ['rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(255, 99, 132, 1)'],
             borderWidth: 1
           }
         ]

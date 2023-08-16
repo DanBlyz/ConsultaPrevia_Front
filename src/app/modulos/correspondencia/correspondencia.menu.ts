@@ -307,6 +307,15 @@ export const CorrespondenciaMenu: MenuItem[] = [
         submenu: [],
         roles: []
       },
+      {
+        ruta: 'Deliberacion/pagos-cpt',
+        titulo: 'Pagos Cpt',
+        icono: 'far fa-money-bill-alt',
+        class: '',
+        esEnlace: true,
+        submenu: [],
+        roles: []
+      },
     ],
     roles: []
   },

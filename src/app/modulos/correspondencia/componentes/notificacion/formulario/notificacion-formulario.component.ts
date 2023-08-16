@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { PaginadorComponent } from 'src/app/comun/componentes';
 import { Paginado } from 'src/app/comun/modelos';
 import { FuncionesHelper } from 'src/app/comun/auxiliares';
+import { TramiteFacade, DocumentoFacade } from '../../../fachadas';
 
 import { Informe, Notificacion, SujetoIdentificado } from '../../../modelos';
 import { NotificacionFacade } from '../../../fachadas';
@@ -39,6 +40,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
   sujetos: SujetoIdentificado [] = [];
   arr = this.router.url.split('/');
   @Input() public informeCorrelativo: any;
+  @Input() public fk_idTramite: any;
   datoRecibido: any;
 
   suscripcion = new Subscription();
@@ -55,7 +57,9 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private router : Router,
     private http: HttpClient,
-    private informeFacade: InformeFacade
+    private informeFacade: InformeFacade,
+    private tramiteFacade: TramiteFacade,
+    private documentoFacade: DocumentoFacade
   ) {
     if (!this.notificacion) {
       this.notificacion = new Notificacion();
@@ -101,8 +105,11 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         this.botonOperacion = 'Guardar';
         break;
     }
-    this.ObtenerSujetosporInforme(this.informeCorrelativo);
-    console.log(this.informeCorrelativo+" noti")
+    //this.ObtenerSujetosporInforme(this.informeCorrelativo);
+    if(this.fk_idTramite !== undefined){
+      this.ObtenerSujetosporTramite(this.fk_idTramite);
+      console.log(this.informeCorrelativo+" noti")
+    }
   }
 
   @HostListener('unloaded')
@@ -134,6 +141,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
           }
         );
         notificacion = { ...this.formNotificacion.value };
+        console.log(notificacion);
         console.log(this.router.url);
         let arr = this.router.url.split('/');
         notificacion.flujo = arr[1];
@@ -176,11 +184,9 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
     }
   }
 
-  ObtenerSujetosporInforme(informe: string) {
-    const body = { correlativo: informe }; // Aquí defines los parámetros que necesitas enviar en el body
+ /* ObtenerSujetosporInforme(informe: string) {
+    const body = { correlativo: informe }; 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    console.log(body.correlativo+" correltaito");
-    // Realizar la solicitud HTTP POST con los parámetros en el body
     this.http.post<any>('http://localhost:3000/documentos/buscar', body, { headers }).subscribe(
       (response) => {
         this.sujetos = response.lista[0].listaSujetoIdentificado; // Almacenar los datos en la variable items
@@ -190,14 +196,40 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         console.error('Error al obtener los datos:', error);
       }
     );
+  }*/
+  ObtenerSujetosporTramite(id: number) {
+    this.tramiteFacade.obtenerPorId(id).then((datos) => {
+      if (datos['objeto']) { // Verifica si 'objeto' está definido
+        console.log(datos['objeto']);     
+        const correlativoTramite = datos['objeto'].correlativo;  
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const body = {
+          tramite: {
+            correlativo: correlativoTramite
+          },
+          tipoDocumento: 'Informe Social'
+        };
+        console.log(body);
+        
+        this.http.post<any>('http://localhost:3000/documentos/buscar', body, { headers }).subscribe(
+          (response) => {
+            this.sujetos = response.lista[0].listaSujetoIdentificado; // Almacenar los datos en la variable items
+            console.log(response.lista);
+          },
+          (error) => {
+            console.error('Error al obtener los datos:', error);
+          }
+        );
+      } else {
+        console.log("El objeto no está definido");
+      }
+    });
   }
   onCheckboxChange(checkboxName: string) {
     if (this.selectedCheckbox === checkboxName) {
-      // Si el checkbox seleccionado ya está marcado, desmárcalo
       this.formNotificacion.get(checkboxName)?.setValue(false);
       this.selectedCheckbox = null;
     } else {
-      // Marca el checkbox seleccionado y desmarca los otros
       this.selectedCheckbox = checkboxName;
       Object.keys(this.formNotificacion.controls).forEach((name) => {
         if (name !== checkboxName && name !== 'notificado' && name !== 'direccionDpto' && name !== 'comunidad') {
@@ -207,8 +239,4 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
       });
     }
   }
-  recibirDato(dato: any) {
-    this.datoRecibido = dato;
-    
-   }
 }

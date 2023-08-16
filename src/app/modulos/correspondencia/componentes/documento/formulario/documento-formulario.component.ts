@@ -126,7 +126,7 @@ export class DocumentoFormularioComponent implements OnInit, OnDestroy {
       case 'modificar':
         this.botonOperacion = 'Modificar';
         break;
-      case 'Documento':
+      case 'documentoReprogramacion':
         this.botonOperacion = 'Guardar';
         break;
       case 'documentoDeliberacion':
@@ -200,6 +200,37 @@ export class DocumentoFormularioComponent implements OnInit, OnDestroy {
         documento.flujo = arr[1];
         this.accion.emit({
           accion: 'guardarDocumento',
+          documento
+        });
+        break;
+      }
+      case 'documentoReprogramacion': {
+        FuncionesHelper.limpiarEspacios(this.formDocumento);
+        console.log(this.formDocumento);
+        if (!this.formDocumento.valid) {
+          this.formDocumento.markAllAsTouched();
+          return;
+        }
+        documento = { ...this.formDocumento.value };
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile,documento.tipoDocumento+"-"+this.selectedFile.name);
+        this.http.post<any>('http://localhost:3000/documentos/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
+        documento.documentoPdf = documento.tipoDocumento+"-"+this.selectedFile.name;
+        let arr = this.router.url.split('/');
+        documento.flujo = arr[1];
+        this.accion.emit({
+          accion: 'guardarDocumentoReprogramacion',
           documento
         });
         break;

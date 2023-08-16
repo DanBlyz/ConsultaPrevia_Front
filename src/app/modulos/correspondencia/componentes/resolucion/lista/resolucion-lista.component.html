@@ -39,8 +39,8 @@
                                 </td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">{{ item.referencia }}</td>
                                 <td *ngIf="(item.flujo === arr[1])" class="align-middle">
-                                    <i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id, fk_tramite: item.fk_idTramite})"
-                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>
+                                    <!--<i (click)="ejecutarOperacion({operacion: 'modificar', id: item.id, fk_tramite: item.fk_idTramite})"
+                                        class="far fa-edit fa-lg text-info mr-1 cursor-pointer" title="Actulizar Datos"></i>-->
                                     <input *ngIf="(item.informeAprobado === true && item.actoAdministrativo === true) ? false : true" type="button" value="Actualizar Datos" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'modificar',id: item.id, fk_tramite: item.fk_idTramite})"> 
                                     <!--<i (click)="ejecutarOperacion({operacion: 'detalle', id: item.id})"
@@ -92,7 +92,7 @@
             <app-correspondencia-resolucion-detalle *ngSwitchCase="'eliminar'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-resolucion-detalle>
             <app-correspondencia-notificacion-formulario *ngSwitchCase="'notificacion'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)" [informeCorrelativo] = "informeCorrelativo" ></app-correspondencia-notificacion-formulario>
+                (accion)="ejecutarAccion($event)" [informeCorrelativo] = "informeCorrelativo" [fk_idTramite] ="fk_idTramite" ></app-correspondencia-notificacion-formulario>
             <app-correspondencia-acto-administrativo-formulario *ngSwitchCase="'actoAdministrativo'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
         </div>

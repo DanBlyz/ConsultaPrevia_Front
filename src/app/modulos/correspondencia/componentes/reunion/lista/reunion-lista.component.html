@@ -61,9 +61,11 @@
                                         (click)="ejecutarOperacion({operacion: 'Remitir a MMyM', idTramite: item.notificacion.fk_idTramite, id: item.id})"> 
                                     <input *ngIf=" (item.reunionRealizada === true && item.conAcuerdo === true && item.motivo !=='COMPLEMENTAR INFORME') ? item.flujo === 'Mediacion' ? true : false: false" type="button" value="Devolver a la DDoDR" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'devolverDo', idTramite: item.notificacion.fk_idTramite, id: item.id})"> 
+
                                     <input *ngIf="item.nroReunion === '1ERA' ? true : false"type="button" value="Reprogramacion Viaje" class="btn btn-danger"
-                                        (click)="ejecutarOperacion({operacion: 'documento', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="item.estado ==='REPROGRAMACION VIAJE' || item.estado ==='DELIBERACION TERMINADA' || item.estado ==='NOTIFICACION'? true : false">
-                                    <input *ngIf="item.motivo === 'NEGATIVA ROTUNDA' ? true : false" type="button" value="Adj. Documento a Mediacion" class="btn btn-primary"
+                                        (click)="ejecutarOperacion({operacion: 'documentoReprogramacion', idTramite: item.notificacion.fk_idTramite, id: item.id})" [disabled]="item.estado ==='REPROGRAMACION VIAJE' || item.estado ==='DELIBERACION TERMINADA' || item.estado ==='NOTIFICACION'? true : false">
+                                    
+                                        <input *ngIf="item.motivo === 'NEGATIVA ROTUNDA' ? true : false" type="button" value="Adj. Documento a Mediacion" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'documentoDeliberacion', idTramite: item.notificacion.fk_idTramite,id: item.id})" [disabled]="item.estado ==='DELIBERACION TERMINADA' ? true : false">
                                     <input *ngIf="item.nroReunion === '1ERA' && item.motivo ==='COMPLEMENTAR INFORME' ? true : false" type="button" value="Adj. Informe Complementario" class="btn btn-primary"
                                         (click)="ejecutarOperacion({operacion: 'documento', idTramite: item.notificacion.fk_idTramite,id: item.id})" [disabled]="item.estado ==='DELIBERACION TERMINADA' ? true : false">
@@ -113,8 +115,8 @@
                 (accion)="ejecutarAccion($event)"></app-correspondencia-acto-administrativo-formulario>
             <app-correspondencia-documento-formulario *ngSwitchCase="'documentoDeliberacion'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-documento-formulario>
-            <app-correspondencia-providencia-formulario *ngSwitchCase="'documentoReprogramacion'" [tipoOperacion]="tipoOperacion"
-                (accion)="ejecutarAccion($event)"></app-correspondencia-providencia-formulario>
+            <app-correspondencia-documento-formulario *ngSwitchCase="'documentoReprogramacion'" [tipoOperacion]="tipoOperacion"
+                (accion)="ejecutarAccion($event)"></app-correspondencia-documento-formulario>
             <app-correspondencia-documento-formulario *ngSwitchCase="'documento'" [tipoOperacion]="tipoOperacion"
                 (accion)="ejecutarAccion($event)"></app-correspondencia-documento-formulario>
         </div>

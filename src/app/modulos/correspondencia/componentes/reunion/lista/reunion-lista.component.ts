@@ -14,7 +14,7 @@ import { Paginado } from 'src/app/comun/modelos';
 
 import { Reunion } from '../../../modelos';
 import { ReunionFilter } from '../../../modelos/filtros';
-import { ReunionFacade } from '../../../fachadas';
+import { ReunionFacade, TramiteFacade } from '../../../fachadas';
 import { NotificacionFacade, DocumentoFacade } from '../../../fachadas';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
@@ -60,7 +60,8 @@ export class ReunionListaComponent
     private informeFacade: InformeFacade,
     private router: Router,
     private http: HttpClient,
-    private documentoFacade: DocumentoFacade
+    private documentoFacade: DocumentoFacade,
+    private tramiteFacade: TramiteFacade
   ) {}
 
   ngOnInit(): void {
@@ -169,6 +170,15 @@ export class ReunionListaComponent
         break;
       }
       case 'documento': {
+        this.tipoOperacion = 'documento';
+        this.idTra = evento.idTramite;
+        this.idReunion = evento.id;
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Adjuntar Documento';
+        this.mostrarModal();
+        break;
+      }
+      case 'documentoReprogramacion': {
         this.tipoOperacion = 'documento';
         this.idTra = evento.idTramite;
         this.idReunion = evento.id;
@@ -316,6 +326,24 @@ export class ReunionListaComponent
               console.log("exito")
             }
           });
+        break;
+      }
+      case 'guardarDocumentoReprogramacion': {
+        evento.documento.fk_idTramite=this.idTra;
+        this.documentoFacade.guardar(evento.documento).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+        const reunionV = {
+          estado: "REPROGRAMACION VIAJE"
+        };
+        this.reunionFacade
+          .modificar(this.idReunion,reunionV);
+        const tramiteBody = {
+            estado: "INTERRUMPIDO"
+        };
+        this.tramiteFacade.modificar(this.idTra,tramiteBody);
         break;
       }
     }

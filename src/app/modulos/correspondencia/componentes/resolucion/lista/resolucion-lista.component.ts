@@ -40,12 +40,12 @@ export class ResolucionListaComponent
   suscripcion = new Subscription();
   filtro: ResolucionFilter = new ResolucionFilter();
   tipoOperacion: string;
-  fkTramite : number;
   nroReunion :string;
 
   idTra : number;
   idResolucion: number;
   informeCorrelativo : string;
+  fk_idTramite : number;
 
   resolucion: Resolucion = new Resolucion();
   lista: Resolucion[];
@@ -134,7 +134,7 @@ export class ResolucionListaComponent
       }
       case 'modificar': {
         this.tipoOperacion = 'modificar';
-        this.fkTramite = evento.fk_tramite;
+        this.fk_idTramite = evento.fk_tramite;
         this.resolucionFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Modificar ' + resolucionTitulo;
         this.mostrarModal();
@@ -149,7 +149,7 @@ export class ResolucionListaComponent
       }
       case 'notificacion': {
         this.tipoOperacion = 'notificacion';
-        this.fkTramite = evento.fk_tramite;
+        this.fk_idTramite = evento.fk_tramite;
         this.nroReunion = evento.nroReunion;
         this.informeCorrelativo = evento.informe;
         this.datoEnviado.emit(evento.informe);
@@ -162,8 +162,16 @@ export class ResolucionListaComponent
         this.tipoOperacion = 'actoAdministrativo';
         this.idTra = evento.fk_tramite;
         this.idResolucion = evento.id;
-        this.modalTitulo = 'Acto Administrativo';
-        this.mostrarModal();
+        const body = {
+          fk_idResolucion: evento.id,
+          viajeRealizado : false,
+          flujo: this.arr[1]
+        };
+        console.log(body)
+        this.actoAdministrativoFacade.guardar(body).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+          }
+        });
         break;
       }
     }
@@ -180,7 +188,7 @@ export class ResolucionListaComponent
         break;
       }
       case 'modificar': {
-        evento.resolucion.fk_idTramite = this.fkTramite;
+        evento.resolucion.fk_idTramite = this.fk_idTramite;
         this.resolucionFacade
           .modificar(evento.resolucionId, evento.resolucion)
           .then((respuesta) => {
@@ -207,7 +215,7 @@ export class ResolucionListaComponent
         break;
       }
       case 'guardarnoti': {
-        evento.notificacion.fk_idTramite = this.fkTramite;
+        evento.notificacion.fk_idTramite = this.fk_idTramite;
         evento.notificacion.nroReunion = this.nroReunion;
         this.notificacionFacade.guardar(evento.notificacion).then((respuesta) => {
           if (respuesta.tipoRespuesta === 'Exito') {

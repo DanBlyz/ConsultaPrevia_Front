@@ -49,14 +49,15 @@ export class ReporteService {
         body: mainData,
         startY: startY
       });
+
       data.forEach(item => {
         startY = (doc as any).lastAutoTable.finalY + 20;
-        if (item.listaProvidencia !== undefined && Array.isArray(item.listaProvidencia)) {
-          doc.setFontSize(15);
-          doc.text("Contenido Correspondiente al Tramite "+item.correlativo, doc.internal.pageSize.width / 2, startY, { align: 'center' });
-          const nestedHeaders = ["Tramite","Correlativo Providencia","Referencia"];
-          const nestedData = item.listaProvidencia.map(res =>[item.correlativo,res.correlativo, res.referencia]);
-          if(item.listaProvidencia.length > 0){
+        if (item.listaDocumento !== undefined && Array.isArray(item.listaDocumento)) {
+          const nestedHeaders = ["Tramite","Correlativo Documento","Referencia","Tipo Documento"];
+          const nestedData = item.listaDocumento.map(res =>[item.correlativo,res.correlativo, res.referencia,res.tipoDocumento]);
+          if(item.listaDocumento.length > 0){
+            doc.setFontSize(15);
+            doc.text("Contenido Correspondiente al Tramite "+item.correlativo, doc.internal.pageSize.width / 2, startY, { align: 'center' });
             startY = (doc as any).lastAutoTable.finalY + 30; 
             autoTable(doc,{
               head: [nestedHeaders],
@@ -211,7 +212,7 @@ export class ReporteService {
       const mainHeaders5 = ['DETALLE DE CÁLCULO DE LIQUIDACIÓN DE VIATICOS Y','PASAJES','','',''];
       const mainData5 = [
         ['Servicios:', 'Nro. Dia (s)','Tipo de Viaje','Monto por Dia','Total Viaticos'],
-        ['Viatico para la identificación de sujetos de consulta previa, dentro del trámite: AJAMD-LP-SOL-CAM/154/2018 del área denominada TOJRA RL, compuesta por 8 cuadrículas, ubicada en el municipio(s) CAJUATA, Provincia(s) INQUISIVI, departamento(s) LA PAZ.', '0.7','Intradepartamental',222,155 ]
+        [data.descripcion, data.diasViaje,data.tipoViaje,222,data.montoTotal ]
       ];
       autoTable(doc, {
         head: [mainHeaders5],

@@ -15,6 +15,7 @@ import { Paginado } from 'src/app/comun/modelos';
 import { PagoCpt } from '../../../modelos';
 import { PagoCptFilter } from '../../../modelos/filtros';
 import { PagoCptFacade } from '../../../fachadas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pago-cpt-lista',
@@ -33,13 +34,17 @@ export class PagoCptListaComponent
 
   pagoCpt: PagoCpt = new PagoCpt();
   lista: PagoCpt[];
+  arr = this.router.url.split('/');
 
   modalTitulo: string;
   modal: NgbModalRef;
 
+  private totalRegistrosEncontrados: number = 0;
+
   constructor(
     private pagoCptFacade: PagoCptFacade,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router :Router
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +54,12 @@ export class PagoCptListaComponent
           if (listaPagoCpt.lista) {
             if (listaPagoCpt.lista.length >= 0) {
               this.lista = listaPagoCpt.lista;
+              this.lista = listaPagoCpt.lista.filter(item => item.flujo === this.arr[1]);
+              this.totalRegistrosEncontrados = this.lista.length;
               if (listaPagoCpt.paginado && this.paginador) {
                 this.paginador.mostrarPaginador = true;
                 this.paginador.valores = new Paginado(
-                  listaPagoCpt.paginado.totalRegistros,
+                  this.totalRegistrosEncontrados,
                   listaPagoCpt.paginado.registrosPorPagina,
                   listaPagoCpt.paginado.totalPaginas,
                   listaPagoCpt.paginado.pagina

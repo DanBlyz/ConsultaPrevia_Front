@@ -442,6 +442,16 @@ const routes: Routes = [
         }
       },
       {
+        path: 'Deliberacion/pagos-cpt',
+        component: PagoCptListaComponent,
+        canActivate: [],
+        data: {
+          title: 'Pagos',
+          urls: [{ title: 'Inicio', url: '/inicio' }, { title: 'Pagos Cpt' }],
+          roles: []
+        }
+      },
+      {
         path: 'Mediacion/resolucion',
         component: ResolucionListaComponent,
         canActivate: [],
