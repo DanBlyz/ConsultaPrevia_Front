@@ -106,6 +106,9 @@ export class TramiteListaComponent
   }
 
   ngAfterViewInit(): void {
+    for (const tramiteItem of this.lista) {
+      this.cambiarEstadoTramite(tramiteItem.id);
+    }
     this.paginar();
   }
 
@@ -276,7 +279,42 @@ export class TramiteListaComponent
     console.log(atributos+" atributos");
     let cadena = this.paginador.totalRegistros+"-"+fecha+"-"+hora;
     this.reporteService.generatePdf(this.lista, cadena,atributos);
-
+  }
+  cambiarEstadoTramite(id: number) {
+    this.tramiteFacade.obtenerPorId(id).then(
+      (dato) => {
+        if (dato && dato.objeto && dato.objeto.correlativo) {
+          const correlativoTramite = dato.objeto.correlativo;
+          const bodyDocumento = {
+            tramite: { correlativo: correlativoTramite },
+            tipoDocumento: 'Informe Social',
+            estado: 'VIGENTE'
+          };
+  
+          this.documentoFacade.buscar(bodyDocumento, 1, 1).then((documento) => {
+            if (documento && documento.lista && documento.lista.length > 0) {
+              const listaSujetoIdentificado = documento.lista[0].listaSujetoIdentificado || [];
+              const totalAcuerdo = listaSujetoIdentificado.filter(item => item.estado === 'ACUERDO REUNION').length;
+              
+              console.log(`Total de sujetos identificados: ${listaSujetoIdentificado.length}, Total de acuerdos: ${totalAcuerdo}`);
+              if(listaSujetoIdentificado.length === totalAcuerdo){
+                const tramiteBody = {
+                  estado : 'CONCLUIDO'
+                }
+                this.tramiteFacade.modificar(id,tramiteBody);
+              }
+            } else {
+              console.log('No se encontró ningún documento para procesar.');
+            }
+          });
+        } else {
+          console.log('No se encontró correlativo de tramite en los datos obtenidos.');
+        }
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
   }
 
 }

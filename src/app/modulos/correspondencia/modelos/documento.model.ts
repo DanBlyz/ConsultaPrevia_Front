@@ -8,6 +8,7 @@ export class Documento {
   documentoPdf: string;
   tipoDocumento: string;
   flujo: string;
+  estado: string;
 
   nroSujetos?: number;
   comunidad?: string;

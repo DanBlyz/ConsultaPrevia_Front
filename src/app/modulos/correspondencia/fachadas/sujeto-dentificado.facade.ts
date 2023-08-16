@@ -142,7 +142,7 @@ export class SujetoIdentificadoFacade {
     });
   }
 
-  modificar(id: number, objeto: SujetoIdentificado): Promise<RespuestaObjeto<SujetoIdentificado>> {
+  modificar(id: number, objeto: any): Promise<RespuestaObjeto<SujetoIdentificado>> {
     this.store.dispatch(
       ComunAcciones.establecerProcesando({ procesando: true })
     );

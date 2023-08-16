@@ -5,7 +5,8 @@ export class SujetoIdentificado {
     fk_idInforme?: number;
     comunidad: string;
     autoridad: string;
-    telefono?: number;
+    telefono: number;
+    estado: string;
 
     documento?: Documento;
   }

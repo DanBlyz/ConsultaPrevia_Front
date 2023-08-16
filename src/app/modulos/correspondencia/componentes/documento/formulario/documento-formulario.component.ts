@@ -190,7 +190,6 @@ export class DocumentoFormularioComponent implements OnInit, OnDestroy {
               sujeto.comunidad = this.formDocumento.value['comunidad' + (i + 1)];
               sujeto.autoridad = this.formDocumento.value['autoridad' + (i + 1)];
               sujeto.telefono = this.formDocumento.value['telefono' + (i + 1)];
-              console.log(sujeto+ "sujeto ident");
               this.listaSujetoIdentificado.push(sujeto);
             }
             documento.listaSujetoIdentificado = this.listaSujetoIdentificado;

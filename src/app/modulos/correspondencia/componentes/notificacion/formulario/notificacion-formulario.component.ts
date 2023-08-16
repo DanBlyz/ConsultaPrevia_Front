@@ -213,7 +213,7 @@ export class NotificacionFormularioComponent implements OnInit, OnDestroy {
         
         this.http.post<any>('http://localhost:3000/documentos/buscar', body, { headers }).subscribe(
           (response) => {
-            this.sujetos = response.lista[0].listaSujetoIdentificado; // Almacenar los datos en la variable items
+            this.sujetos = response.lista[0].listaSujetoIdentificado.filter((item) => item.estado !== 'ACUERDO REUNION'); // Almacenar los datos en la variable items
             console.log(response.lista);
           },
           (error) => {

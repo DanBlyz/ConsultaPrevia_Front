@@ -54,10 +54,10 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
     }
 
     this.formResolucion = this.fb.group({
-      informe: ['', Validators.required],
+      informe: [''],
       correlativo: ['', Validators.required],
-      informeAprobado: ['', Validators.required],
-      actoAdministrativo: ['', Validators.required],
+      informeAprobado: [false],
+      actoAdministrativo: [false],
       referencia: ['', Validators.required]
     });
   }
@@ -90,6 +90,9 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
         break;
       case 'modificar':
         this.botonOperacion = 'Modificar';
+        break;
+      case 'resolucionAcuerdo':
+        this.botonOperacion = 'Guardar';
         break;
     }
   }
@@ -146,6 +149,38 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
         });
         break;
       }
+      case 'resolucionAcuerdo': {
+        console.log(this.formResolucion.value);
+        FuncionesHelper.limpiarEspacios(this.formResolucion);
+        if (!this.formResolucion.valid) {
+          this.formResolucion.markAllAsTouched();
+          return;
+        }
+        if (!this.selectedFile) {
+          console.log('Selecciona un archivo antes de subirlo.');
+          return;
+        }
+        const formData: FormData = new FormData();
+        formData.append('file', this.selectedFile);
+        this.http.post<any>('http://localhost:3000/resoluciones/subir-archivo', formData).subscribe(
+          (response) => {
+            console.log(response.message); // Mensaje del servidor
+          },
+          (error) => {
+            console.error('Error al subir el archivo:', error);
+          }
+        );
+        resolucion = { ...this.formResolucion.value };
+        let arr = this.router.url.split('/');
+        resolucion.flujo = arr[1];
+        resolucion.resolucionPdf = "resolucion-"+this.selectedFile.name;
+        console.log(resolucion+ "resolucon");
+        this.accion.emit({
+          accion: 'guardarResolucionAcuerdo',
+          resolucion
+        });
+        break;
+      }
       case 'cancelar': {
         this.accion.emit({
           accion
@@ -185,7 +220,6 @@ export class ResolucionFormularioComponent implements OnInit, OnDestroy {
     this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
       (datos) => {
         this.datoRecuperado = datos.lista[0];
-        console.log(this.datoRecuperado);
         this.formResolucion.patchValue({
           referencia: this.datoRecuperado.referencia
         });

@@ -15,12 +15,13 @@ import { Paginado } from 'src/app/comun/modelos';
 import { Reunion } from '../../../modelos';
 import { ReunionFilter } from '../../../modelos/filtros';
 import { ReunionFacade, TramiteFacade } from '../../../fachadas';
-import { NotificacionFacade, DocumentoFacade } from '../../../fachadas';
+import { NotificacionFacade, DocumentoFacade,SujetoIdentificadoFacade,ResolucionFacade } from '../../../fachadas';
 import { ActoAdministrativoFacade } from '../../../fachadas';
 import { InformeFacade } from '../../../fachadas';
 import { Router } from '@angular/router';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { PdfModalComponent } from '../../pdf-modal';
+import { TramiteService ,DocumentoService, SujetoIdentificadoService,ReunionService} from '../../../servicios';
 
 @Component({
   selector: 'app-reunion-lista',
@@ -40,6 +41,7 @@ export class ReunionListaComponent
 
   reunion: Reunion = new Reunion();
   lista: Reunion[];
+  listaSujetos: any[];
 
   modalTitulo: string;
   modal: NgbModalRef;
@@ -48,6 +50,7 @@ export class ReunionListaComponent
   idReunion: number;
   aux: Reunion;
   nroReunion : string;
+  comunidad : string;
 
   arr = this.router.url.split('/');
   private totalRegistrosEncontrados: number = 0;
@@ -61,7 +64,11 @@ export class ReunionListaComponent
     private router: Router,
     private http: HttpClient,
     private documentoFacade: DocumentoFacade,
-    private tramiteFacade: TramiteFacade
+    private tramiteFacade: TramiteFacade,
+    private sujetoIdentificadoFacade : SujetoIdentificadoFacade,
+    private resolucionFacade : ResolucionFacade,
+    private sujetoIdentificadoService : SujetoIdentificadoService,
+    private reunionService: ReunionService
   ) {}
 
   ngOnInit(): void {
@@ -179,11 +186,22 @@ export class ReunionListaComponent
         break;
       }
       case 'documentoReprogramacion': {
-        this.tipoOperacion = 'documento';
+        this.tipoOperacion = 'documentoReprogramacion';
         this.idTra = evento.idTramite;
         this.idReunion = evento.id;
         this.reunionFacade.obtenerPorId(evento.id);
         this.modalTitulo = 'Adjuntar Documento';
+        this.mostrarModal();
+        break;
+      }
+      case 'resolucionAcuerdo': {
+        this.tipoOperacion = 'resolucionAcuerdo';
+        this.idTra = evento.idTramite;
+        this.idReunion = evento.id;
+        this.comunidad = evento.comunidad;
+        console.log(this.comunidad)
+        this.reunionFacade.obtenerPorId(evento.id);
+        this.modalTitulo = 'Adjuntar Resolucion';
         this.mostrarModal();
         break;
       }
@@ -320,12 +338,8 @@ export class ReunionListaComponent
           estado: "REPROGRAMACION VIAJE"
         };
         this.reunionFacade
-          .modificar(this.idReunion,reunionV)
-          .then((respuesta) => {
-            if (respuesta.tipoRespuesta === 'Exito') {
-              console.log("exito")
-            }
-          });
+          .modificar(this.idReunion,reunionV);
+
         break;
       }
       case 'guardarDocumentoReprogramacion': {
@@ -335,15 +349,32 @@ export class ReunionListaComponent
             this.cerrarModal();
           }
         });
-        const reunionV = {
+        const reunionBody = {
           estado: "REPROGRAMACION VIAJE"
         };
         this.reunionFacade
-          .modificar(this.idReunion,reunionV);
+          .modificar(this.idReunion,reunionBody);
         const tramiteBody = {
             estado: "INTERRUMPIDO"
         };
         this.tramiteFacade.modificar(this.idTra,tramiteBody);
+        this.cambiarEstadoDocumento(this.idTra);
+        this.cambiarEstadoTramite(this.idTra);
+        break;
+      }
+      case 'guardarResolucionAcuerdo': {
+        evento.resolucion.fk_idTramite=this.idTra;
+        evento.resolucion.informe = this.reunion.nroReunion+" REUNION "+this.reunion.notificacion.comunidad;
+        this.resolucionFacade.guardar(evento.resolucion).then((respuesta) => {
+          if (respuesta.tipoRespuesta === 'Exito') {
+            this.cerrarModal();
+          }
+        });
+       const reunionV = {
+          estado: "ACUERDO"
+        };
+        this.reunionFacade.modificar(this.idReunion,reunionV);
+        this.cambiarEstadoSujeto(this.idTra,this.comunidad);
         break;
       }
     }
@@ -397,4 +428,119 @@ export class ReunionListaComponent
     modalRef.componentInstance.modalTitle = modalTitle;
     modalRef.componentInstance.modalRef = modalRef; // Asigna el NgbModalRef al componente hijo
   }
+  async cambiarEstadoSujeto(id: number, comunidad: string) {
+    try {
+      const tramite = await this.tramiteFacade.obtenerPorId(id);
+      if (tramite && tramite.objeto && tramite.objeto.correlativo) {
+        const correlativoTramite = tramite.objeto.correlativo;
+        const bodyDocumento = {
+          tramite: { correlativo: correlativoTramite },
+          tipoDocumento: 'Informe Social',
+          estado: 'VIGENTE'
+        };
+  
+        const documento = await this.documentoFacade.buscar(bodyDocumento, 1, 1);
+        if (documento && documento.lista && documento.lista.length > 0) {
+          const listaSujetoIdentificado = documento.lista[0].listaSujetoIdentificado || [];
+          const sujeto = listaSujetoIdentificado.find(item => item.comunidad === comunidad);
+          if (sujeto) {
+            const bodySujeto = {
+              estado: "ACUERDO REUNION"
+            };
+            await this.sujetoIdentificadoFacade.modificar(sujeto.id, bodySujeto);
+            console.log(`El estado del sujeto en la comunidad ${comunidad} ha sido actualizado.`);
+          } else {
+            console.log('No se encontró ningún sujeto con la comunidad especificada.');
+          }
+        } else {
+          console.log('No se encontró ningún documento para procesar.');
+        }
+      } else {
+        console.log('No se encontró correlativo de tramite en los datos obtenidos.');
+      }
+    } catch (error) {
+      console.error('Error al buscar los datos:', error);
+    }
+  }
+  cambiarEstadoDocumento(id: number) {
+    this.tramiteFacade.obtenerPorId(id).then(
+      (dato) => {
+        if (dato && dato.objeto && dato.objeto.correlativo) {
+          const correlativoTramite = dato.objeto.correlativo;
+          const bodyDocumento = {
+            tramite: { correlativo: correlativoTramite },
+            tipoDocumento: 'Informe Social',
+            estado: 'VIGENTE'
+          };
+          this.documentoFacade.buscar(bodyDocumento, 1, 1).then((documento) => {
+            if (documento && documento.lista && documento.lista.length > 0 && documento.lista[0].id) {
+              const idDocumento = documento.lista[0].id;
+              const bodyDocumentoModificacion = {
+                estado: 'REEMPLAZADO'
+              };
+              
+              this.documentoFacade.modificar(idDocumento, bodyDocumentoModificacion);
+            } else {
+              console.log('No se encontró ningún documento para actualizar.');
+            }
+          });
+        } else {
+          console.log('No se encontró correlativo de tramite en los datos obtenidos.');
+        }
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+  }
+  cambiarEstadoTramite(id: number) {
+    this.tramiteFacade.obtenerPorId(id).then(
+      (dato) => {
+        if (dato && dato.objeto && dato.objeto.correlativo) {
+          const correlativoTramite = dato.objeto.correlativo;
+          const bodyDocumento = {
+            tramite: { correlativo: correlativoTramite },
+            tipoDocumento: 'Informe Social',
+            estado: 'VIGENTE'
+          };
+  
+          this.documentoFacade.buscar(bodyDocumento, 1, 1).then((documento) => {
+            if (documento && documento.lista && documento.lista.length > 0) {
+              const listaSujetoIdentificado = documento.lista[0].listaSujetoIdentificado || [];
+              const totalAcuerdo = listaSujetoIdentificado.filter(item => item.estado === 'ACUERDO REUNION').length;
+              
+              console.log(`Total de sujetos identificados: ${listaSujetoIdentificado.length}, Total de acuerdos: ${totalAcuerdo}`);
+            } else {
+              console.log('No se encontró ningún documento para procesar.');
+            }
+          });
+        } else {
+          console.log('No se encontró correlativo de tramite en los datos obtenidos.');
+        }
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+  }
+  /*buscarCorrelativo(){
+    if(this.formResolucion.get('correlativo').value !== ""){
+      const body = { correlativo : this.formResolucion.get('correlativo').value};
+    this.vistaDocumentoService.buscar(body, 1, 1).subscribe(
+      (datos) => {
+        this.datoRecuperado = datos.lista[0];
+        console.log(this.datoRecuperado);
+        this.formResolucion.patchValue({
+          referencia: this.datoRecuperado.referencia
+        });
+      },
+      (error) => {
+        console.error('Error al buscar los datos:', error);
+      }
+    );
+    }else{
+      console.log("error de datos");
+    }
+  }*/
+ 
 }

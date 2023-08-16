@@ -3,5 +3,6 @@ export class SujetoIdentificadoFilter {
     comunidad?: string;
     autoridad?: string;
     telefono?: number;
+    estado?: string;
   }
   
